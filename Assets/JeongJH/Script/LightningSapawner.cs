@@ -12,7 +12,7 @@ namespace JJH
 
         void Start()
         {
-            //Instantiate(lightningPrefab,transform.position,Quaternion.identity);
+            Instantiate(lightningPrefab,transform.position,Quaternion.identity);
         }
 
         void Update()
