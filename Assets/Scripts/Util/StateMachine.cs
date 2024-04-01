@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StateMachine<T> where T : Enum
 {
@@ -26,6 +27,12 @@ public class StateMachine<T> where T : Enum
     public void FixedUpdate()
     {
         curState.FixedUpdate();
+    }
+
+    public void InitState(T stateType)
+    {
+        curState = stateDic[stateType];
+        
     }
 
     public void AddState(T stateEnum, BaseState<T> state)
