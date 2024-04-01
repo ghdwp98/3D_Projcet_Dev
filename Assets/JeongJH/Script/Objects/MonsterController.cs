@@ -21,8 +21,6 @@ namespace JJH
         [SerializeField] AnimationClip attackClip;
         [SerializeField] Transform startPos; //이거 그냥 빈 오브젝트 넣어서 할까 고민중. 
 
-        
-        
         string attack;
         int size = 20;
         Vector3 dirToTarget;
