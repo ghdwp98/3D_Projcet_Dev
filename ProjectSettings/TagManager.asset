@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Damage
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -35,8 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PPP
+  - Damage
   m_SortingLayers:
   - name: Default
     uniqueID: 0
