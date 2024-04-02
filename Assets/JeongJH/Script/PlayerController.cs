@@ -51,6 +51,11 @@ namespace JJH
                 playerhpmp.RunStaminaConsume(0.5f);
             }
 
+            if(Input.GetKeyDown(KeyCode.RightShift)) //나중에 이 부분을 ondeath  이벤트등으로 묶어서 처리하면될듯. 
+            {
+                Debug.Log("라이트쉬프트");
+                rigid.transform.position= CheckPoint.GetActiveCheckPointPosition();
+            }
            
         }
 
