@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
 	public GameObject[] weapons;
 	public bool[] hasWeapons;
 
+	float hp;
+
+
 	public int key; // 갖고 있는 열쇠 수
 	public int maxKey; // 최대 열쇠 소지 수
 
