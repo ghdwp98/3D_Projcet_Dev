@@ -8,10 +8,7 @@ namespace JJH
 
         private void Update()
         {
-            if (Input.anyKeyDown)
-            {
-                Manager.Scene.LoadScene("TutorialScene");
-            }
+          
         }
         public override IEnumerator LoadingRoutine()
         {
