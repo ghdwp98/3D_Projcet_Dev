@@ -6,6 +6,8 @@ using System;
 namespace JJH
 {
     public class PlayerHp : Entity
+
+        //플레이어의 사망 처리도 여기서 진행하면 될 듯 함. EVENT 이용. 
     {
         public static Action<float> Player_Action;
 
