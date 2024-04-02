@@ -1,3 +1,4 @@
+using JJH;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
@@ -8,8 +9,7 @@ public class Player : MonoBehaviour
 
 	public GameObject[] weapons;
 	public bool[] hasWeapons;
-
-	public float hp = 100;
+	[SerializeField] PlayerHp playerhpmp;
 
 	public int key; // 갖고 있는 열쇠 수
 	public int maxKey; // 최대 열쇠 소지 수
@@ -35,7 +35,8 @@ public class Player : MonoBehaviour
 
 	private void Start()
 	{
-		
+		playerhpmp.HP = 50;
+		Debug.Log(playerhpmp.HP);
 	}
 
 	private void Update()
@@ -45,6 +46,12 @@ public class Player : MonoBehaviour
 		Turn();
 		Jump();
 		Down();
+		Interaction();
+
+		if (Input.GetKey(KeyCode.LeftShift))
+		{
+			playerhpmp.RunStaminaConsume(0.5f);
+		}
 	}
 
 	void GetInput()
@@ -79,15 +86,20 @@ public class Player : MonoBehaviour
 
 	void Interaction()
 	{
-		if (iDown && nearObject != null && !isJump)
+		if (iDown && nearObject != null)
 		{
-			if (nearObject.tag == "Weapon")
+			Debug.Log("IDOWN KEY");
+			if (nearObject.tag == "RecoveryItem")
 			{
-				Item item = nearObject.GetComponent<Item>();
-				int weaponIndex = item.value;
-				hasWeapons[weaponIndex] = true;
-
-				Destroy(nearObject);
+				playerhpmp.HP += playerhpmp.HPRecovery;
+				Debug.Log(playerhpmp.HP);
+				Destroy(nearObject.gameObject);
+			}
+			if (nearObject.tag == "DemageItem")
+			{
+				playerhpmp.TakeDamage(3);
+				Debug.Log(playerhpmp.HP);
+				Destroy(nearObject.gameObject);
 			}
 		}
 	}
@@ -136,21 +148,24 @@ public class Player : MonoBehaviour
 
 		if(collision.gameObject.layer == 31)
 		{
+			Debug.Log("충돌진입");
 			gameObject.layer = 6;
-			
+			PlayerHp.Player_Action?.Invoke(10);
 			Invoke("OnDamegeLayer", 1f);
+			Debug.Log(playerhpmp.HP);
+			Destroy(collision.gameObject);
 		}
 	}
 
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Weapon")
+		if (other.tag == "DemageItem" || other.tag == "RecoveryItem")
 			nearObject = other.gameObject;
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.tag == "Weapon")
+		if (other.tag == "DemageItem" || other.tag == "RecoveryItem")
 			nearObject = null;
 	}
 }
