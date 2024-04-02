@@ -43,7 +43,7 @@ namespace JJH
 
         public override float HPRecovery => 10;
         public override float MaxMP => 200;
-        public override float MPRecovery => 25;
+        public override float MPRecovery => 1; //0.1초당 스태미너 recovery 값 변경. 
 
         public override void TakeDamage(float damage)
         {

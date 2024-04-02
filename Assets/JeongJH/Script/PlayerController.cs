@@ -45,6 +45,12 @@ namespace JJH
             Turn();
             Jump();
             
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                playerhpmp.RunStaminaConsume(0.5f);
+            }
+
+           
         }
 
         void GetInput()

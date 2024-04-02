@@ -44,9 +44,9 @@ public abstract class Entity : MonoBehaviour
 			if ( HP < MaxHP ) HP += HPRecovery;
 			if ( MP < MaxMP ) MP += MPRecovery;
 
-			yield return new WaitForSeconds(1);
-		}
-	}
+            yield return new WaitForSeconds(0.1f); //또는 여기서 달리기 키를 떼어야 회복 시작되도록. 
+        }
+    }
 
 	// 상대방을 공격할 때 상대방의 TakeDamage() 호출
 	// 매개변수 damage는 공격하는 본인 공격력
