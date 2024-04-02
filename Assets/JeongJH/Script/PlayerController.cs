@@ -8,8 +8,9 @@ namespace JJH
 
         public GameObject[] weapons;
         public bool[] hasWeapons;
+        [SerializeField] PlayerHp playerhpmp; 
 
-        public float hp = 100;
+
 
         public int key; // 갖고 있는 열쇠 수
         public int maxKey; // 최대 열쇠 소지 수
@@ -45,6 +46,7 @@ namespace JJH
             Turn();
             Jump();
             
+           
         }
 
         void GetInput()
@@ -61,6 +63,7 @@ namespace JJH
             moveVec = new Vector3(hAxis, 0, vAxis).normalized;
 
             transform.position += moveVec * speed * Time.deltaTime;
+
         }
 
         void Turn()
@@ -92,7 +95,7 @@ namespace JJH
             }
         }
 
-        
+
 
         private void OnTriggerEnter(Collider other)
         {

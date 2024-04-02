@@ -1363,7 +1363,7 @@ MonoBehaviour:
   speed: 5
   weapons: []
   hasWeapons: 
-  hp: 100
+  playerhpmp: {fileID: 404530320}
   key: 0
   maxKey: 0
 --- !u!1 &1506380131
