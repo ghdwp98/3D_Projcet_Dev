@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
 
 	float hp;
 
-
 	public int key; // 갖고 있는 열쇠 수
 	public int maxKey; // 최대 열쇠 소지 수
 
@@ -20,6 +19,7 @@ public class Player : MonoBehaviour
 
 	bool jDown; // Jump
 	bool iDown; // Interaction
+	bool dDown; // Down
 
 	bool isJump; // 점프
 
@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 		Move();
 		Turn();
 		Jump();
+		Down();
 	}
 
 	void GetInput()
@@ -51,7 +52,8 @@ public class Player : MonoBehaviour
 		hAxis = Input.GetAxisRaw("Horizontal");
 		vAxis = Input.GetAxisRaw("Vertical");
 		jDown = Input.GetButtonDown("Jump");
-		//iDown = Input.GetButtonDown("Interaction");
+		iDown = Input.GetButtonDown("Interaction");
+		dDown = Input.GetButton("Down");
 	}
 
 	void Move()
@@ -87,6 +89,21 @@ public class Player : MonoBehaviour
 
 				Destroy(nearObject);
 			}
+		}
+	}
+
+	void Down()
+	{
+		BoxCollider collider = GetComponent<BoxCollider>();
+		if (dDown)
+		{
+			collider.center = new Vector3(0, -0.1f, 0);
+			collider.size = new Vector3(0.8f, 0.8f, 0.8f);
+		}
+		else
+		{
+			collider.center = new Vector3(0, 0, 0);
+			collider.size = new Vector3(1, 1, 1);
 		}
 	}
 
