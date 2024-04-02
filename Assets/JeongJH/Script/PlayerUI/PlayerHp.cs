@@ -1,16 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using JJH;
+using System;
 
 namespace JJH
 {
     public class PlayerHp : Entity
     {
-        
+        public static Action<float> Player_Action;
+
 
         private void Awake()
         {
             // Entity에 정의되어 있는 Setup() 메소드 호출
             base.Setup();
+            Player_Action += TakeDamage;
         }
 
         private void Update()

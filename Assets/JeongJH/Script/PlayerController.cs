@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace JJH
 {
-    public class PlayerController : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         public float speed;
 
         public GameObject[] weapons;
         public bool[] hasWeapons;
 
-        [SerializeField] float hp = 100;
+        public float hp = 100;
 
         public int key; // 갖고 있는 열쇠 수
         public int maxKey; // 최대 열쇠 소지 수
@@ -19,6 +19,7 @@ namespace JJH
 
         bool jDown; // Jump
         bool iDown; // Interaction
+        bool dDown; // Down
 
         bool isJump; // 점프
 
@@ -34,7 +35,7 @@ namespace JJH
 
         private void Start()
         {
-            hp = 100;
+
         }
 
         private void Update()
@@ -43,6 +44,7 @@ namespace JJH
             Move();
             Turn();
             Jump();
+            
         }
 
         void GetInput()
@@ -50,7 +52,8 @@ namespace JJH
             hAxis = Input.GetAxisRaw("Horizontal");
             vAxis = Input.GetAxisRaw("Vertical");
             jDown = Input.GetButtonDown("Jump");
-            //iDown = Input.GetButtonDown("Interaction");
+            iDown = Input.GetButtonDown("Interaction");
+            dDown = Input.GetButton("Down");
         }
 
         void Move()
@@ -89,6 +92,8 @@ namespace JJH
             }
         }
 
+        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Item")
@@ -106,10 +111,23 @@ namespace JJH
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        void OnDamegeLayer()
+        {
+            gameObject.layer = 0;
+        }
+
+        private void OnCollisionEnter(Collision collision) //지금 ㄷ미지 받는 상황 같은데 여기서 처리를 해보자. 
         {
             if (collision.gameObject.tag == "Floor")
                 isJump = false;
+
+            if (collision.gameObject.layer == 31)
+            {
+                Debug.Log("충돌진입");
+                gameObject.layer = 6;
+                PlayerHp.Player_Action?.Invoke(10);
+                Invoke("OnDamegeLayer", 1f);
+            }
         }
 
         private void OnTriggerStay(Collider other)
