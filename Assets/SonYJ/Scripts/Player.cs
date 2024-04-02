@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 	public GameObject[] weapons;
 	public bool[] hasWeapons;
 
-	float hp;
+	public float hp = 100;
 
 	public int key; // 갖고 있는 열쇠 수
 	public int maxKey; // 최대 열쇠 소지 수
@@ -124,10 +124,22 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	void OnDamegeLayer()
+	{
+		gameObject.layer = 0;
+	}
+
 	private void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == "Floor")
 			isJump = false;
+
+		if(collision.gameObject.layer == 31)
+		{
+			gameObject.layer = 6;
+			
+			Invoke("OnDamegeLayer", 1f);
+		}
 	}
 
 	private void OnTriggerStay(Collider other)
