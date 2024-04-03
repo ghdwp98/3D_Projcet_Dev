@@ -126,7 +126,7 @@ namespace JJH
 
         void OnDamegeLayer()
         {
-            gameObject.layer = 0;
+            gameObject.layer = 30;
         }
 
         private void OnCollisionEnter(Collision collision) //지금 ㄷ미지 받는 상황 같은데 여기서 처리를 해보자. 
@@ -136,7 +136,7 @@ namespace JJH
 
             if (collision.gameObject.layer == 31)
             {
-                Debug.Log("충돌진입");
+                
                 gameObject.layer = 6;
                 PlayerHp.Player_Action?.Invoke(10);
                 Invoke("OnDamegeLayer", 1f);
