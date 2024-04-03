@@ -1920,7 +1920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718463422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29417127, y: -0.000000040281964, z: 0.0000000123983925, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 5.778281e-16, z: -9.344088e-17, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 7.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3396,12 +3396,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1139301429}
+  playerhpmp: {fileID: 514152560}
   moveSpeed: 10
-  jumpSpeed: 5
+  jumpSpeed: 10
   groundChecker:
     serializedVersion: 2
     m_Bits: 0
-  isGround: 0
+  isJump: 0
+  childCollider: {fileID: 209446742}
 --- !u!1 &1152896776
 GameObject:
   m_ObjectHideFlags: 3
@@ -4660,7 +4662,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907475728}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29417127, y: -0.000000040281964, z: 0.0000000123983925, w: 0.95575273}
+  m_LocalRotation: {x: 0.2941713, y: 5.778281e-16, z: -9.344088e-17, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 7.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
