@@ -70,7 +70,7 @@ namespace JJH
 
         void Move()
         {
-            moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+            moveVec = new Vector3(-hAxis, 0, -vAxis).normalized;
 
             transform.position += moveVec * speed * Time.deltaTime;
 
