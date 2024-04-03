@@ -100,6 +100,11 @@ public class Player : MonoBehaviour
 				playerhpmp.TakeDamage(3);
 				Debug.Log(playerhpmp.HP);
 				Destroy(nearObject.gameObject);
+
+				if(playerhpmp.HP <= 0)
+				{
+					transform.position = CheckPoint.GetActiveCheckPointPosition();
+				}
 			}
 		}
 	}
