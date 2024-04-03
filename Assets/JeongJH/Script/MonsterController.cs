@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace JJH
 {
-    public class MonsterController : MonoBehaviour
+    public class MonsterController : MonoBehaviour //벌 용 . 
     {
         [SerializeField] Transform viewPoint;
         [SerializeField] LayerMask targetLayerMask;
@@ -20,11 +21,14 @@ namespace JJH
         [SerializeField] float moveSpeed;
         [SerializeField] AnimationClip attackClip;
         [SerializeField] Transform startPos; //이거 그냥 빈 오브젝트 넣어서 할까 고민중. 
+        [SerializeField] float damage;
+        [SerializeField] float KnockBackPower;
 
         string attack;
         int size = 20;
         Vector3 dirToTarget;
         float distToTarget;
+        bool isRoutine = false;
 
 
         bool isTriggerOn;
@@ -55,9 +59,8 @@ namespace JJH
 
 
             stateMachine = new StateMachine<State>();
-            attackClip=GetComponent<AnimationClip>();
 
-            //attack=attackClip.name;
+            attack=attackClip.name;
 
             stateMachine.AddState(State.Idle, new IdleState(this));
             stateMachine.AddState(State.Trace, new TraceState(this));
@@ -120,10 +123,11 @@ namespace JJH
             public override void Enter()
             {
                 isTargetOn = false; //어차피 다시 idle로 돌아오면 false 되니까 다시 바로 트랜지션안됨. 
+                animator.Play("Swim/Fly");
             }
             public override void Update()
             {
-                Debug.Log("idel 상태");
+                
                 FindTarget();
             }
 
@@ -160,18 +164,21 @@ namespace JJH
         }
         private class TraceState : MonsterState
         {
+
+            float coolTime = 0;
+
             public TraceState(MonsterController monster) : base(monster)
             {
                 //추적 애니메이션 재생 및 플레이어 쪽으로 이동 필요. 
             }
             public override void Enter()
             {
-
+                animator.Play("Swim/Fly");
             }
             public override void Update()
             {
                 FindTarget();
-                Debug.Log("추적상태");
+                
             }
             public override void Transition()
             {
@@ -184,8 +191,13 @@ namespace JJH
 
                 if(size==0)
                 {
-                    Debug.Log("size 0 ");
-                    ChangeState(State.Return); //이거 그냥 overlap을 조금 크게 잡죠? 
+                    coolTime += Time.deltaTime;
+                    if(coolTime>=10f)
+                    {
+                        coolTime = 0f;
+                        ChangeState(State.Return); //이거 그냥 overlap을 조금 크게 잡죠? 
+                    }
+                    
                 }
             }
 
@@ -226,30 +238,33 @@ namespace JJH
 
             public override void Enter()
             {
-                //공격 애니메이션 재생 
+                animator.Play(monster.attack);
+                PlayerHp.Player_Action(monster.damage);
+
             }
             public override void Update()
             {
-                Debug.Log("공격상태");
+                
             }
 
             public override void Transition()
             {
-                /*if (animator.GetCurrentAnimatorStateInfo(0).IsName(monster.attack) == true)
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName(monster.attack) == true)
                 {
-                    if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=1f) //애니메이션 종료. 
+                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) //애니메이션 종료. 
                     {
+                        
                         ChangeState(State.Trace);
                     }
 
-                }*/
+                }
             }
         }
         private class ReturnState : MonsterState
         {
             public ReturnState(MonsterController monster) : base(monster)
             {
-                
+                animator.Play("Swim/Fly");
             }
             public override void Enter()
             {
@@ -262,13 +277,18 @@ namespace JJH
 
                 transform.position = Vector3.MoveTowards(transform.position, monster.startPos.position,
                          moveSpeed * Time.deltaTime);
+
+                transform.LookAt(monster.startPos.position);
             }
 
             public override void Transition()
             {
-                if (Vector3.Distance(monster.startPos.position, transform.position) < 0.1f)
+                if (Vector3.Distance(monster.startPos.position, transform.position) < 0.1f) //startpos를 먼 위치에 만들기!
                 {
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    Destroy(monster.gameObject);
                     ChangeState(State.Idle);
+                    
                 }
             }
 
@@ -306,15 +326,21 @@ namespace JJH
         {
             onGround = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
             stateMachine.FixedUpdate();
-            
+            AngleLimit();  
+
         }
 
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) //넉백 수정 필요. 
         {
             if (Extension.Contain(targetLayerMask,other.gameObject.layer))
             {
                 isTriggerOn = true;
+                Vector3 direction = other.transform.position - transform.position;
+
+                Rigidbody playerRigid = other.GetComponent<Rigidbody>();
+                playerRigid.velocity = Vector3.zero;
+                playerRigid.velocity = direction * KnockBackPower;
             }
             
         }
@@ -325,8 +351,6 @@ namespace JJH
                 isTriggerOn = false;
             }
         }
-
-
 
         private void OnDrawGizmosSelected()
         {
@@ -339,5 +363,18 @@ namespace JJH
             Debug.DrawRay(viewPoint.position, rightDir * range, Color.cyan);
             Debug.DrawRay(viewPoint.position, leftDir * range, Color.cyan);
         }
+
+
+        // x축 회전 각도 제한. 
+        public void AngleLimit()
+        {
+            float minRotation = -30f;
+            float maxRotation = 30f;
+            Vector3 currentRotation = transform.localRotation.eulerAngles;
+            currentRotation.x=Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
+            transform.localRotation = Quaternion.Euler(currentRotation);
+        }
+        
+
     }
 }
