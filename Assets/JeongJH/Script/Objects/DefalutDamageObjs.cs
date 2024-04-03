@@ -23,12 +23,23 @@ public class DefalutDamageObjs : MonoBehaviour
     {
         if(other.gameObject.layer==LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
         {
-            PlayerHp.Player_Action(damage);
+            //PlayerHp.Player_Action(damage);
             Vector3 direction = other.transform.position - transform.position;
                 
-            Rigidbody playerRigid=other.GetComponent<Rigidbody>();
+            CharacterController characterController=other.GetComponent<CharacterController>();
+            if(characterController != null)
+            {
+                characterController.enabled = false;
+                Rigidbody playerRigid=other.GetComponent<Rigidbody>();
+                playerRigid.velocity = Vector3.zero;
+                playerRigid.velocity = direction * KnockBackPower;
+            }
+
+
+
+            /*Rigidbody playerRigid=other.GetComponent<Rigidbody>();
             playerRigid.velocity = Vector3.zero;
-            playerRigid.velocity = direction * KnockBackPower;
+            playerRigid.velocity = direction * KnockBackPower;*/
         }
     }
 
