@@ -16,7 +16,22 @@ public class DefalutDamageObjs : MonoBehaviour
     }
 
     
-
+    IEnumerator ControllerCoroutine(Collider other)
+    {
+        Vector3 direction = other.transform.position - transform.position;
+        CharacterController characterController = other.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+            Rigidbody playerRigid = other.GetComponent<Rigidbody>();
+            playerRigid.isKinematic= false;
+            playerRigid.velocity = Vector3.zero;
+            playerRigid.velocity = direction * KnockBackPower;
+            yield return new WaitForSeconds(0.7f);
+            playerRigid.isKinematic = true;
+            characterController.enabled = true;
+        }
+    }
     //트리거 + 넉배구현 
 
     private void OnTriggerEnter(Collider other)
@@ -24,26 +39,12 @@ public class DefalutDamageObjs : MonoBehaviour
         if(other.gameObject.layer==LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
         {
             //PlayerHp.Player_Action(damage);
-            Vector3 direction = other.transform.position - transform.position;
-                
-            CharacterController characterController=other.GetComponent<CharacterController>();
-            if(characterController != null)
-            {
-                characterController.enabled = false;
-                Rigidbody playerRigid=other.GetComponent<Rigidbody>();
-                playerRigid.velocity = Vector3.zero;
-                playerRigid.velocity = direction * KnockBackPower;
-            }
+            StartCoroutine(ControllerCoroutine(other));
 
-
-
-            /*Rigidbody playerRigid=other.GetComponent<Rigidbody>();
-            playerRigid.velocity = Vector3.zero;
-            playerRigid.velocity = direction * KnockBackPower;*/
         }
     }
 
-   
+    
     
 
 
