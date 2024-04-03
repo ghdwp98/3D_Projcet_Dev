@@ -9,6 +9,7 @@ TagManager:
   - DemageItem
   - RecoveryItem
   - CheckPoint
+  - Hide
   layers:
   - Default
   - TransparentFX
@@ -37,8 +38,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Wall
+  - Hide
   - Obstacle
   - PPP
   - Damage

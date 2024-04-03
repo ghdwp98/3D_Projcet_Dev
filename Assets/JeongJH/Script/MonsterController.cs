@@ -219,7 +219,7 @@ namespace JJH
                     transform.LookAt(colliders[i].transform.position);
                     transform.position = Vector3.MoveTowards(transform.position, colliders[i].transform.position,
                         moveSpeed * Time.deltaTime);
-
+                    coolTime = 0f;
 
 
                     Debug.DrawRay(viewPoint.position, dirToTarget * distToTarget, Color.red);
@@ -239,12 +239,12 @@ namespace JJH
             public override void Enter()
             {
                 animator.Play(monster.attack);
-                PlayerHp.Player_Action(monster.damage);
-
+               // PlayerHp.Player_Action(monster.damage); 
+                
             }
             public override void Update()
             {
-                
+                rigid.velocity = Vector3.zero;
             }
 
             public override void Transition()
@@ -331,16 +331,15 @@ namespace JJH
         }
 
 
-        private void OnTriggerEnter(Collider other) //넉백 수정 필요. 
+        private void OnTriggerStay(Collider other) //넉백 수정 필요. 
         {
             if (Extension.Contain(targetLayerMask,other.gameObject.layer))
             {
                 isTriggerOn = true;
-                Vector3 direction = other.transform.position - transform.position;
+                Debug.Log("트리거 중..스테이 ");
 
-                Rigidbody playerRigid = other.GetComponent<Rigidbody>();
-                playerRigid.velocity = Vector3.zero;
-                playerRigid.velocity = direction * KnockBackPower;
+                StartCoroutine(ControllerCoroutine(other));
+                
             }
             
         }
@@ -348,6 +347,7 @@ namespace JJH
         {
             if (Extension.Contain(targetLayerMask, other.gameObject.layer))
             {
+                Debug.Log("트리거 아님.");
                 isTriggerOn = false;
             }
         }
@@ -374,7 +374,24 @@ namespace JJH
             currentRotation.x=Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
             transform.localRotation = Quaternion.Euler(currentRotation);
         }
-        
+
+
+        IEnumerator ControllerCoroutine(Collider other)
+        {
+            Vector3 direction = other.transform.position - transform.position;
+            CharacterController characterController = other.GetComponent<CharacterController>();
+            if (characterController != null)
+            {
+                characterController.enabled = false;
+                Rigidbody playerRigid = other.GetComponent<Rigidbody>();
+                playerRigid.isKinematic = false;
+                playerRigid.velocity = Vector3.zero;
+                playerRigid.velocity = direction * KnockBackPower;
+                yield return new WaitForSeconds(0.7f);
+                playerRigid.isKinematic = true;
+                characterController.enabled = true;
+            }
+        }
 
     }
 }
