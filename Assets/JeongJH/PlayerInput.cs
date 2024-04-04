@@ -9,6 +9,7 @@ namespace JJH
     {        
         [SerializeField] CharacterController controller;
         [SerializeField] float moveSpeed;
+        [SerializeField] float jumpSpeed;
 
         private Vector3 moveInput;
         private float ySpeed;
@@ -17,6 +18,14 @@ namespace JJH
         {
             Move();
             Fall();
+
+
+            if(Input.GetKeyDown(KeyCode.RightShift))
+            {
+                transform.position = CheckPoint.GetActiveCheckPointPosition();
+            }
+
+
         }
 
         private void Move()
@@ -56,8 +65,23 @@ namespace JJH
 
             
         }
+        private void Jump()
+        {
+            ySpeed = jumpSpeed;
+        }
 
-       
+        private void OnJump(InputValue value)
+        {
+            if (value.isPressed && controller.isGrounded)
+            {
+                Jump();
+            }
+        }
+
+
+
+
+
     }
 
 

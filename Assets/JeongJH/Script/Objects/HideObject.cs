@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class HideObject : MonoBehaviour
 {
-    //충돌체 가지고 있고.
-    // 상호작용 키를 누르면 충돌체 사라지고 트리거?로 변하고
-    //트리거 내에 player가 있으면 player의 layer를 변경해주고. --> 찾을 수 없도록 
-    // 플레이어의 위치를 tranform.positino으로 강제 이동시켜서 플레이어와 정확히 일치하도록하고
-    // 카메라가 플레이어를 보지 못하도록 이단 카메라 설치 
 
     [SerializeField] BoxCollider boxCollier;
     [SerializeField] CinemachineVirtualCamera Vcam;
