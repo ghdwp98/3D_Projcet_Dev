@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,17 +11,17 @@ namespace JJH
         // 4. 일정 구간에 들어서면 (trigger?)를 가지고 npc대사 패널 작동해서 대화 나오기. 
 
         [SerializeField] int speed = 10;
-
+        [SerializeField] int m_NextGoal = 0;
 
         public GameObject player;
         public GameObject DialogPrefab;
         public Rigidbody rigid;
         NavMeshAgent m_Agent;
 
-        [SerializeField] List<Vector3>destPos=new List<Vector3>();
+        public Transform[] goals;
         int count;
 
-        
+
 
 
         void Start()
@@ -39,37 +36,31 @@ namespace JJH
 
         void Update()  //여기서 이제 만약 일정범위 이내로 들어오면 그 위치에 고정되어야함. 
         {
+            FindGoal();
+
+        }
+
+
+        public void FindGoal()
+        {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-            //이 부분은 trigger를 벗어나면 실행해서 다시 돌아가도록 하고
+            // 각 goal 목표를 기준으로 이동. --> 루프 but 실제게임은 루프는 필요 x 
 
-
-            m_Agent.destination = destPos[count]; //도착시마다 count 증가 시켜주기. 
-
-
-
-        }
-
-
-        private void OnTriggerEnter(Collider other)
-        {
+            float distance = Vector3.Distance(m_Agent.transform.position, goals[m_NextGoal].position);
+            if (distance < 0.5f)
+            {
+                //여기서 목표지점에 도착한다면 -->대사를 출력해주고 목표지점을 바꿔줘야함.
+                m_NextGoal = +1;
+            }
+            m_Agent.destination = goals[m_NextGoal].position;
 
         }
 
 
-        private void OnTriggerExit(Collider other)
-        {
 
-        }
 
-        private void Jump() //y축 증가시키고 + 이동해야 하는 방향 설정해줘서 넣어주기. 
-        {
 
-        }
 
-        private void OnGround() //그라운드 체크로 점프 막 못하게 하기. 
-        {
-
-        }
 
 
     }
