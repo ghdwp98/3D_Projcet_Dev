@@ -28,7 +28,7 @@ namespace JJH
         int size = 20;
         Vector3 dirToTarget;
         float distToTarget;
-        bool isRoutine = false;
+        
 
 
         bool isTriggerOn;
