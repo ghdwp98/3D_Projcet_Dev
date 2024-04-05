@@ -3373,7 +3373,8 @@ MonoBehaviour:
   jumpSpeed: 10
   ySpeed: 0
   groundChecker: 0
-  playerhpmp: {fileID: 0}
+  playerhpmp: {fileID: 514152560}
+  nearObject: {fileID: 0}
 --- !u!1 &1152896776
 GameObject:
   m_ObjectHideFlags: 3
@@ -5132,6 +5133,7 @@ GameObject:
   - component: {fileID: 2062611792}
   - component: {fileID: 2062611791}
   - component: {fileID: 2062611790}
+  - component: {fileID: 2062611796}
   m_Layer: 8
   m_Name: Recovery
   m_TagString: RecoveryItem
@@ -5266,6 +5268,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1515230376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2062611796
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062611789}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2115841720
 GameObject:
   m_ObjectHideFlags: 0
