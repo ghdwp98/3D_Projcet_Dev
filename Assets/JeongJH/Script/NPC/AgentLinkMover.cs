@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Unity.AI.Navigation.Samples
 {
-    public enum OffMeshLinkMoveMethod
+    public enum Method
     {
         Teleport,
         NormalSpeed,
@@ -23,23 +23,26 @@ namespace Unity.AI.Navigation.Samples
         [SerializeField] Transform viewPoint;
         [SerializeField] LayerMask targetLayerMask;
         [SerializeField] float range;
-        [SerializeField] GameObject[] npcDialog;
-
+        
         private int m_NextGoal = 0;
         Rigidbody rigid;
 
         [Header("NpcDialogue")]
         int dialogCount = 0;
-        
+        [SerializeField] DialogSystem dialogSystem01;
+        [SerializeField] DialogSystem dialogSystem02;
 
-        public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
+
+        public Method m_Method = Method.Parabola;
         public AnimationCurve m_Curve = new AnimationCurve();
         NavMeshAgent agent;
         [SerializeField] Transform[] destinations;
 
 
         // 0번 목표를 플레이어로 해서 그냥 0번 dialog를 첫 번 만남 대사로 진행하면 될듯함. 
-        // 
+        // + 특정 이벤트 지역들에 들어가면 잠시 사라졌다가 다시 나와야 하는데 
+        // 차라리 들어갈 때 마다 active fasle 해주고 다른 npc를 미리 준비해 두는게 나을 수 도 있음. 
+
 
         IEnumerator Start()
         {
@@ -51,11 +54,11 @@ namespace Unity.AI.Navigation.Samples
 
                 if (agent.isOnOffMeshLink) 
                 {
-                    if (m_Method == OffMeshLinkMoveMethod.NormalSpeed)
+                    if (m_Method == Method.NormalSpeed)
                         yield return StartCoroutine(NormalSpeed(agent));
-                    else if (m_Method == OffMeshLinkMoveMethod.Parabola)
+                    else if (m_Method == Method.Parabola)
                         yield return StartCoroutine(Parabola(agent, 2.0f, 0.5f));
-                    else if (m_Method == OffMeshLinkMoveMethod.Curve)
+                    else if (m_Method == Method.Curve)
                         yield return StartCoroutine(Curve(agent, 0.5f));
                     agent.CompleteOffMeshLink();
                 }
@@ -98,9 +101,9 @@ namespace Unity.AI.Navigation.Samples
         private void NextDest()
         {
             float distance = Vector3.Distance(agent.transform.position, destinations[m_NextGoal].position);
-            if (distance < 2f) // 다음 위치로 이동하도록 함. 
+            if (distance < 1.5f) // 다음 위치로 이동하도록 함. 
             {
-                DialogSetOn(dialogCount);
+                StartCoroutine(DialogSetOn(dialogCount));
 
                 if (m_NextGoal < destinations.Length - 1)
                 {
@@ -112,10 +115,26 @@ namespace Unity.AI.Navigation.Samples
         }
 
 
-        private void DialogSetOn(int count)
+        // 이 부분 어차피 반복이니까  list형태로 관리해주자. 
+        private IEnumerator DialogSetOn(int count)
         {
-            npcDialog[dialogCount].SetActive(true); //흠..?
-            dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            if(count==0)
+            {
+                dialogSystem01.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+                yield return new WaitUntil(() => dialogSystem01.UpdateDialog());
+                Time.timeScale = 1f;
+                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            }
+            else if(count==1)
+            {
+                Time.timeScale = 0f;
+                dialogSystem02.gameObject.SetActive(true);
+                yield return new WaitUntil(() => dialogSystem02.UpdateDialog());
+                Time.timeScale = 1f;
+                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            }
+            
 
         }
 

@@ -10,6 +10,7 @@ TagManager:
   - RecoveryItem
   - CheckPoint
   - Hide
+  - Npc
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Npc
   - Wall
   - Hide
   - Obstacle

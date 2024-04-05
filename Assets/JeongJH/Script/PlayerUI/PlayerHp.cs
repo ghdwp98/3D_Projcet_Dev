@@ -1,18 +1,18 @@
-using System.Collections;
-using UnityEngine;
-using JJH;
 using System;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem.XR;
 
 namespace JJH
 {
     public class PlayerHp : Entity
 
-        //플레이어의 사망 처리도 여기서 진행하면 될 듯 함. EVENT 이용. 
+    //플레이어의 사망 처리도 여기서 진행하면 될 듯 함. EVENT 이용. 
     {
         public static Action<float> Player_Action;
         public static Action<float> Player_Stamina_Action;
 
-        
+        public static UnityEvent PlayerDeath;
 
 
         private void Awake()
@@ -36,6 +36,7 @@ namespace JJH
                 MP -= 100;
                 target.TakeDamage(55);
             }
+
         }
 
         // 기본 체력 + 스탯 보너스 + 버프 등과 같이 계산
@@ -53,6 +54,11 @@ namespace JJH
         {
             HP -= damage;
             
+            if (HP <= 0) //플레이어 사망임. 
+            {
+                PlayerDie();
+            }
+
         }
 
         public void RunStaminaConsume(float runStaminas)
@@ -60,8 +66,14 @@ namespace JJH
             MP -= runStaminas;
         }
 
+        public void PlayerDie()
+        {
+            Debug.Log("플레이어다이");
+            Debug.Log(Manager.Scene.GetCurSceneName());
+            Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName()); //나중에 일반화 시켜야되는데.. 
 
-      
+        }
+
     }
 }
 
