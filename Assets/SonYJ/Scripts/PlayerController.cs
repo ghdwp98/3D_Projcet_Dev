@@ -1,6 +1,7 @@
 using JJH;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,7 +19,11 @@ public class PlayerController : MonoBehaviour
 	Vector3 moveDir;
 
 	[SerializeField] PlayerHp playerhpmp;
-	[SerializeField] GameObject nearObject;
+	GameObject nearObject;
+
+	[Header("Interact")]
+	Collider[] colliders = new Collider[20];
+	[SerializeField] float range;
 
 	private void Start()
 	{
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		if(groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
+		if (groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
 			Jump();
 	}
 
@@ -58,7 +63,7 @@ public class PlayerController : MonoBehaviour
 		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
 		ySpeed = jumpSpeed;
 		groundChecker = false;
-	}
+	} // c
 
 	private void Fall()
 	{
@@ -80,7 +85,7 @@ public class PlayerController : MonoBehaviour
 	{
 		controller.radius = 0.3f;
 		controller.height = 0.5f;
-	}
+	} // z
 
 	private void UnDown()
 	{
@@ -88,17 +93,23 @@ public class PlayerController : MonoBehaviour
 		controller.height = 1f;
 	}
 
-	private void OnInteraction(InputValue value)
+	private void OnInteraction(InputValue value) // x
 	{
-		if(nearObject != null)
-		{
-			
-		}
+		Interaction();
 	}
 
 	private void Interaction()
 	{
-
+		int size = Physics.OverlapSphereNonAlloc(transform.position, range, colliders); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
+		for(int i = 0; i < size; i++)
+		{
+			IInteractable interactable = colliders[i].GetComponent<IInteractable>();
+			if(interactable != null)
+			{
+				interactable.Interact(this);
+				break;
+			}
+		}
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -133,5 +144,11 @@ public class PlayerController : MonoBehaviour
 	void OnDamageLayer()
 	{
 		gameObject.layer = 0; // Default
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, range);
 	}
 }
