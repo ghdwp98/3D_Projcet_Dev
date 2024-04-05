@@ -25,6 +25,11 @@ namespace Unity.AI.Navigation.Samples
                 if (Physics.Raycast(ray.origin, ray.direction, out m_HitInfo))
                     m_Agent.destination = m_HitInfo.point;
             }
+
+            // 格利瘤 流立 历厘秦焊扁. 
+
+
+
         }
     }
 }
