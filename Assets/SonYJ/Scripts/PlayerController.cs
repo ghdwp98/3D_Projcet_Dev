@@ -1,78 +1,120 @@
 using JJH;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] CharacterController controller;
-	[SerializeField] PlayerHp playerhpmp;
+	[Header("Component")]
+	[SerializeField] CharacterController controller;
 
+	[Header("Spec")]
 	[SerializeField] float moveSpeed;
-	[SerializeField] float jumpSpeed;
+	[SerializeField] float jumpSpeed; // 지정 Y 속도
+	[SerializeField] float ySpeed; // 실제 이동 Y 속도
+	[SerializeField] bool groundChecker; // 땅에 붙어있는지 확인
+	Vector3 moveDir;
 
-	private Vector3 moveDir;
-	private float ySpeed;
-
-	[SerializeField] LayerMask groundChecker;
-	[SerializeField] bool isJump;
-
-	Vector3 moveVec;
-
-	public SphereCollider childCollider;
+	[SerializeField] PlayerHp playerhpmp;
 
 	private void Start()
 	{
-		//childCollider = GetComponentInChildren<SphereCollider>();
-		Debug.Log(childCollider.gameObject.name);
+		playerhpmp.HP = 50;
+		Debug.Log(playerhpmp.HP);
 	}
+
 	private void Update()
 	{
 		Move();
-		Jump();
+		Fall();
 	}
-	private void Move()
-	{
-		controller.Move(moveDir * moveSpeed * Time.deltaTime);
-	}
+
 	private void OnMove(InputValue value)
 	{
-		Vector2 inputDir = value.Get<Vector2>();
+		Vector3 inputDir = value.Get<Vector2>();
 		moveDir.x = inputDir.x;
 		moveDir.z = inputDir.y;
 	}
 
-	void Turn()
+	private void Move()
 	{
-		transform.LookAt(transform.position + moveVec);
+		if (moveDir != Vector3.zero)
+			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
+		controller.Move(moveDir * moveSpeed * Time.deltaTime); // 이동
+	}
+
+	private void OnJump(InputValue value)
+	{
+		if(groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
+			Jump();
 	}
 
 	private void Jump()
 	{
-		ySpeed += Physics.gravity.y * Time.deltaTime;
-		controller.Move(ySpeed * Vector3.up * Time.deltaTime);
-	}
-	private void OnJump(InputValue value)
-	{
-		if(isJump)
-			ySpeed = jumpSpeed;
+		// 점프 버튼 눌리고 controller.isGrounded가 true일 때
+		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
+		ySpeed = jumpSpeed;
+		groundChecker = false;
 	}
 
-	private void OnCollisionEnter(Collision collision)
+	private void Fall()
 	{
-		Debug.Log("CollisionEnter 되었는지");
-		if(childCollider.gameObject.tag == "Floor")
-			isJump = false;
-		
-		if (collision.gameObject.layer == 31)
-		{
-			Debug.Log("충돌진입");
-			gameObject.layer = 6;
-			PlayerHp.Player_Action?.Invoke(10);
-			Invoke("OnDamegeLayer", 1f);
-			Debug.Log(playerhpmp.HP);
-			Destroy(collision.gameObject);
-		}
+		// ySpeed : Character Controller에 없는 중력을 Time.deltaTime로 시간이 지날 때마다 계속 더한 값에 물리 중력 y 값을 곱해서 얻어지는 속도 변수
+		ySpeed += Physics.gravity.y * Time.deltaTime;
+		if (/*controller.isGrounded*/ groundChecker && ySpeed < 0)
+			ySpeed = 0;
+		controller.Move(Vector3.up * ySpeed * Time.deltaTime);
 	}
+
+	/*private void OnDown(InputValue value)
+	{
+		Down();
+	}
+
+	private void Down()
+	{
+		controller.radius = 0.3f;
+		controller.height = 0.5f;
+	}
+
+	private void UnDown()
+	{
+		controller.radius = 0.6f;
+		controller.height = 1f;
+	}*/
+
+	private void OnControllerColliderHit(ControllerColliderHit hit)
+	{
+		if (hit.collider.includeLayers == 6) // 땅에 닿았을 때 groundChecker true, 아닐때 false
+			groundChecker = true;
+		else
+			groundChecker = false;
+		/*if (hit.collider.includeLayers == 31) // Damage
+		{
+			playerhpmp.TakeDamage(5);
+			Debug.Log(playerhpmp.HP);
+			gameObject.layer = 7; // DamageMusi
+			Invoke("OnDamageLayer", 1f);
+			Destroy(hit.gameObject);
+
+			if (playerhpmp.HP <= 0)
+			{
+				transform.position = CheckPoint.GetActiveCheckPointPosition();
+			}
+		}
+
+		if (hit.collider.includeLayers == 8) // Recovery
+		{
+			playerhpmp.HP += playerhpmp.HPRecovery;
+			Debug.Log(playerhpmp.HP);
+			Destroy(hit.gameObject);
+		}*/
+	}
+/*
+	void OnDamageLayer()
+	{
+		gameObject.layer = 0; // Default
+	}*/
 }
