@@ -8,8 +8,14 @@ public class SceneManager : Singleton<SceneManager>
     [SerializeField] Image fade;
     [SerializeField] Slider loadingBar;
     [SerializeField] float fadeTime;
+    public static Vector3 playerPos;
 
     private BaseScene curScene;
+
+    public string GetCurSceneName()
+    {
+        return UnitySceneManager.GetActiveScene().name;
+    }
 
     public BaseScene GetCurScene()
     {
@@ -48,7 +54,10 @@ public class SceneManager : Singleton<SceneManager>
         Time.timeScale = 0f;
         loadingBar.gameObject.SetActive(true);
 
+        playerPos = CheckPoint.GetActiveCheckPointPosition();
+        
         AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
+
         while (oper.isDone == false)
         {
             loadingBar.value = oper.progress;
@@ -58,7 +67,9 @@ public class SceneManager : Singleton<SceneManager>
         Manager.UI.EnsureEventSystem();
 
         BaseScene curScene = GetCurScene();
+        
         yield return curScene.LoadingRoutine();
+        //현재 씬의 로딩 루틴 작업 시작. -->각 씬의 base에서 진행하면 되는 듯? 
 
         loadingBar.gameObject.SetActive(false);
         Time.timeScale = 1f;

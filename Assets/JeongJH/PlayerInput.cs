@@ -19,12 +19,11 @@ namespace JJH
             Move();
             Fall();
 
-
             if(Input.GetKeyDown(KeyCode.RightShift))
             {
                 transform.position = CheckPoint.GetActiveCheckPointPosition();
+                
             }
-
 
         }
 

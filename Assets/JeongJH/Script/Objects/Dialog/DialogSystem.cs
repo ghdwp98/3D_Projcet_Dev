@@ -47,9 +47,9 @@ public class DialogSystem : MonoBehaviour
 			isFirst = false;
 		}
 
-		if ( Input.GetKeyDown(KeyCode.Space))
+		if ( Input.GetKeyDown(KeyCode.Space)) //키는 나중에 수정. 
 		{
-			// 텍스트 타이핑 효과를 재생중일때 마우스 왼쪽 클릭하면 타이핑 효과 종료
+			// 텍스트 타이핑 효과를 재생중일때 스페이스바 누르면 타이핑 효과 종료
 			if ( isTypingEffect == true )
 			{
 				isTypingEffect = false;
@@ -78,7 +78,7 @@ public class DialogSystem : MonoBehaviour
 					// SetActiveObjects()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
 					//speakers[i].spriteRenderer.gameObject.SetActive(false);
 				}
-				Time.timeScale = 1f;
+				
 				
 				return true;
 				

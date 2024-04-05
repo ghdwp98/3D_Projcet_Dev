@@ -27,25 +27,35 @@ public class EscPopUpUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)&& UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
         {
             Debug.Log("∞Ÿ≈∞ µÈæÓ∞®");
-            Manager.UI.ShowPopUpUI(escPopUPUI);
+            Manager.UI.ShowPopUpUI(escPopUPUI); //ESC∆Àæ˜ UI 
         }
 
     }
 
-    public void ReturnGame()
+    
+
+    //æ¿ ¿Á∑ŒµÂ ∆Àæ˜ 
+    public void RestartGameScene() //æ¿ ¿Á∑ŒµÂ (æ¿ ¥ŸΩ√ Ω√¿€ ) 
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ReturnGame() // ∆Àæ˜ ¿¸∫Œ ≤Ù±‚ -->¥ŸΩ√ Ω√¿€ ¥¿≥¶. 
     {       
         Manager.UI.ClearPopUpUI();
     }
 
-    public void GmaeQuit()
+    public void GmaeQuit() //∞‘¿”¡æ∑·
     {
         Application.Quit();
     }
 
-    public void MainReturnButton()
+    public void MainReturnButton() //∆Àæ˜ 1∞≥ ≤Ù±‚ 
     {
-        Manager.UI.ClosePopUpUI();
+        Manager.UI.ClosePopUpUI(); 
     }
+
 
 
 

@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
 namespace Unity.AI.Navigation.Samples
 {
@@ -18,16 +18,38 @@ namespace Unity.AI.Navigation.Samples
     [RequireComponent(typeof(NavMeshAgent))]
     public class AgentLinkMover : MonoBehaviour
     {
+
+        [Header("Spec")]
+        [SerializeField] Transform viewPoint;
+        [SerializeField] LayerMask targetLayerMask;
+        [SerializeField] float range;
+        [SerializeField] GameObject[] npcDialog;
+
+        private int m_NextGoal = 0;
+        Rigidbody rigid;
+
+        [Header("NpcDialogue")]
+        int dialogCount = 0;
+        
+
         public OffMeshLinkMoveMethod m_Method = OffMeshLinkMoveMethod.Parabola;
         public AnimationCurve m_Curve = new AnimationCurve();
+        NavMeshAgent agent;
+        [SerializeField] Transform[] destinations;
+
+
+        // 0번 목표를 플레이어로 해서 그냥 0번 dialog를 첫 번 만남 대사로 진행하면 될듯함. 
+        // 
 
         IEnumerator Start()
         {
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
+            rigid = GetComponent<Rigidbody>();
+            agent = GetComponent<NavMeshAgent>();
             agent.autoTraverseOffMeshLink = false;
             while (true)
             {
-                if (agent.isOnOffMeshLink)
+
+                if (agent.isOnOffMeshLink) 
                 {
                     if (m_Method == OffMeshLinkMoveMethod.NormalSpeed)
                         yield return StartCoroutine(NormalSpeed(agent));
@@ -41,6 +63,64 @@ namespace Unity.AI.Navigation.Samples
                 yield return null;
             }
         }
+
+
+        private void Update()
+        {
+
+            FindTarget();
+            NextDest();
+
+        }
+
+        Collider[] colliders = new Collider[20];
+        private void FindTarget()
+        {
+            int size = Physics.OverlapSphereNonAlloc(viewPoint.position, range, colliders, targetLayerMask);
+            for (int i = 0; i < size; i++)
+            {
+                float distToTarget = Vector3.Distance(colliders[i].transform.position, viewPoint.position);
+                {
+                    if (distToTarget < range) //범위내에 player가 있으면 
+                    {
+                        agent.isStopped = false;
+                        agent.SetDestination(destinations[m_NextGoal].transform.position);
+                    }
+                    else //플레이어가 범위 내에 있으면 대기. -->아 점프순간에 저장이 되어버려서 다시 돌아오는 상황임. 
+                    {
+                        agent.isStopped = true;
+                    }
+                }
+            }
+        }
+
+
+        private void NextDest()
+        {
+            float distance = Vector3.Distance(agent.transform.position, destinations[m_NextGoal].position);
+            if (distance < 2f) // 다음 위치로 이동하도록 함. 
+            {
+                DialogSetOn(dialogCount);
+
+                if (m_NextGoal < destinations.Length - 1)
+                {
+                    m_NextGoal++;
+                }
+                agent.SetDestination(destinations[m_NextGoal].position);
+            }
+
+        }
+
+
+        private void DialogSetOn(int count)
+        {
+            npcDialog[dialogCount].SetActive(true); //흠..?
+            dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+
+        }
+
+
+
 
         IEnumerator NormalSpeed(NavMeshAgent agent)
         {
@@ -83,5 +163,14 @@ namespace Unity.AI.Navigation.Samples
                 yield return null;
             }
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(viewPoint.position, range);
+        }
+
+
+
     }
 }
