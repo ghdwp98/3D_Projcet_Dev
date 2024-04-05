@@ -34,7 +34,7 @@
                 },
                 {
                     "name": "Down",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "11ed99a0-9b84-4b2c-a011-fae4dca2f955",
                     "expectedControlType": "Button",
                     "processors": "",

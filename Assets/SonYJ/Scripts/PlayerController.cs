@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 moveDir;
 
 	[SerializeField] PlayerHp playerhpmp;
+	[SerializeField] GameObject nearObject;
 
 	private void Start()
 	{
@@ -68,9 +69,11 @@ public class PlayerController : MonoBehaviour
 		controller.Move(Vector3.up * ySpeed * Time.deltaTime);
 	}
 
-	/*private void OnDown(InputValue value)
+	private void OnDown(InputValue value)
 	{
 		Down();
+		if (Input.GetKeyUp(KeyCode.Z))
+			UnDown();
 	}
 
 	private void Down()
@@ -83,15 +86,29 @@ public class PlayerController : MonoBehaviour
 	{
 		controller.radius = 0.6f;
 		controller.height = 1f;
-	}*/
+	}
+
+	private void OnInteraction(InputValue value)
+	{
+		if(nearObject != null)
+		{
+			
+		}
+	}
+
+	private void Interaction()
+	{
+
+	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
 	{
-		if (hit.collider.includeLayers == 6) // ¶¥¿¡ ´ê¾ÒÀ» ¶§ groundChecker true, ¾Æ´Ò¶§ false
+		if (hit.collider.gameObject.layer == 6) // ¶¥¿¡ ´ê¾ÒÀ» ¶§ groundChecker true, ¾Æ´Ò¶§ false
 			groundChecker = true;
 		else
 			groundChecker = false;
-		/*if (hit.collider.includeLayers == 31) // Damage
+
+		if (hit.collider.gameObject.layer == 31) // Damage
 		{
 			playerhpmp.TakeDamage(5);
 			Debug.Log(playerhpmp.HP);
@@ -105,16 +122,16 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if (hit.collider.includeLayers == 8) // Recovery
+		if (hit.collider.gameObject.layer == 8) // Recovery
 		{
 			playerhpmp.HP += playerhpmp.HPRecovery;
 			Debug.Log(playerhpmp.HP);
 			Destroy(hit.gameObject);
-		}*/
+		}
 	}
-/*
+
 	void OnDamageLayer()
 	{
 		gameObject.layer = 0; // Default
-	}*/
+	}
 }
