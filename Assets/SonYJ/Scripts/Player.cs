@@ -7,15 +7,23 @@ public class Player : MonoBehaviour
 {
 	public float speed;
 
-	public GameObject[] weapons;
-	public bool[] hasWeapons;
 	[SerializeField] PlayerHp playerhpmp;
 
 	public int key; // 갖고 있는 열쇠 수
 	public int maxKey; // 최대 열쇠 소지 수
 
-	float hAxis;
-	float vAxis;
+	/*float hAxis;
+	float vAxis;*/
+
+	[SerializeField] CharacterController controller;
+	[SerializeField] float moveSpeed;
+	[SerializeField] float jumpSpeed;
+
+	private Vector3 moveDir;
+	private float ySpeed; // 점프와 중력 주기위해 ySpeed 만들기
+
+	[SerializeField] LayerMask groundChecker;
+	[SerializeField] bool isGround;
 
 	bool jDown; // Jump
 	bool iDown; // Interaction
@@ -39,11 +47,12 @@ public class Player : MonoBehaviour
 		Debug.Log(playerhpmp.HP);
 	}
 
+
 	private void Update()
 	{
 		GetInput();
 		Move();
-		Turn();
+		//Turn();
 		Jump();
 		Down();
 		Interaction();
@@ -56,18 +65,25 @@ public class Player : MonoBehaviour
 
 	void GetInput()
 	{
-		hAxis = Input.GetAxisRaw("Horizontal");
-		vAxis = Input.GetAxisRaw("Vertical");
-		jDown = Input.GetButtonDown("Jump");
+		/*hAxis = Input.GetAxisRaw("Horizontal");
+		vAxis = Input.GetAxisRaw("Vertical");*/
+		// jDown = Input.GetButtonDown("Jump");
 		iDown = Input.GetButtonDown("Interaction");
 		dDown = Input.GetButton("Down");
 	}
 
+	private void OnMove(InputValue value)
+	{
+		Vector2 inputDir = value.Get<Vector2>();
+		moveDir.x = inputDir.x; // 키보드 x 좌우
+		moveDir.z = inputDir.y; // 키보드 y 앞뒤 (z, y는 위아래)
+	}
+
 	void Move()
 	{
-		moveVec = new Vector3(hAxis, 0, vAxis).normalized;
-
-		transform.position += moveVec * speed * Time.deltaTime;
+		/*moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+		transform.position += moveVec * speed * Time.deltaTime;*/
+		controller.Move(moveSpeed * moveDir * Time.deltaTime);
 	}
 
 	void Turn()
@@ -75,13 +91,31 @@ public class Player : MonoBehaviour
 		transform.LookAt(transform.position + moveVec);
 	}
 
+	private void OnJump(InputValue value)
+	{
+		if (isGround)
+		{
+			ySpeed = jumpSpeed;
+		}
+	}
+
 	void Jump()
 	{
-		if (jDown && !isJump)
+		/*if (jDown && !isJump)
 		{
 			rigid.AddForce(Vector3.up * 15, ForceMode.Impulse);
 			isJump = true;
+		}*/
+
+		ySpeed += Physics.gravity.y * Time.deltaTime;
+
+		Debug.Log(isGround);
+		if (isGround && ySpeed < 0)
+		{
+			ySpeed = 0;
 		}
+		controller.Move(ySpeed * Vector3.up * Time.deltaTime);
+
 	}
 
 	void Interaction()
@@ -126,6 +160,11 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (groundChecker.Contain(other.gameObject.layer))
+		{
+			isGround = true;
+		}
+
 		if (other.tag == "Item")
 		{
 			Item item = other.GetComponent<Item>();
@@ -170,6 +209,10 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
+		if (groundChecker.Contain(other.gameObject.layer))
+		{
+			isGround = false;
+		}
 		if (other.tag == "DemageItem" || other.tag == "RecoveryItem")
 			nearObject = null;
 	}
