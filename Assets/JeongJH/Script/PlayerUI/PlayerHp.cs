@@ -69,8 +69,10 @@ namespace JJH
         public void PlayerDie()
         {
             Debug.Log("플레이어다이");
-            Debug.Log(Manager.Scene.GetCurSceneName());
-            Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName()); //나중에 일반화 시켜야되는데.. 
+            
+            Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName()); //이걸로 씬 재로드 일반화 가능
+            // 현재씬을 재로드 하는 기능임. --> 각 베이스씬 상속 오브젝트마다 
+            // gameMnager의 playerPos를 가져오면됨. 
 
         }
 

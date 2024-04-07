@@ -16,7 +16,7 @@ namespace Unity.AI.Navigation.Samples
     /// Move an agent when traversing a OffMeshLink given specific animated methods
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public class AgentLinkMover : MonoBehaviour
+    public class AgentNpc : MonoBehaviour
     {
 
         [Header("Spec")]
