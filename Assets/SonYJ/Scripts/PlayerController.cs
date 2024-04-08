@@ -2,6 +2,7 @@ using JJH;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,23 +26,25 @@ public class PlayerController : MonoBehaviour
 	Collider[] colliders = new Collider[20];
 	[SerializeField] float range;
 
+	[SerializeField] TextMeshProUGUI hpText;
+
 	private void Start()
 	{
 		playerhpmp.HP = 50;
-		Debug.Log(playerhpmp.HP);
 	}
 
 	private void Update()
 	{
 		Move();
 		Fall();
+		hpText.text = "HP : " + (playerhpmp.HP).ToString();
 	}
 
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
-		moveDir.x = inputDir.x;
-		moveDir.z = inputDir.y;
+		moveDir.x = -inputDir.x;
+		moveDir.z = -inputDir.y;
 	}
 
 	private void Move()
@@ -101,15 +104,22 @@ public class PlayerController : MonoBehaviour
 	private void Interaction()
 	{
 		int size = Physics.OverlapSphereNonAlloc(transform.position, range, colliders); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
-		for(int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++)
 		{
 			IInteractable interactable = colliders[i].GetComponent<IInteractable>();
-			if(interactable != null)
+			if (interactable != null)
 			{
 				interactable.Interact(this);
 				break;
 			}
 		}
+
+		if(nearObject != null)
+		{
+			playerhpmp.HP += playerhpmp.HPRecovery;
+			Destroy(nearObject.gameObject);
+		}
+
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -122,22 +132,21 @@ public class PlayerController : MonoBehaviour
 		if (hit.collider.gameObject.layer == 31) // Damage
 		{
 			playerhpmp.TakeDamage(5);
-			Debug.Log(playerhpmp.HP);
 			gameObject.layer = 7; // DamageMusi
 			Invoke("OnDamageLayer", 1f);
 			Destroy(hit.gameObject);
 
 			if (playerhpmp.HP <= 0)
-			{
 				transform.position = CheckPoint.GetActiveCheckPointPosition();
-			}
+			if (playerhpmp.HP >= 100)
+				playerhpmp.HP = 100;
 		}
 
 		if (hit.collider.gameObject.layer == 8) // Recovery
 		{
-			playerhpmp.HP += playerhpmp.HPRecovery;
-			Debug.Log(playerhpmp.HP);
-			Destroy(hit.gameObject);
+			Debug.Log("??");
+			nearObject = hit.gameObject;
+			Debug.Log(nearObject.name);
 		}
 	}
 
