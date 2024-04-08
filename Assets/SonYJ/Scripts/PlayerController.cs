@@ -22,19 +22,41 @@ public class PlayerController : MonoBehaviour
 	GameObject nearObject;
 
 	[Header("Interact")]
-	Collider[] colliders = new Collider[20];
+	Collider[] collidersInter = new Collider[20];
 	[SerializeField] float range;
+
+	[Header("Get")]
+	Collider[] collidersGet = new Collider[20];
+
+	[SerializeField] Inventory inventory;
+
+	bool isOpen = false;
 
 	private void Start()
 	{
-		playerhpmp.HP = 50;
-		Debug.Log(playerhpmp.HP);
+		// playerhpmp.HP = 50;
+		// Debug.Log(playerhpmp.HP);
 	}
 
 	private void Update()
 	{
 		Move();
 		Fall();
+
+		if (Input.GetKeyDown(KeyCode.I))
+		{
+			if (!isOpen)
+			{
+				inventory.GetComponentInChildren<Inventory>().gameObject.SetActive(true);
+				isOpen = true;
+			}
+			else
+			{
+				inventory.GetComponentInChildren<Inventory>().gameObject.SetActive(false);
+				isOpen = false;
+			}
+			
+		}
 	}
 
 	private void OnMove(InputValue value)
@@ -100,13 +122,27 @@ public class PlayerController : MonoBehaviour
 
 	private void Interaction()
 	{
-		int size = Physics.OverlapSphereNonAlloc(transform.position, range, colliders); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
-		for(int i = 0; i < size; i++)
+		// 상호작용 가능한 아이템
+		int sizeInter = Physics.OverlapSphereNonAlloc(transform.position, range, collidersInter); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
+		for(int i = 0; i < sizeInter; i++)
 		{
-			IInteractable interactable = colliders[i].GetComponent<IInteractable>();
+			IInteractable interactable = collidersInter[i].GetComponent<IInteractable>();
 			if(interactable != null)
 			{
 				interactable.Interact(this);
+				break;
+			}
+		}
+
+		int sizeGet = Physics.OverlapSphereNonAlloc(transform.position, range, collidersGet); // 획득가능한 아이템
+		for (int i = 0; i < sizeGet; i++)
+		{
+			// IGetable getable = collidersGet[i].GetComponent<IGetable>();
+			Item curItem = gameObject.GetComponent<Item>();
+			if (curItem != null)
+			{
+				// getable.Get(this);
+				inventory.AddItem(curItem);
 				break;
 			}
 		}
@@ -139,6 +175,15 @@ public class PlayerController : MonoBehaviour
 			Debug.Log(playerhpmp.HP);
 			Destroy(hit.gameObject);
 		}
+
+		/*if(hit.collider.gameObject.layer == 9) // Item
+		{
+			inventory.name = hit.collider.gameObject.name;
+			inventory.count = hit.collider.gameObject.GetComponent<Inventory>().count++;
+			Debug.Log(inventory.name);
+			Debug.Log(inventory.count);
+			inventory.SetItem();
+		}*/
 	}
 
 	void OnDamageLayer()

@@ -7,7 +7,6 @@ public class NPC : MonoBehaviour
 	[SerializeField] TextMeshProUGUI text1;
 	public void Talk()
 	{
-		Debug.Log("??");
 		StartCoroutine(TextBlink());
 
 	}
