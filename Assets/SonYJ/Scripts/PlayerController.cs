@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,6 +43,13 @@ public class PlayerController : MonoBehaviour
 	{
 		Move();
 		Fall();
+		hpText.text = "HP : " + (playerhpmp.HP).ToString();
+		if (Input.GetKey(KeyCode.Q))
+		{
+			InvenGetItem();
+		}
+	}
+
 
 		if (Input.GetKeyDown(KeyCode.I))
 		{
@@ -195,5 +203,10 @@ public class PlayerController : MonoBehaviour
 	{
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, range);
+	}
+
+	public void InvenGetItem()
+	{
+		
 	}
 }
