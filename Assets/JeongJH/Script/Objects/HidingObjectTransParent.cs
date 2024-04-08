@@ -29,14 +29,14 @@ public class HidingObjectTransParent : MonoBehaviour
 
 
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other) //제대로 들어가지 못하는 이유가? 
     { 
         if(other.gameObject.CompareTag("Player")) //comparetag가 훨씬 성능좋음. 
         {
+            Debug.Log("플레이어트리거");
             
             if(Input.GetKeyDown(KeyCode.X))
             {
-                Debug.Log("x키 눌림");
                 boxCollider.enabled = false;
                 CharacterController characterController = other.gameObject.GetComponent<CharacterController>();
                 if(characterController != null)
