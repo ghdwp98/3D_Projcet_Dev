@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class BasingScene : BaseScene
 {
@@ -15,19 +11,24 @@ public class BasingScene : BaseScene
     [SerializeField] int capacity;
     [SerializeField] int smallSize;
     [SerializeField] int smallCapacity;
+    [SerializeField] PooledObject lightningPrefab;
+    [SerializeField] PooledObject dangerCircle;
 
+    bool routine;
 
 
     private void Awake()
     {
-        Manager.Pool.CreatePool(FirePrefab, size, capacity); //시작 할 때 숫자만큼 생성해주고. 
-        Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
+
+
     }
 
     public override IEnumerator LoadingRoutine()
     {
-        /*Manager.Pool.CreatePool(FirePrefab, size, capacity); //시작 할 때 숫자만큼 생성해주고. 
-        Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);*/ //나중에 진짜 사용. 
+        Manager.Pool.CreatePool(FirePrefab, size, capacity);
+        Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
+        Manager.Pool.CreatePool(lightningPrefab, size, capacity);
+        Manager.Pool.CreatePool(dangerCircle, size, capacity);
 
         if (GameManager.saved == false)
             yield break;
@@ -41,5 +42,5 @@ public class BasingScene : BaseScene
 
     }
 
-    
+
 }

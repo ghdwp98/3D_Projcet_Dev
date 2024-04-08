@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLayer:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 0
   KnockBackPower: 10
   damage: 20
 --- !u!136 &3419208081374156276
@@ -5030,6 +5030,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84fc090c9535884d9ac0b7588e525b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minMoveSpeed: 0
+  maxMoveSpeed: 0
+  pooledObject: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  KnockBackPower: 0
+  damage: 0

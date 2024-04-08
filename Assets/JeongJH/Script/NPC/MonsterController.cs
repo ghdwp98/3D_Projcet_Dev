@@ -122,6 +122,7 @@ namespace JJH
 
             public override void Enter()
             {
+                Debug.Log(State.Idle);
                 isTargetOn = false; //어차피 다시 idle로 돌아오면 false 되니까 다시 바로 트랜지션안됨. 
                 animator.Play("Swim/Fly");
             }
@@ -159,8 +160,6 @@ namespace JJH
                     return;
                 }
             }
-
-
         }
         private class TraceState : MonsterState
         {
@@ -173,6 +172,7 @@ namespace JJH
             }
             public override void Enter()
             {
+                Debug.Log(State.Trace);
                 animator.Play("Swim/Fly");
             }
             public override void Update()
@@ -194,6 +194,7 @@ namespace JJH
                     coolTime += Time.deltaTime;
                     if(coolTime>=10f)
                     {
+                        Debug.Log(coolTime);
                         coolTime = 0f;
                         ChangeState(State.Return); //이거 그냥 overlap을 조금 크게 잡죠? 
                     }
@@ -221,25 +222,24 @@ namespace JJH
                         moveSpeed * Time.deltaTime);
                     coolTime = 0f;
 
-
                     Debug.DrawRay(viewPoint.position, dirToTarget * distToTarget, Color.red);
                     return;
                 }
             }
         }
 
-        
         private class AttackState : MonsterState
         {
             public AttackState(MonsterController monster) : base(monster)
             {
 
             }
-
             public override void Enter()
             {
+                Debug.Log(State.Attack);
+
                 animator.Play(monster.attack);
-               // PlayerHp.Player_Action(monster.damage); 
+                PlayerHp.Player_Action(monster.damage); 
                 
             }
             public override void Update()
@@ -252,11 +252,9 @@ namespace JJH
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName(monster.attack) == true)
                 {
                     if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) //애니메이션 종료. 
-                    {
-                        
+                    {                  
                         ChangeState(State.Trace);
                     }
-
                 }
             }
         }
@@ -268,6 +266,8 @@ namespace JJH
             }
             public override void Enter()
             {
+                Debug.Log(State.Return);
+
                 //걷는 애니메이션 재생. 
             }
 

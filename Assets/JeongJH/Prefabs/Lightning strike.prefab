@@ -14815,8 +14815,8 @@ GameObject:
   - component: {fileID: 2260144106904910511}
   - component: {fileID: 6314416366022032363}
   - component: {fileID: 4512759063956490252}
-  - component: {fileID: 6444853613851015249}
   - component: {fileID: 3297477457509127162}
+  - component: {fileID: 7657852434087728746}
   m_Layer: 31
   m_Name: Lightning strike
   m_TagString: Untagged
@@ -14867,7 +14867,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -19851,29 +19851,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &6444853613851015249
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2479579442926638390}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.43
-  m_Height: 9.84
-  m_Direction: 1
-  m_Center: {x: 0, y: 3.5, z: 0}
 --- !u!114 &3297477457509127162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19888,6 +19865,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playAura: 1
   ParticleSystem: {fileID: 2260144106904910511}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  audioSource: {fileID: 0}
+  clip: {fileID: 8300000, guid: 327fe35519344d949a52bfc2ad0281e4, type: 3}
+--- !u!114 &7657852434087728746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2479579442926638390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481092cc15e545d48820e7d078f98942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoRelease: 1
+  releaseTime: 2
 --- !u!1 &3936800299148977391
 GameObject:
   m_ObjectHideFlags: 0
@@ -38515,7 +38511,7 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
     inside: 1
     outside: 0
@@ -54385,7 +54381,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 1.57e-43, z: 4.079e-42, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
