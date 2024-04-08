@@ -12,6 +12,7 @@ TagManager:
   - Hide
   - Npc
   - Fire
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Item
   - Fire
   - Npc
   - Wall
