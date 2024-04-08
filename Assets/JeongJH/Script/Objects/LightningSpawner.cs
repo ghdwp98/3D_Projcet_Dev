@@ -28,15 +28,15 @@ public class LightningSpawner : MonoBehaviour
     [SerializeField] int count;
 
     //배열을 한 3개 만들어서 그 중에서 이제 랜덤 선택해서 
-    Vector3[] lightningZone = new Vector3[3];
+    Vector3[] lightningZone = new Vector3[5];
 
-    Vector3 []createPos=new Vector3[3];
+    Vector3 []createPos=new Vector3[5];
 
-    private void Start()
+    private void Awake()
     {
         playerPos = GameObject.FindWithTag("Player");
-        /*Manager.Pool.CreatePool(lightningPrefab, size, capacity);
-        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);*/
+        Manager.Pool.CreatePool(lightningPrefab, size, capacity);
+        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);
     }
 
     private void Update()
@@ -61,14 +61,14 @@ public class LightningSpawner : MonoBehaviour
         {
             on = true;
             Collider[] colliders = new Collider[20];
-            for (count = 0; count < 3; count++)
+            for (count = 0; count < lightningZone.Length; count++)
             {           
                 lightningZone[count] = Random.insideUnitSphere * circleRnage;
                 createPos[count] = playerPos.transform.position + lightningZone[count];
                 createPos[count].y = playerPos.transform.position.y; //플레이어의 y 위치와 똑같이?
             }
            
-            for(int i=0;i<3;i++)
+            for(int i=0;i<lightningZone.Length;i++)
             {
                 Manager.Pool.GetPool(dangerZonePrefab, createPos[i], dangerZonePrefab.transform.rotation);
             }           
@@ -80,7 +80,7 @@ public class LightningSpawner : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             //이 부분 기즈모가 제대로 안그려지는데 이유가 뭐지?? 어째서 안그려지는거지??
-            for(int i=0;i<3;i++)
+            for(int i=0;i< lightningZone.Length; i++)
             {
                 int size = Physics.OverlapSphereNonAlloc(createPos[i], range, colliders, targetLayer);
                 for(int j=0;j<size;j++)

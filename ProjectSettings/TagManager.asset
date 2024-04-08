@@ -13,6 +13,7 @@ TagManager:
   - Npc
   - Fire
   - Item
+  - GroundChecking
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - GroundChecking
   - Item
   - Fire
   - Npc
