@@ -69,9 +69,7 @@ namespace JJH
 
             stateMachine.Start(State.Idle);
 
-
         }
-
 
         private float CosAngle
         {
@@ -127,8 +125,7 @@ namespace JJH
                 animator.Play("Swim/Fly");
             }
             public override void Update()
-            {
-                
+            {               
                 FindTarget();
             }
 
@@ -178,6 +175,8 @@ namespace JJH
             public override void Update()
             {
                 FindTarget();
+                Debug.Log(size); //쿨타임 찍어보자. 
+                
                 
             }
             public override void Transition()
@@ -188,13 +187,11 @@ namespace JJH
                 }
 
                 //플레이어를 잃고 어느정도 시간이 지나면 return으로 변화 --> 원래 위치로 돌아가는 작업. 
-
                 if(size==0)
                 {
                     coolTime += Time.deltaTime;
                     if(coolTime>=10f)
                     {
-                        Debug.Log(coolTime);
                         coolTime = 0f;
                         ChangeState(State.Return); //이거 그냥 overlap을 조금 크게 잡죠? 
                     }

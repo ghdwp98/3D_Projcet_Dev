@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
+
 		if (moveDir != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
 		controller.Move(moveDir * moveSpeed * Time.deltaTime); // 이동

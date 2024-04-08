@@ -16,9 +16,7 @@ public class HidingObjectTransParent : MonoBehaviour
         material = GetComponent<MeshRenderer>().material;
         material.color = new Color32(255, 255, 255, 255);
 
-
     }
-
 
     private void Update()
     {
@@ -37,7 +35,7 @@ public class HidingObjectTransParent : MonoBehaviour
                 other.gameObject.transform.position = transform.position;
                 characterController.enabled = true;
                 material.color = new Color32(255, 255, 255, 150);
-                other.gameObject.layer = 30;
+                other.gameObject.layer = 28; //hide 레이어로 변경해보기. 
 
             }
         }
@@ -49,7 +47,8 @@ public class HidingObjectTransParent : MonoBehaviour
         {
             boxCollider.enabled = true;
             material.color = new Color32(255, 255, 255, 255);
-            other.gameObject.layer = 9; //이 부분 수정 필요. layer가 1번으로 바뀜... 원래 레이어를 유지할 수 있도록 해줘야함. 
+            other.gameObject.layer = 9; // 아 이게 문제가 뭐냐면 트리거가 tag가 player인데... 이게 
+            // 지금 플레이어로 바뀌어서 그럼. --> 바닥에 있어서 exit이 되어버림. 
 
         }
     }
