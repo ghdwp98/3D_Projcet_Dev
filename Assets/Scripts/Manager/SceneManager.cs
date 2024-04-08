@@ -9,6 +9,7 @@ public class SceneManager : Singleton<SceneManager>
     [SerializeField] Slider loadingBar;
     [SerializeField] float fadeTime;
     public static Vector3 playerPos;
+    bool isRoading;
 
     private BaseScene curScene;
 
@@ -35,13 +36,26 @@ public class SceneManager : Singleton<SceneManager>
         return curScene as T;
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName) //이 함수를 부르는데.. 
     {
-        StartCoroutine(LoadingRoutine(sceneName));
+        if (isRoading == true)
+        {
+            
+            return;
+        }
+        else if (isRoading == false) //한 번 실행되는건 맞는데 도대체 왜 오브젝트풀링 문제가 발생하는지?
+        {
+            isRoading = true;
+            Debug.Log("씬 로딩 flase로 코루틴이 실행될거임");
+            StartCoroutine(LoadingRoutine(sceneName));
+        }
+        
+
     }
 
     IEnumerator LoadingRoutine(string sceneName)
     {
+
         fade.gameObject.SetActive(true);
         yield return FadeOut();
 
@@ -54,8 +68,8 @@ public class SceneManager : Singleton<SceneManager>
         Time.timeScale = 0f;
         loadingBar.gameObject.SetActive(true);
 
-        playerPos = CheckPoint.GetActiveCheckPointPosition();
-        
+        //playerPos = CheckPoint.GetActiveCheckPointPosition();
+
         AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
 
         while (oper.isDone == false)
@@ -67,7 +81,7 @@ public class SceneManager : Singleton<SceneManager>
         Manager.UI.EnsureEventSystem();
 
         BaseScene curScene = GetCurScene();
-        
+
         yield return curScene.LoadingRoutine();
         //현재 씬의 로딩 루틴 작업 시작. -->각 씬의 base에서 진행하면 되는 듯? 
 
@@ -76,6 +90,9 @@ public class SceneManager : Singleton<SceneManager>
 
         yield return FadeIn();
         fade.gameObject.SetActive(false);
+        isRoading = false;
+
+
     }
 
     IEnumerator FadeOut()

@@ -310,7 +310,7 @@ MonoBehaviour:
   viewPoint: {fileID: 1374138515320633940}
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 512
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -325,7 +325,7 @@ MonoBehaviour:
   attackClip: {fileID: 7400010, guid: f688071401476a14a84f97ec807217f7, type: 3}
   startPos: {fileID: 0}
   damage: 10
-  KnockBackPower: 5
+  KnockBackPower: 10
   stateEnum: 0
 --- !u!135 &5485822507707033754
 SphereCollider:

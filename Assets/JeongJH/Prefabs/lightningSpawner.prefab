@@ -45,17 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2c3ec5b06bdbc4196d4104bbe84b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightningPrefab: {fileID: 2479579442926638390, guid: 1ac553131e5e52e4fb63f38cf83fefcc, type: 3}
-  dangerZonePrefab: {fileID: 9020453303905540821, guid: 52b51f800559368429c59ae7254bf2a4, type: 3}
+  lightningPrefab: {fileID: 7657852434087728746, guid: 1ac553131e5e52e4fb63f38cf83fefcc, type: 3}
+  dangerZonePrefab: {fileID: 6528309626419097312, guid: 52b51f800559368429c59ae7254bf2a4, type: 3}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 512
   playerPos: {fileID: 0}
   range: 3
   size: 20
   isTrigger: 0
-  circleRnage: 3
+  circleRnage: 8
   on: 0
+  capacity: 0
+  count: 0
 --- !u!135 &2338094179762715446
 SphereCollider:
   m_ObjectHideFlags: 0
