@@ -1,21 +1,20 @@
 using JJH;
 using System.Collections;
 using System.Collections.Generic;
-using System.Transactions;
 using UnityEngine;
 
-public class DefalutDamageObjs : MonoBehaviour
+public class FixedFire : MonoBehaviour
 {
-    public float damage;
-    public float KnockBackPower;
+    //pooled object 
 
-    
-    void Start()
+    [SerializeField]LayerMask playerLayer;
+    [SerializeField] float KnockBackPower;
+    [SerializeField] float damage;
+    private void OnEnable()
     {
-        //여기서 데미지 초기화 해주고. 
+        
     }
 
-    
     IEnumerator ControllerCoroutine(Collider other)
     {
         Vector3 direction = other.transform.position - transform.position;
@@ -24,7 +23,7 @@ public class DefalutDamageObjs : MonoBehaviour
         {
             characterController.enabled = false;
             Rigidbody playerRigid = other.GetComponent<Rigidbody>();
-            playerRigid.isKinematic= false;
+            playerRigid.isKinematic = false;
             playerRigid.velocity = Vector3.zero;
             playerRigid.velocity = direction * KnockBackPower;
             yield return new WaitForSeconds(0.7f);
@@ -36,17 +35,12 @@ public class DefalutDamageObjs : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer==LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
+        if (other.gameObject.layer == LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
         {
             PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));
 
         }
     }
-
-    
-    
-
-
 
 }
