@@ -28,9 +28,7 @@ namespace JJH
         int size = 20;
         Vector3 dirToTarget;
         float distToTarget;
-        
-
-
+ 
         bool isTriggerOn;
         Rigidbody rigid;
         CapsuleCollider capsuleCollider;
@@ -322,6 +320,12 @@ namespace JJH
         private void FixedUpdate()
         {
             onGround = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+            if(onGround) //지금 땅에 닿은 상태라면. 
+            {
+                rigid.velocity = Vector3.up; // 땅에 닿으면 땅 파고들지 않게 벡터업 해주기. 
+                    
+            }
             stateMachine.FixedUpdate();
             AngleLimit();  
 
