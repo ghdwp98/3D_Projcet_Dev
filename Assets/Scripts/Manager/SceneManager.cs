@@ -36,17 +36,17 @@ public class SceneManager : Singleton<SceneManager>
         return curScene as T;
     }
 
-    public void LoadScene(string sceneName) //이 함수를 부르는데.. 
+    public void LoadScene(string sceneName) 
     {
         if (isRoading == true)
         {
             
             return;
         }
-        else if (isRoading == false) //한 번 실행되는건 맞는데 도대체 왜 오브젝트풀링 문제가 발생하는지?
+        else if (isRoading == false) //debug 자체는 한 번만 찍히는데 
         {
             isRoading = true;
-            Debug.Log("씬 로딩 flase로 코루틴이 실행될거임");
+            Debug.Log("씬 로딩 flase");
             StartCoroutine(LoadingRoutine(sceneName));
         }
         
@@ -59,6 +59,7 @@ public class SceneManager : Singleton<SceneManager>
         fade.gameObject.SetActive(true);
         yield return FadeOut();
 
+        Debug.Log("풀 삭제");
         Manager.Pool.ClearPool();
         Manager.Sound.StopSFX();
         Manager.UI.ClearPopUpUI();
@@ -79,7 +80,6 @@ public class SceneManager : Singleton<SceneManager>
         }
 
         Manager.UI.EnsureEventSystem();
-
         BaseScene curScene = GetCurScene();
 
         yield return curScene.LoadingRoutine();

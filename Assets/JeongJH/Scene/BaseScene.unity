@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17649122, g: 0.22090474, b: 0.30321833, a: 1}
+  m_IndirectSpecularColor: {r: 0.17649084, g: 0.22090396, b: 0.30321693, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -473,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &480744547
 Transform:
   m_ObjectHideFlags: 0
@@ -518,20 +518,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 309569814998312204, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
-      propertyPath: capacity
+      propertyPath: size
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 309569814998312204, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
       propertyPath: playerPos
       value: 
       objectReference: {fileID: 2023589127}
-    - target: {fileID: 2338094179762715446, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
-      propertyPath: m_Radius
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 7168166313951476228, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
       propertyPath: m_Name
       value: lightningSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7168166313951476228, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8872779591145166835, guid: 6cc8fad485f72204fb1af4e9b7af89d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1111,6 +1111,14 @@ PrefabInstance:
     - target: {fileID: 699948822334263073, guid: 23e345badf7555748a963639f990a776, type: 3}
       propertyPath: m_Name
       value: PlayerTemp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496359019644140871, guid: 23e345badf7555748a963639f990a776, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.1357821
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496359019644140871, guid: 23e345badf7555748a963639f990a776, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.03105306
       objectReference: {fileID: 0}
     - target: {fileID: 6677882889915301138, guid: 23e345badf7555748a963639f990a776, type: 3}
       propertyPath: m_LocalPosition.x

@@ -25,6 +25,7 @@ public class BasingScene : BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
+        Debug.Log("Ç®»ý¼º");
         Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
         Manager.Pool.CreatePool(lightningPrefab, size, capacity);

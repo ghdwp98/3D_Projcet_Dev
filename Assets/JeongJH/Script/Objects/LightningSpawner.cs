@@ -35,32 +35,17 @@ public class LightningSpawner : MonoBehaviour
     private void Awake()
     {
         playerPos = GameObject.FindWithTag("Player");
-        Manager.Pool.CreatePool(lightningPrefab, size, capacity);
-        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);
+        /*Manager.Pool.CreatePool(lightningPrefab, size, capacity);
+        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);*/
     }
 
-    private void Update()
-    {
-        if (isTrigger)
-        {
-
-            StartCoroutine(LightningCoroutine());
-
-            //StartCoroutine(OverCoroutine());
-
-            //이거 코루틴 제대로 한 번에 3개 정도씩만 플레이어 주변에 떨어지게 하는 방법을 생각해보자. 
-
-
-        }
-
-    }
-
+    Collider[] colliders = new Collider[20];
     IEnumerator LightningCoroutine()
     {
-        if (on == false)
+        while (true)
         {
-            on = true;
-            Collider[] colliders = new Collider[20];
+            yield return new WaitForSeconds(0.1f);
+
             for (count = 0; count < lightningZone.Length; count++)
             {           
                 lightningZone[count] = Random.insideUnitSphere * circleRnage;
@@ -73,21 +58,21 @@ public class LightningSpawner : MonoBehaviour
                 Manager.Pool.GetPool(dangerZonePrefab, createPos[i], dangerZonePrefab.transform.rotation);
             }           
             yield return new WaitForSeconds(1f);
-            for(int i=0;i<3;i++) //여기가 실제 데미지를 줘야하는 부분이지용. 
+            for(int i=0;i< lightningZone.Length; i++) //여기가 실제 데미지를 줘야하는 부분이지용. 
             {
                 Manager.Pool.GetPool(lightningPrefab, createPos[i], lightningPrefab.transform.rotation);               
             }    
             yield return new WaitForSeconds(1f);
 
-            //이 부분 기즈모가 제대로 안그려지는데 이유가 뭐지?? 어째서 안그려지는거지??
+            
             for(int i=0;i< lightningZone.Length; i++)
             {
                 int size = Physics.OverlapSphereNonAlloc(createPos[i], range, colliders, targetLayer);
                 for(int j=0;j<size;j++)
                 {
-                    if (Extension.Contain(targetLayer, colliders[i].gameObject.layer)) //플레이어라면. 
+                    if (colliders[j].gameObject.CompareTag("Player")) //플레이어라면. 
                     {
-                        if(PlayerHp.Player_Action!=null)
+                        if(PlayerHp.Player_Action!=null&&gameObject!=null)
                         {
                             PlayerHp.Player_Action(1000f);
                         }
@@ -95,20 +80,21 @@ public class LightningSpawner : MonoBehaviour
                                
                 }
             }
-            yield return new WaitForSeconds(0.5f);
-            on = false;
-
+            yield return new WaitForSeconds(0.4f);
         }
     }
 
 
-
+    Coroutine spawnRoutine = null;
     private void OnTriggerEnter(Collider other)
     {
         if (Extension.Contain(targetLayer, other.gameObject.layer))
         {
-            isTrigger = true;
+            if (spawnRoutine != null)
+                return;
 
+            Debug.Log("Trigger Enter");
+            spawnRoutine = StartCoroutine(LightningCoroutine());
         }
 
     }
@@ -116,12 +102,23 @@ public class LightningSpawner : MonoBehaviour
     {
         if (Extension.Contain(targetLayer, other.gameObject.layer))
         {
-            //일단 나가면 벼락 안치고 어쨋든 1자 진행이니까 다시 들어가면 다시 번개 치고. 
-            isTrigger = false;
+            if (spawnRoutine == null)
+                return;
+
+            Debug.Log("Trigger Exit");
+            //일단 나가면 벼락 안치고 어쨋든 1자 진행이니까 다시 들어가면 다시 번개 치고.
+            StopCoroutine(spawnRoutine);
+            spawnRoutine = null;
         }
     }
 
-   
+    private void OnEnable()
+    {
+        Debug.Log("라이트닝 활성화");
+    }
 
-
+    private void OnDisable()
+    {
+        Debug.Log("라이트닝 비활성화");
+    }
 }
