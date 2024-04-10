@@ -16661,7 +16661,8 @@ MonoBehaviour:
   sec: 180
   min: 0
   countDownText: {fileID: 0}
-  moveSpeed: 10
+  patrolSpeed: 3.5
+  traceSpeed: 5
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 512
