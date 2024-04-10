@@ -219,9 +219,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4716226516170785768}
   - component: {fileID: 7680937021135004860}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Trigger
-  m_TagString: Player
+  m_TagString: GroundChecking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
