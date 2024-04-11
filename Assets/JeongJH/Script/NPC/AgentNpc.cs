@@ -33,7 +33,7 @@ namespace Unity.AI.Navigation.Samples
         [SerializeField]
         DialogSystem[] dialogSystems;
 
-
+        [SerializeField] GameObject panel;
 
 
         public Method m_Method = Method.Parabola;
@@ -123,12 +123,14 @@ namespace Unity.AI.Navigation.Samples
         private IEnumerator DialogSetOn(int count)
         {
             //count를 통해 배열 접근 
+            panel.SetActive(true);
             dialogSystems[count].gameObject.SetActive(true);
             Time.timeScale = 0f;
             yield return new WaitUntil(() => dialogSystems[count].UpdateDialog());
             Time.timeScale = 1f;
-            Destroy(dialogSystems[count].gameObject); //다시 대화가 나오지 않도록 파괴. 
+            dialogSystems[count].gameObject.SetActive(false); //어차피 count로 하니까 대사 다시 안나올듯 ? 
             dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            panel.SetActive(false);
 
         }
 

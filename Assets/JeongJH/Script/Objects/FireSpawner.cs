@@ -6,13 +6,14 @@ public class FireSpawner : MonoBehaviour
 {
     //파이어 생성. 
     [SerializeField] CinemachineVirtualCamera vCam;
-    [SerializeField] int size;
+    /*[SerializeField] int size;
     [SerializeField] int capacity;
     [SerializeField] int smallSize;
-    [SerializeField] int smallCapacity;
+    [SerializeField] int smallCapacity;*/
+    //[SerializeField] float range;
     [SerializeField] bool isFirst = true;
-    [SerializeField] float range;
-    [SerializeField] LayerMask playerLayer;
+    
+    [SerializeField] LayerMask playerLayer; //의미 없는듯? 
 
     SphereCollider sphereCollider;
     BoxCollider boxCollider;
@@ -24,6 +25,8 @@ public class FireSpawner : MonoBehaviour
 
     [SerializeField] PooledObject FirePrefab; //불꽃 이펙트
     [SerializeField] PooledObject smallFirePrefab;
+
+
     private void Start()
     {
         sphereCollider=GetComponent<SphereCollider>();

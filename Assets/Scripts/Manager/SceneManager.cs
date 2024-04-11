@@ -46,7 +46,6 @@ public class SceneManager : Singleton<SceneManager>
         else if (isRoading == false) //debug 자체는 한 번만 찍히는데 
         {
             isRoading = true;
-            Debug.Log("씬 로딩 flase");
             StartCoroutine(LoadingRoutine(sceneName));
         }
         

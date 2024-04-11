@@ -9,6 +9,7 @@ public class BasingScene : BaseScene
     [SerializeField] PooledObject smallFirePrefab;
     [SerializeField] int size;
     [SerializeField] int capacity;
+
     [SerializeField] int smallSize;
     [SerializeField] int smallCapacity;
     [SerializeField] PooledObject lightningPrefab;
@@ -25,7 +26,7 @@ public class BasingScene : BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
-        Debug.Log("Ç®»ý¼º");
+        
         Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
         Manager.Pool.CreatePool(lightningPrefab, size, capacity);
