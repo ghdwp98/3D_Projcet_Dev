@@ -28,9 +28,7 @@ namespace JJH
         int size = 20;
         Vector3 dirToTarget;
         float distToTarget;
-        
-
-
+ 
         bool isTriggerOn;
         Rigidbody rigid;
         CapsuleCollider capsuleCollider;
@@ -69,9 +67,7 @@ namespace JJH
 
             stateMachine.Start(State.Idle);
 
-
         }
-
 
         private float CosAngle
         {
@@ -122,12 +118,12 @@ namespace JJH
 
             public override void Enter()
             {
+                Debug.Log(State.Idle);
                 isTargetOn = false; //어차피 다시 idle로 돌아오면 false 되니까 다시 바로 트랜지션안됨. 
                 animator.Play("Swim/Fly");
             }
             public override void Update()
-            {
-                
+            {               
                 FindTarget();
             }
 
@@ -159,8 +155,6 @@ namespace JJH
                     return;
                 }
             }
-
-
         }
         private class TraceState : MonsterState
         {
@@ -173,11 +167,14 @@ namespace JJH
             }
             public override void Enter()
             {
+                Debug.Log(State.Trace);
                 animator.Play("Swim/Fly");
             }
             public override void Update()
             {
                 FindTarget();
+                Debug.Log(size); //쿨타임 찍어보자. 
+                
                 
             }
             public override void Transition()
@@ -188,7 +185,6 @@ namespace JJH
                 }
 
                 //플레이어를 잃고 어느정도 시간이 지나면 return으로 변화 --> 원래 위치로 돌아가는 작업. 
-
                 if(size==0)
                 {
                     coolTime += Time.deltaTime;
@@ -221,25 +217,24 @@ namespace JJH
                         moveSpeed * Time.deltaTime);
                     coolTime = 0f;
 
-
                     Debug.DrawRay(viewPoint.position, dirToTarget * distToTarget, Color.red);
                     return;
                 }
             }
         }
 
-        
         private class AttackState : MonsterState
         {
             public AttackState(MonsterController monster) : base(monster)
             {
 
             }
-
             public override void Enter()
             {
+                Debug.Log(State.Attack);
+
                 animator.Play(monster.attack);
-               // PlayerHp.Player_Action(monster.damage); 
+                PlayerHp.Player_Action(monster.damage); 
                 
             }
             public override void Update()
@@ -252,11 +247,9 @@ namespace JJH
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName(monster.attack) == true)
                 {
                     if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) //애니메이션 종료. 
-                    {
-                        
+                    {                  
                         ChangeState(State.Trace);
                     }
-
                 }
             }
         }
@@ -268,6 +261,8 @@ namespace JJH
             }
             public override void Enter()
             {
+                Debug.Log(State.Return);
+
                 //걷는 애니메이션 재생. 
             }
 
@@ -325,6 +320,12 @@ namespace JJH
         private void FixedUpdate()
         {
             onGround = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+            if(onGround) //지금 땅에 닿은 상태라면. 
+            {
+                rigid.velocity = Vector3.up; // 땅에 닿으면 땅 파고들지 않게 벡터업 해주기. 
+                    
+            }
             stateMachine.FixedUpdate();
             AngleLimit();  
 

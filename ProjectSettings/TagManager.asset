@@ -11,6 +11,10 @@ TagManager:
   - CheckPoint
   - Hide
   - Npc
+  - Fire
+  - Item
+  - GroundChecking
+  - Robbery
   layers:
   - Default
   - TransparentFX
@@ -21,6 +25,7 @@ TagManager:
   - Ground
   - DamageMusi
   - Recovery
+  - Player
   - 
   - 
   - 
@@ -33,11 +38,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Robbery
+  - GroundChecking
+  - Item
+  - Fire
   - Npc
   - Wall
   - Hide

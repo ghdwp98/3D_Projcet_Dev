@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/JeongJH/Scene/MainScene.unity
     guid: 920b1933e40a1e7499da309c6221ec7b
   - enabled: 1
+    path: Assets/JeongJH/Scene/STARTsCENE.unity
+    guid: ff2e341c3155f724285992f4763de298
+  - enabled: 1
     path: Assets/JeongJH/Scene/TutorialScene.unity
     guid: b6391c8a008307b4890d20fc1739a8a1
+  - enabled: 1
+    path: Assets/JeongJH/Scene/BaseScene.unity
+    guid: cbb4f71cefa14c94aaf0de28a4f85138
   m_configObjects: {}
