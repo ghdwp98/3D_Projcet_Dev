@@ -43,12 +43,11 @@ public class PlayerController : MonoBehaviour
 	{
 		Move();
 		Fall();
-		hpText.text = "HP : " + (playerhpmp.HP).ToString();
+		// hpText.text = "HP : " + (playerhpmp.HP).ToString();
 		if (Input.GetKey(KeyCode.Q))
 		{
 			InvenGetItem();
 		}
-	}
 
 
 		if (Input.GetKeyDown(KeyCode.I))
@@ -145,12 +144,12 @@ public class PlayerController : MonoBehaviour
 		int sizeGet = Physics.OverlapSphereNonAlloc(transform.position, range, collidersGet); // »πµÊ∞°¥…«— æ∆¿Ã≈€
 		for (int i = 0; i < sizeGet; i++)
 		{
-			// IGetable getable = collidersGet[i].GetComponent<IGetable>();
+			IGetable getable = collidersGet[i].GetComponent<IGetable>();
 			Item curItem = gameObject.GetComponent<Item>();
 			if (curItem != null)
 			{
-				// getable.Get(this);
-				inventory.AddItem(curItem);
+				getable.Get(this);
+				inventory.AddInven(curItem.name);
 				break;
 			}
 		}

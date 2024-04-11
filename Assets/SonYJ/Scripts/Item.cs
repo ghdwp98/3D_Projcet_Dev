@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Item : ScriptableObject
+public class Item : MonoBehaviour
 {
-    /*public enum Type { Key, Coin, HP };
+    public enum Type { Key, Coin, HP };
     public Type type;
-    public int value;*/
-
     public string itemName;
-    public Sprite itemImage;
-    public int itemCount;
+
+    public Item(string name)
+    {
+        itemName = name;
+    }
 }

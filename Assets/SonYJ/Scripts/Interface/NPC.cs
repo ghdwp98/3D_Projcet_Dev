@@ -27,6 +27,5 @@ public class NPC : MonoBehaviour
 		yield return new WaitForSeconds(0.1f);
 		text1.text = "New Text";
 		text1.gameObject.SetActive(true);
-
 	}
 }
