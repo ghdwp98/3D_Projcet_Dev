@@ -21,34 +21,16 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] Collider[] colliders = new Collider[20];
 	[SerializeField] float range;
 
-	bool isOpen = false;
-
 	private void Start()
 	{
-		// playerhpmp.HP = 50;
-		// Debug.Log(playerhpmp.HP);
+		
 	}
 
 	private void Update()
 	{
 		Move();
 		Fall();
-		// hpText.text = "HP : " + (playerhpmp.HP).ToString();
 
-		if (Input.GetKeyDown(KeyCode.I))
-		{
-			if (!isOpen)
-			{
-				Manager.Inven.GetComponentInChildren<Inventory>().gameObject.SetActive(true);
-				isOpen = true;
-			}
-			else
-			{
-				Manager.Inven.GetComponentInChildren<Inventory>().gameObject.SetActive(false);
-				isOpen = false;
-			}
-
-		}
 	}
 
 	private void OnMove(InputValue value)
@@ -60,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
+
 		if (moveDir != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
 		controller.Move(moveDir * moveSpeed * Time.deltaTime); // 이동
@@ -149,6 +132,12 @@ public class PlayerController : MonoBehaviour
 				break;
 			}
 		}
+
+		if(nearObject != null)
+		{
+			playerhpmp.HP += playerhpmp.HPRecovery;
+			Destroy(nearObject.gameObject);
+		}
 		*/
 		// NPC, 오브젝트에 획득 아이템 전달
 
@@ -164,22 +153,20 @@ public class PlayerController : MonoBehaviour
 		if (hit.collider.gameObject.layer == 31) // Damage
 		{
 			playerhpmp.TakeDamage(5);
-			Debug.Log(playerhpmp.HP);
 			gameObject.layer = 7; // DamageMusi
 			Invoke("OnDamageLayer", 1f);
 			Destroy(hit.gameObject);
 
 			if (playerhpmp.HP <= 0)
-			{
 				transform.position = CheckPoint.GetActiveCheckPointPosition();
-			}
+			if (playerhpmp.HP >= 100)
+				playerhpmp.HP = 100;
 		}
 
 		if (hit.collider.gameObject.layer == 8) // Recovery
 		{
-			playerhpmp.HP += playerhpmp.HPRecovery;
-			Debug.Log(playerhpmp.HP);
-			Destroy(hit.gameObject);
+			nearObject = hit.gameObject;
+			Debug.Log(nearObject.name);
 		}
 
 		/*if(hit.collider.gameObject.layer == 9) // Item

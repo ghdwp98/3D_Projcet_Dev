@@ -1,20 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class BasingScene : BaseScene
 {
     [SerializeField] GameObject player;
     [SerializeField] CharacterController controller;
+    [SerializeField] PooledObject FirePrefab;
+    [SerializeField] PooledObject smallFirePrefab;
+    [SerializeField] int size;
+    [SerializeField] int capacity;
+    [SerializeField] int smallSize;
+    [SerializeField] int smallCapacity;
+    [SerializeField] PooledObject lightningPrefab;
+    [SerializeField] PooledObject dangerCircle;
+
+    bool routine;
+
 
     private void Awake()
     {
-        
+
+
     }
 
     public override IEnumerator LoadingRoutine()
     {
+        Debug.Log("Ç®»ý¼º");
+        Manager.Pool.CreatePool(FirePrefab, size, capacity);
+        Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
+        Manager.Pool.CreatePool(lightningPrefab, size, capacity);
+        Manager.Pool.CreatePool(dangerCircle, size, capacity);
+
         if (GameManager.saved == false)
             yield break;
 
@@ -27,5 +43,5 @@ public class BasingScene : BaseScene
 
     }
 
-    
+
 }

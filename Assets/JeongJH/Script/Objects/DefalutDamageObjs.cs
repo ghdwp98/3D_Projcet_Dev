@@ -38,7 +38,7 @@ public class DefalutDamageObjs : MonoBehaviour
     {
         if(other.gameObject.layer==LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
         {
-            //PlayerHp.Player_Action(damage);
+            PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));
 
         }
