@@ -4,31 +4,20 @@ public class NPCInteract : MonoBehaviour
 {
 	// 사과가 필요한 NPC
 	[SerializeField] Item item;
-	[SerializeField] InvenUI invenUI;
-	bool PlayerCheck;
-
-	private void Start()
-	{
-
-	}
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.X))
-		{
-			CheckItem();
-		}
-	}
 
 	public void CheckItem()
 	{
-		if (Manager.Inven.FindInven(item.name) && PlayerCheck)
+		if (Manager.Inven.FindInven(item.name))
 		{
+			Debug.Log(item.name);
 			Manager.Inven.RemoveInven(item.name);
-			Debug.Log("NPC가 사과를 받고 기뻐합니다.");
+			Manager.Inven.invenUI.PrintNPCText("NPC가 " + item.name + "을 받고 기뻐합니다.");
+			//Debug.Log("NPC가 사과를 받고 기뻐합니다.");
 		}
 		else
 		{
-			Debug.Log("아이템이 없습니다.");
+			Manager.Inven.invenUI.PrintNPCText(item.name + "가 없는거 같은데요? 다시 확인해주세요.");
+			//Debug.Log("아이템이 없습니다.");
 		}
 	}
 
@@ -36,8 +25,6 @@ public class NPCInteract : MonoBehaviour
 	{
 		if (collision.gameObject.layer == 10) // Player
 		{
-			PlayerCheck = true;
-			Debug.Log(PlayerCheck);
 		}
 	}
 
@@ -45,7 +32,7 @@ public class NPCInteract : MonoBehaviour
 	{
 		if (collision.gameObject.layer == 10)
 		{
-			PlayerCheck = false;
+
 		}
 	}
 }

@@ -1,9 +1,4 @@
 using JJH;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,13 +18,8 @@ public class PlayerController : MonoBehaviour
 	GameObject nearObject;
 
 	[Header("Interact")]
-	Collider[] collidersInter = new Collider[20];
+	[SerializeField] Collider[] colliders = new Collider[20];
 	[SerializeField] float range;
-
-	[Header("Get")]
-	Collider[] collidersGet = new Collider[20];
-
-	[SerializeField] Inventory inventory;
 
 	bool isOpen = false;
 
@@ -44,25 +34,20 @@ public class PlayerController : MonoBehaviour
 		Move();
 		Fall();
 		// hpText.text = "HP : " + (playerhpmp.HP).ToString();
-		if (Input.GetKey(KeyCode.Q))
-		{
-			InvenGetItem();
-		}
-
 
 		if (Input.GetKeyDown(KeyCode.I))
 		{
 			if (!isOpen)
 			{
-				inventory.GetComponentInChildren<Inventory>().gameObject.SetActive(true);
+				Manager.Inven.GetComponentInChildren<Inventory>().gameObject.SetActive(true);
 				isOpen = true;
 			}
 			else
 			{
-				inventory.GetComponentInChildren<Inventory>().gameObject.SetActive(false);
+				Manager.Inven.GetComponentInChildren<Inventory>().gameObject.SetActive(false);
 				isOpen = false;
 			}
-			
+
 		}
 	}
 
@@ -129,30 +114,44 @@ public class PlayerController : MonoBehaviour
 
 	private void Interaction()
 	{
-		// 상호작용 가능한 아이템
+		// 아이템 획득
+		int sizeGet = Physics.OverlapSphereNonAlloc(transform.position, range, colliders);
+
+		for(int i = 0; i < sizeGet; i++)
+		{
+			IInteractable target = colliders[i].GetComponent<IInteractable>();
+
+			target?.Interact(this);
+		}
+
+		/*
+		for (int i = 0; i < sizeGet; i++)
+		{
+			IGetable getable = collidersGet[i].GetComponent<IGetable>();
+			//Item curItem = gameObject.GetComponent<Item>();
+			string str = collidersGet[i].name;
+			if (getable != null)
+			{
+				getable.Get(this);
+				Manager.Inven.AddInven(str);
+				break;
+			}
+		}
+
+		// NPC 단순 대화
 		int sizeInter = Physics.OverlapSphereNonAlloc(transform.position, range, collidersInter); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
-		for(int i = 0; i < sizeInter; i++)
+		for (int i = 0; i < sizeInter; i++)
 		{
 			IInteractable interactable = collidersInter[i].GetComponent<IInteractable>();
-			if(interactable != null)
+			if (interactable != null)
 			{
 				interactable.Interact(this);
 				break;
 			}
 		}
+		*/
+		// NPC, 오브젝트에 획득 아이템 전달
 
-		int sizeGet = Physics.OverlapSphereNonAlloc(transform.position, range, collidersGet); // 획득가능한 아이템
-		for (int i = 0; i < sizeGet; i++)
-		{
-			IGetable getable = collidersGet[i].GetComponent<IGetable>();
-			Item curItem = gameObject.GetComponent<Item>();
-			if (curItem != null)
-			{
-				getable.Get(this);
-				inventory.AddInven(curItem.name);
-				break;
-			}
-		}
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -202,10 +201,5 @@ public class PlayerController : MonoBehaviour
 	{
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, range);
-	}
-
-	public void InvenGetItem()
-	{
-		
 	}
 }

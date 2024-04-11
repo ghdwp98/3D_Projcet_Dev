@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Inventory : Singleton<Inventory>
 {
-	[SerializeField] InvenUI invenUI;
+	public InvenUI invenUI;
 	public List<string> items = new List<string>();
 
 	protected override void Awake()
