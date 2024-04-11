@@ -1,3 +1,4 @@
+using JJH;
 using System.Collections;
 using UnityEngine;
 
@@ -21,8 +22,14 @@ public class ReturnPlayerStartPos : MonoBehaviour
         Rigidbody rigid = other.gameObject.GetComponent<Rigidbody>();
         rigid.isKinematic = false;
         controller.enabled = false;
+
+        if(PlayerHp.Player_Action!=null)
+        {
+            PlayerHp.Player_Action(10f); //µ¥¹ÌÁö 10Á¤µµ . 
+        }
+
         other.transform.position = startPos.transform.position + (Vector3.up * 4);
-        yield return new WaitForSeconds(1f); // ÀÌ·± Àá½Ã ¸ØÃß´Â ºÎºÐµéÀº ±×³É ¹ë·¯½º »óÀ¸·Î ¸ÂÃçÁÖ¸é µÊ. 
+        yield return new WaitForSeconds(0.5f); // ÀÌ·± Àá½Ã ¸ØÃß´Â ºÎºÐµéÀº ±×³É ¹ë·¯½º »óÀ¸·Î ¸ÂÃçÁÖ¸é µÊ. 
         controller.enabled = true;
         rigid.isKinematic = true;
 

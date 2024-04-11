@@ -23,14 +23,17 @@ namespace Unity.AI.Navigation.Samples
         [SerializeField] Transform viewPoint;
         [SerializeField] LayerMask targetLayerMask;
         [SerializeField] float range;
-        
+
         private int m_NextGoal = 0;
         Rigidbody rigid;
 
         [Header("NpcDialogue")]
         int dialogCount = 0;
-        [SerializeField] DialogSystem dialogSystem01;
-        [SerializeField] DialogSystem dialogSystem02;
+
+        [SerializeField]
+        DialogSystem[] dialogSystems;
+
+        [SerializeField] GameObject panel;
 
 
         public Method m_Method = Method.Parabola;
@@ -52,7 +55,7 @@ namespace Unity.AI.Navigation.Samples
             while (true)
             {
 
-                if (agent.isOnOffMeshLink) 
+                if (agent.isOnOffMeshLink)
                 {
                     if (m_Method == Method.NormalSpeed)
                         yield return StartCoroutine(NormalSpeed(agent));
@@ -103,6 +106,7 @@ namespace Unity.AI.Navigation.Samples
             float distance = Vector3.Distance(agent.transform.position, destinations[m_NextGoal].position);
             if (distance < 1.5f) // 다음 위치로 이동하도록 함. 
             {
+                // 특정 위치에 도달하면 대화 코루틴 스타트. 
                 StartCoroutine(DialogSetOn(dialogCount));
 
                 if (m_NextGoal < destinations.Length - 1)
@@ -118,28 +122,17 @@ namespace Unity.AI.Navigation.Samples
         // 이 부분 어차피 반복이니까  list형태로 관리해주자. 
         private IEnumerator DialogSetOn(int count)
         {
-            if(count==0)
-            {
-                dialogSystem01.gameObject.SetActive(true);
-                Time.timeScale = 0f;
-                yield return new WaitUntil(() => dialogSystem01.UpdateDialog());
-                Time.timeScale = 1f;
-                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
-            }
-            else if(count==1)
-            {
-                Time.timeScale = 0f;
-                dialogSystem02.gameObject.SetActive(true);
-                yield return new WaitUntil(() => dialogSystem02.UpdateDialog());
-                Time.timeScale = 1f;
-                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
-            }
-            
+            //count를 통해 배열 접근 
+            panel.SetActive(true);
+            dialogSystems[count].gameObject.SetActive(true);
+            Time.timeScale = 0f;
+            yield return new WaitUntil(() => dialogSystems[count].UpdateDialog());
+            Time.timeScale = 1f;
+            dialogSystems[count].gameObject.SetActive(false); //어차피 count로 하니까 대사 다시 안나올듯 ? 
+            dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            panel.SetActive(false);
 
         }
-
-
-
 
         IEnumerator NormalSpeed(NavMeshAgent agent)
         {
@@ -189,7 +182,10 @@ namespace Unity.AI.Navigation.Samples
             Gizmos.DrawWireSphere(viewPoint.position, range);
         }
 
-
+        private void OnTriggerEnter(Collider other) //특정한 레이어에 닿으면 잠시 사라져야함. 
+        {
+            
+        }
 
     }
 }

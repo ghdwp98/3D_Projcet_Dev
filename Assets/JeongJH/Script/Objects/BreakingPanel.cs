@@ -24,11 +24,11 @@ public class BreakingPanel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("콜라이더 충돌");
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("GroundChecking")) //플레이어 발 밑에 달려있는 트리거의 태그. 
         {
             Debug.Log("진입");
             rigid.useGravity = true;
-            Destroy(gameObject, 10f);
+            Destroy(gameObject, 5f);
         }
     }
 }

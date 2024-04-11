@@ -10,6 +10,7 @@ public class FixedFire : MonoBehaviour
     [SerializeField]LayerMask playerLayer;
     [SerializeField] float KnockBackPower;
     [SerializeField] float damage;
+
     private void OnEnable()
     {
         
@@ -35,7 +36,7 @@ public class FixedFire : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
+        if (Extension.Contain(playerLayer,other.gameObject.layer)) //임시로 ppp 이용. 
         {
             PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));

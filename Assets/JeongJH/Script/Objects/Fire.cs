@@ -18,7 +18,7 @@ public class Fire : MonoBehaviour
     [SerializeField] float maxMoveSpeed;
     [SerializeField] PooledObject pooledObject;
     [SerializeField]LayerMask playerLayer;
-    [SerializeField] float KnockBackPower;
+    [SerializeField] float KnockBackPower; //넉백 조금 강하게 해주기. 
     [SerializeField] float damage;
     
     
@@ -45,7 +45,7 @@ public class Fire : MonoBehaviour
     }
 
 
-    IEnumerator ControllerCoroutine(Collider other)
+    IEnumerator ControllerCoroutine(Collider other) //넉백 및 이동불가능 하도록 하기. 
     {
         if(isPoolOn==false)
         {
@@ -68,15 +68,22 @@ public class Fire : MonoBehaviour
     }
     //트리거 + 넉배구현 
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
+        if (Extension.Contain(playerLayer,other.gameObject.layer))  //플레이어라면. 데미지 주기. 
         {
             PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));
 
-        
+
         }
+    }
+
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        
 
         if (other.gameObject.CompareTag("Fire"))
         {

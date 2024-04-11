@@ -36,7 +36,7 @@ public class DefalutDamageObjs : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer==LayerMask.NameToLayer("PPP")) //임시로 ppp 이용. 
+        if(other.gameObject.layer==LayerMask.NameToLayer("Player")) //플레이어라면. 데미지 주기. 
         {
             PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));
