@@ -10,7 +10,6 @@ public class StoneFallSpawner : MonoBehaviour
 
 
     [SerializeField] PooledObject StonePrefab;
-    [SerializeField] GameObject player;
     [SerializeField] bool isTrigger;
     [SerializeField] bool coroutineTime;
     [SerializeField] int size = 10;
@@ -43,17 +42,14 @@ public class StoneFallSpawner : MonoBehaviour
         if(coroutineTime==false) 
         {
             coroutineTime = true;
-            float rand = Random.Range(transform.position.x-5, transform.position.x+5);
-            Vector3 xPos = new Vector3(rand, transform.position.y + 5, transform.position.z);
+            float rand = Random.Range(spawnPointXY.transform.position.z-10, spawnPointXY.transform.position.z+10);
+            Vector3 zPos = new Vector3(spawnPointXY.transform.position.x, spawnPointXY.transform.position.y
+                , rand); //zรเ ทฃดý. 
 
-            //Manager.Pool.GetPool(StonePrefab,xPos,transform.rotation);
-            Manager.Pool.GetPool(StonePrefab, spawnPointXY.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(1f);            
+            Manager.Pool.GetPool(StonePrefab, zPos, Quaternion.identity);
+            yield return new WaitForSeconds(0.7f);            
             coroutineTime = false;
         }
-
-
-        
     }
 
     private void OnTriggerStay(Collider other)
@@ -62,11 +58,11 @@ public class StoneFallSpawner : MonoBehaviour
         {
             impluseCam.Priority = 11;
             impluseCam.LookAt = other.transform;
+
             isTrigger = true;
         }
          
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -74,7 +70,6 @@ public class StoneFallSpawner : MonoBehaviour
             impluseCam.Priority = 9;
             isTrigger = false;
         }
-
-            
+      
     }
 }

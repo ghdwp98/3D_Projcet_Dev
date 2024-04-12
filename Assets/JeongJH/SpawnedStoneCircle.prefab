@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: -8432653419970975233}
   - component: {fileID: 1874354146359976368}
   - component: {fileID: 3346835231992231211}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: SpawnedStoneCircle
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,6 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685db37b911953d4f874275cc782cb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pooledObject: {fileID: 7546538803894345169}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!54 &1874354146359976368
 Rigidbody:
   m_ObjectHideFlags: 0
