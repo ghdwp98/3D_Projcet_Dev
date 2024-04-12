@@ -613,6 +613,7 @@ MonoBehaviour:
   groundChecker: 0
   playerhpmp: {fileID: 0}
   range: 3
+  inventory: {fileID: 0}
 --- !u!143 &2079374512
 CharacterController:
   m_ObjectHideFlags: 0

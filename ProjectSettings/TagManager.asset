@@ -25,11 +25,10 @@ TagManager:
   - Ground
   - DamageMusi
   - Recovery
+  - Item
   - Player
-  - 
-  - 
-  - 
-  - 
+  - TalkNPC
+  - TakeNPC
   - 
   - 
   - 

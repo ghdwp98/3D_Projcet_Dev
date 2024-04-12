@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
 
 		if (other.tag == "Item")
 		{
-			Item item = other.GetComponent<Item>();
+			/*Item item = other.GetComponent<Item>();
 			switch (item.type)
 			{
 				case Item.Type.Key:
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
 					if (key > maxKey)
 						key = maxKey;
 					break;
-			}
+			}*/
 			Destroy(other.gameObject);
 		}
 	}
