@@ -36,13 +36,12 @@ public class PlayerController : MonoBehaviour
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
-		moveDir.x = inputDir.x;
-		moveDir.z = inputDir.y;
+		moveDir.x = -inputDir.x;
+		moveDir.z = -inputDir.y;
 	}
 
 	private void Move()
 	{
-
 		if (moveDir != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
 		controller.Move(moveDir * moveSpeed * Time.deltaTime); // 이동

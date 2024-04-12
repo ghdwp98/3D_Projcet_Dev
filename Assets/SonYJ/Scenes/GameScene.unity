@@ -1732,7 +1732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718463422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2941713, y: 5.778281e-16, z: -9.344088e-17, w: 0.95575273}
+  m_LocalRotation: {x: 0.29417127, y: -0.000000040281964, z: 0.0000000123983925, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 7.793, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3388,7 +3388,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1217597336}
         m_TargetAssemblyTypeName: NPCInteract, Assembly-CSharp
-        m_MethodName: CheckItem
+        m_MethodName: CheckItemApple
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4802,7 +4802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907475728}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2941713, y: 5.778281e-16, z: -9.344088e-17, w: 0.95575273}
+  m_LocalRotation: {x: 0.29417127, y: -0.000000040281964, z: 0.0000000123983925, w: 0.95575273}
   m_LocalPosition: {x: 0, y: 7.793, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
