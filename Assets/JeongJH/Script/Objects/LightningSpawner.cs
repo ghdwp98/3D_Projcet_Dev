@@ -35,8 +35,10 @@ public class LightningSpawner : MonoBehaviour
     private void Awake()
     {
         playerPos = GameObject.FindWithTag("Player");
-        /*Manager.Pool.CreatePool(lightningPrefab, size, capacity);
-        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);*/
+        Manager.Pool.CreatePool(lightningPrefab, size, capacity);
+        Manager.Pool.CreatePool(dangerZonePrefab, size, capacity);
+
+        //임시로 나중에 로딩루틴에서 해주기 --> 메인화면 --> 1챕터 
     }
 
     Collider[] colliders = new Collider[20];

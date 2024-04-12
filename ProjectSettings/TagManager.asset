@@ -39,7 +39,7 @@ TagManager:
   - 
   - Robbery
   - GroundChecking
-  - Item
+  - 
   - Fire
   - Npc
   - Wall
@@ -47,6 +47,7 @@ TagManager:
   - Obstacle
   - PPP
   - Damage
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
