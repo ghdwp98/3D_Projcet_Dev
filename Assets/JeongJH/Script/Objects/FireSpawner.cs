@@ -25,6 +25,7 @@ public class FireSpawner : MonoBehaviour
 
     [SerializeField] PooledObject FirePrefab; //∫“≤… ¿Ã∆Â∆Æ
     [SerializeField] PooledObject smallFirePrefab;
+   
 
 
     private void Start()

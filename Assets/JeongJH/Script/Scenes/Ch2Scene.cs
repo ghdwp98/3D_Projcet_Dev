@@ -22,23 +22,36 @@ public class Ch2Scene : BaseScene
     {
         /*Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);*/
+        Debug.Log("로딩루틴 진행중인데.. 이거 디버그가 안나옴");
+        
 
         if (GameManager.saved == false)
             yield break;
 
         //여기서 위치 저장 가능한지? 순서 확인 할 것. 
         controller.enabled = false;
+        Debug.Log("로딩루틴의 위치 " + GameManager.playerPos);
         player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
         Debug.Log(GameManager.playerPos);
         controller.enabled = true;
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        yield return null;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player")) //플레이어가 닿으면 3챕터 씬 로드... 
+        {
+            Manager.Scene.LoadScene("3M");
+        }
+    }
+
+
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
-        controller = player.GetComponent<CharacterController>();
+       
         Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
 

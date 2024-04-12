@@ -45,6 +45,7 @@ public class CheckPoint : MonoBehaviour
         Activated = true;
         GameManager.playerPos = transform.position;
         GameManager.saved = true;
+        Debug.Log(GameManager.saved); //ture 되는거 맞는데??????? 
         Debug.Log(GameManager.playerPos);
         /*foreach (GameObject cp in checkPointList) //이 함수 부르면 true로 바뀌는데? 
         {

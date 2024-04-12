@@ -24,6 +24,9 @@ namespace Unity.AI.Navigation.Samples
         [SerializeField] LayerMask targetLayerMask;
         [SerializeField] float range;
 
+        public bool isHide; //숨어있는 상태 true 아닌상태 false
+
+
         private int m_NextGoal = 0;
         Rigidbody rigid;
 
@@ -34,6 +37,7 @@ namespace Unity.AI.Navigation.Samples
         DialogSystem[] dialogSystems;
 
         [SerializeField] GameObject panel;
+        MeshRenderer meshRenderer;
 
 
         public Method m_Method = Method.Parabola;
@@ -47,10 +51,13 @@ namespace Unity.AI.Navigation.Samples
         // 차라리 들어갈 때 마다 active fasle 해주고 다른 npc를 미리 준비해 두는게 나을 수 도 있음. 
 
 
+
         IEnumerator Start()
         {
+            isHide = false; //일단 false로 초기화. 
             rigid = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
+            meshRenderer= GetComponent<MeshRenderer>();
             agent.autoTraverseOffMeshLink = false;
             while (true)
             {
@@ -73,9 +80,20 @@ namespace Unity.AI.Navigation.Samples
 
         private void Update()
         {
-
-            FindTarget();
-            NextDest();
+            if(isHide==false)
+            {
+                agent.isStopped = false;
+                // 투명 해제 
+                meshRenderer.enabled = true;
+                FindTarget();
+                NextDest();
+            }
+            else //숨어있는 상태라면. (hide 가 true) 
+            {
+                meshRenderer.enabled = false;
+                agent.isStopped = true; //stop이 안된다?? 
+                agent.transform.localPosition = new Vector3(0, 0, 0);
+            }
 
         }
 
@@ -92,7 +110,7 @@ namespace Unity.AI.Navigation.Samples
                         agent.isStopped = false;
                         agent.SetDestination(destinations[m_NextGoal].transform.position);
                     }
-                    else //플레이어가 범위 내에 있으면 대기. -->아 점프순간에 저장이 되어버려서 다시 돌아오는 상황임. 
+                    else //플레이어가 범위 내에 없으면  대기. -->아 점프순간에 저장이 되어버려서 다시 돌아오는 상황임. 
                     {
                         agent.isStopped = true;
                     }
@@ -129,7 +147,10 @@ namespace Unity.AI.Navigation.Samples
             yield return new WaitUntil(() => dialogSystems[count].UpdateDialog());
             Time.timeScale = 1f;
             dialogSystems[count].gameObject.SetActive(false); //어차피 count로 하니까 대사 다시 안나올듯 ? 
-            dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            if(dialogCount<dialogSystems.Length-1)
+            {
+                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            }        
             panel.SetActive(false);
 
         }

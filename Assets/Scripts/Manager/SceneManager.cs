@@ -13,7 +13,7 @@ public class SceneManager : Singleton<SceneManager>
 
     private BaseScene curScene;
 
-    public string GetCurSceneName()
+    public string GetCurSceneName() //현재 씬을 다시 로드를 한다. 
     {
         return UnitySceneManager.GetActiveScene().name;
     }
