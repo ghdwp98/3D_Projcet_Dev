@@ -7,17 +7,10 @@ public class Ch1Scene :BaseScene
 {
     [SerializeField] GameObject player;
     [SerializeField] CharacterController controller;
-    [SerializeField] PooledObject FirePrefab;
-    [SerializeField] PooledObject smallFirePrefab;
     [SerializeField] int size;
-    [SerializeField] int capacity;
-    [SerializeField] int smallSize;
-    [SerializeField] int smallCapacity;
+    [SerializeField] int capacity;  
     [SerializeField] PooledObject lightningPrefab;
     [SerializeField] PooledObject dangerCircle;
-
-
-
 
 
     public override IEnumerator LoadingRoutine()
@@ -33,5 +26,13 @@ public class Ch1Scene :BaseScene
         yield return null;
     }
 
-    
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Player"))
+		{
+			Manager.Scene.LoadScene("2M");
+		}
+	}
+
 }
