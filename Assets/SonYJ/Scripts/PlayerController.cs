@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float ySpeed; // 실제 이동 Y 속도
 	[SerializeField] bool groundChecker; // 땅에 붙어있는지 확인
 	Vector3 moveDir;
+	Vector3 selfDir;
 
 	[SerializeField] PlayerHp playerhpmp;
 	GameObject nearObject;
@@ -36,15 +37,41 @@ public class PlayerController : MonoBehaviour
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
-		moveDir.x = -inputDir.x;
-		moveDir.z = -inputDir.y;
+		string temp = Manager.Scene.GetCurSceneName();
+		Debug.Log(temp);
+		if(temp == "1MapJaehoon")
+		{
+			moveDir.x = (-1) * inputDir.x;
+			moveDir.z = (-1) * inputDir.y;
+		}
+		else if(temp == "3M")
+		{
+			moveDir.x = (-1) * inputDir.y;
+			moveDir.z = inputDir.x;
+		}
 	}
 
 	private void Move()
 	{
+		/*Vector3 targetPos = transform.position + moveDir;
+		Vector3 framePos = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		Vector3 frameDir = framePos - transform.position;*/
 		if (moveDir != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
-		controller.Move(moveDir * moveSpeed * Time.deltaTime); // 이동
+		// controller.Move(transform.TransformDirection(moveDir.normalized) * moveSpeed * Time.deltaTime); // 이동
+
+		/*float x = Input.GetAxisRaw("Horizontal");
+		float z = Input.GetAxisRaw("Vertical");
+		moveDir = new Vector3(x, 0, z);
+		//controller.Move(moveDir * moveSpeed * Time.deltaTime);
+		// transform.Translate(moveDir * moveSpeed * Time.deltaTime);
+		// transform.position += moveDir * moveSpeed * Time.deltaTime;
+		controller.Move(transform.forward * z * moveSpeed * Time.deltaTime);*/
+
+		/*var dir = Vector3.forward;
+		controller.Move(transform.position + transform.TransformDirection(-dir) * (moveSpeed * Time.deltaTime));*/
+
+		controller.Move(moveDir * moveSpeed * Time.deltaTime);
 	}
 
 	private void OnJump(InputValue value)
