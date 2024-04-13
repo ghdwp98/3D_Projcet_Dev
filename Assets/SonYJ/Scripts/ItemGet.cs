@@ -15,6 +15,6 @@ public class ItemGet : MonoBehaviour
 		Debug.Log("1");
 		Debug.Log(playerhpmp.HP);
 		playerhpmp.HP += playerhpmp.HPRecovery;
-
+		Destroy(gameObject);
 	}
 }
