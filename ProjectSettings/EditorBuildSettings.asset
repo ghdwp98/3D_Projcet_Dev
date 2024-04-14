@@ -36,6 +36,9 @@ EditorBuildSettings:
     path: Assets/BaekJH/3M2.unity
     guid: 3f81fbfcb9801314389da8339c311257
   - enabled: 1
+    path: Assets/BaekJH/1MapJaehoon.unity
+    guid: 9427940238e44054f981ee80d9979b1b
+  - enabled: 1
     path: Assets/BaekJH/3M3.unity
     guid: dc7b6faf15c68cf4892c130750b8b7fc
   - enabled: 1

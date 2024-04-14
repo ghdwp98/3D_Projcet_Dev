@@ -5,6 +5,8 @@ using UnityEngine.InputSystem.XR;
 
 public class Ch1Scene :BaseScene
 {
+    //번개 생성. 
+
     [SerializeField] GameObject player;
     [SerializeField] CharacterController controller;
     [SerializeField] int size;
@@ -15,6 +17,12 @@ public class Ch1Scene :BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
+        PlayerPrefs.SetString("LastScene",
+            Manager.Scene.GetCurSceneName());
+
+       
+
+
         if (GameManager.saved == false)
             yield break;
 
