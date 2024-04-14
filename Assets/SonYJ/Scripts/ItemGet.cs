@@ -12,9 +12,13 @@ public class ItemGet : MonoBehaviour
 
 	public void GetHP()
 	{
-		Debug.Log("1");
-		Debug.Log(playerhpmp.HP);
 		playerhpmp.HP += playerhpmp.HPRecovery;
 		Destroy(gameObject);
 	}
+	public void LoseHP()
+	{
+		playerhpmp.TakeDamage(10);
+		Destroy(gameObject);
+	}
+
 }

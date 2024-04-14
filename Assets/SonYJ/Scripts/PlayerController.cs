@@ -31,14 +31,12 @@ public class PlayerController : MonoBehaviour
 	{
 		Move();
 		Fall();
-
 	}
 
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
 		string temp = Manager.Scene.GetCurSceneName();
-		Debug.Log(temp);
 		if(temp == "1MapJaehoon")
 		{
 			moveDir.x = (-1) * inputDir.x;
@@ -53,24 +51,8 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		/*Vector3 targetPos = transform.position + moveDir;
-		Vector3 framePos = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-		Vector3 frameDir = framePos - transform.position;*/
 		if (moveDir != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
-		// controller.Move(transform.TransformDirection(moveDir.normalized) * moveSpeed * Time.deltaTime); // 이동
-
-		/*float x = Input.GetAxisRaw("Horizontal");
-		float z = Input.GetAxisRaw("Vertical");
-		moveDir = new Vector3(x, 0, z);
-		//controller.Move(moveDir * moveSpeed * Time.deltaTime);
-		// transform.Translate(moveDir * moveSpeed * Time.deltaTime);
-		// transform.position += moveDir * moveSpeed * Time.deltaTime;
-		controller.Move(transform.forward * z * moveSpeed * Time.deltaTime);*/
-
-		/*var dir = Vector3.forward;
-		controller.Move(transform.position + transform.TransformDirection(-dir) * (moveSpeed * Time.deltaTime));*/
-
 		controller.Move(moveDir * moveSpeed * Time.deltaTime);
 	}
 
@@ -80,13 +62,13 @@ public class PlayerController : MonoBehaviour
 			Jump();
 	}
 
-	private void Jump()
+	private void Jump() // c
 	{
 		// 점프 버튼 눌리고 controller.isGrounded가 true일 때
 		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
 		ySpeed = jumpSpeed;
 		groundChecker = false;
-	} // c
+	}
 
 	private void Fall()
 	{
@@ -104,11 +86,11 @@ public class PlayerController : MonoBehaviour
 			UnDown();
 	}
 
-	private void Down()
+	private void Down() // z
 	{
 		controller.radius = 0.3f;
 		controller.height = 0.5f;
-	} // z
+	}
 
 	private void UnDown()
 	{
@@ -132,39 +114,6 @@ public class PlayerController : MonoBehaviour
 
 			target?.Interact(this);
 		}
-
-		/*
-		for (int i = 0; i < sizeGet; i++)
-		{
-			IGetable getable = collidersGet[i].GetComponent<IGetable>();
-			//Item curItem = gameObject.GetComponent<Item>();
-			string str = collidersGet[i].name;
-			if (getable != null)
-			{
-				getable.Get(this);
-				Manager.Inven.AddInven(str);
-				break;
-			}
-		}
-
-		// NPC 단순 대화
-		int sizeInter = Physics.OverlapSphereNonAlloc(transform.position, range, collidersInter); // 플레이어 위치부터 범위만큼, 충돌체들을 반환해서 상호작용
-		for (int i = 0; i < sizeInter; i++)
-		{
-			IInteractable interactable = collidersInter[i].GetComponent<IInteractable>();
-			if (interactable != null)
-			{
-				interactable.Interact(this);
-				break;
-			}
-		}
-
-		if(nearObject != null)
-		{
-			playerhpmp.HP += playerhpmp.HPRecovery;
-			Destroy(nearObject.gameObject);
-		}
-		*/
 		// NPC, 오브젝트에 획득 아이템 전달
 
 	}
@@ -178,31 +127,12 @@ public class PlayerController : MonoBehaviour
 
 		if (hit.collider.gameObject.layer == 31) // Damage
 		{
-			playerhpmp.TakeDamage(5);
 			gameObject.layer = 7; // DamageMusi
 			Invoke("OnDamageLayer", 1f);
-			Destroy(hit.gameObject);
 
 			if (playerhpmp.HP <= 0)
 				transform.position = CheckPoint.GetActiveCheckPointPosition();
-			if (playerhpmp.HP >= 100)
-				playerhpmp.HP = 100;
 		}
-
-		if (hit.collider.gameObject.layer == 8) // Recovery
-		{
-			nearObject = hit.gameObject;
-			Debug.Log(nearObject.name);
-		}
-
-		/*if(hit.collider.gameObject.layer == 9) // Item
-		{
-			inventory.name = hit.collider.gameObject.name;
-			inventory.count = hit.collider.gameObject.GetComponent<Inventory>().count++;
-			Debug.Log(inventory.name);
-			Debug.Log(inventory.count);
-			inventory.SetItem();
-		}*/
 	}
 
 	void OnDamageLayer()
