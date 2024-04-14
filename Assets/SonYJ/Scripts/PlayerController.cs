@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("Component")]
 	[SerializeField] CharacterController controller;
+	[SerializeField] Animator ani;
 
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
@@ -13,7 +14,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float ySpeed; // 실제 이동 Y 속도
 	[SerializeField] bool groundChecker; // 땅에 붙어있는지 확인
 	Vector3 moveDir;
-	Vector3 selfDir;
 
 	[SerializeField] PlayerHp playerhpmp;
 	GameObject nearObject;
@@ -36,6 +36,14 @@ public class PlayerController : MonoBehaviour
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
+		if(inputDir != null)
+		{
+			ani.SetBool("walk", true);
+		}
+		else
+		{
+			ani.SetBool("walk", false);
+		}
 		string temp = Manager.Scene.GetCurSceneName();
 		if(temp == "1MapJaehoon")
 		{
@@ -66,8 +74,10 @@ public class PlayerController : MonoBehaviour
 	{
 		// 점프 버튼 눌리고 controller.isGrounded가 true일 때
 		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
+		ani.SetTrigger("jump");
 		ySpeed = jumpSpeed;
 		groundChecker = false;
+		
 	}
 
 	private void Fall()
