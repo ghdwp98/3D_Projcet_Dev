@@ -10,11 +10,14 @@ public class MainSceneButton : MonoBehaviour
     private void Start()
     {
         sceneName = PlayerPrefs.GetString("LastScene");      //저장 된 씬
+        Debug.Log(sceneName);
     }
 
 
-    public void ch1Load()  //start버튼 
+    public void ch1Load()  //start버튼 누르면 저장 데이터 초기화시키기. 
     {
+        PlayerPrefs.DeleteAll();
+
         Manager.Scene.LoadScene("1MAPJaehoon");
     }
 

@@ -173,14 +173,15 @@ namespace JJH
                 roberry.startTimer = true;                
                 animator.SetBool("isWalking", true);
                 animator.SetBool("isRunning", false);
-                FindTarget();
+                
 
             }
             public override void Update() //agent의 컴포넌트 speed로 순찰도는 속도를 조절해줄 수 있음. 
             {
                 float distance = Vector3.Distance(agent.transform.position, patrol[m_NextGoal].position);
-                if (distance < 0.5f)
+                if (distance < 1f)
                 {
+                    Debug.Log("1f이내로 목적지에 접근함");
                     m_NextGoal = m_NextGoal != patrol.Length - 1 ? m_NextGoal + 1 : 0; //이 부분 나중에 확인.
                 }
                 agent.SetDestination(patrol[m_NextGoal].position);
@@ -221,16 +222,22 @@ namespace JJH
             public override void Enter()
             {
                 Debug.Log(State.Wander);
-                agent.speed = patrolSpeed; 
+                agent.speed = patrolSpeed;
+                //animator.SetBool("isRunning", false);
+                // animator.SetBool("isWalking", true); //워킹 상태로 움직여주자.WW
                 animator.SetBool("isRunning", false);
-                animator.SetBool("isWalking", true); //워킹 상태로 움직여주자.WW
-                goals = CalculateWanderPosition(); //랜덤 계속 부르면 안되니까 enter로 생성. 
+                animator.SetBool("isWalking", false);
+
+
+
+
+                //goals = CalculateWanderPosition(); //랜덤 계속 부르면 안되니까 enter로 생성. 
             }
             public override void Update()
             {
                 currentTime += Time.deltaTime;
 
-                float distance = Vector3.Distance(agent.transform.position, goals);
+                /*float distance = Vector3.Distance(agent.transform.position, goals);
                 if (distance < 1f) //1 정도로 해보자. 좀 빠르게 휙휙 바뀌는 느낌으로 
                 {
                     goals= CalculateWanderPosition(); //새로 다시 부름 --> 이 부분 범위제한 안되면 그냥 치우고 idle하자. 
@@ -239,7 +246,7 @@ namespace JJH
 
                 Vector3 to = new Vector3(agent.destination.x, 0, agent.destination.z);
                 Vector3 from = new Vector3(roberry.transform.position.x, 0, roberry.transform.position.z);
-                roberry.transform.rotation = Quaternion.LookRotation(to - from);
+                roberry.transform.rotation = Quaternion.LookRotation(to - from);*/
 
             }
             public override void Transition()
@@ -334,7 +341,6 @@ namespace JJH
                 count += Time.deltaTime;
                 if (count > 2) //2초 후. 
                 {
-
                     // 이벤트 관리하는 오브젝트 불러온 다음에 자기자신을 파괴한다. or 이벤트 관리 다른 방법 있으면 그거로 진행. 
                     Destroy(roberry.gameObject);
                 }
