@@ -22,12 +22,9 @@ public class Ch2Scene : BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
-        PlayerPrefs.SetString("LastScene",
-           Manager.Scene.GetCurSceneName());
 
         /*Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);*/
-        
 
         if (GameManager.saved == false)
             yield break;

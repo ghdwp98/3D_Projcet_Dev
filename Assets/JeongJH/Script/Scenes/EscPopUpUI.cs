@@ -14,6 +14,13 @@ public class EscPopUpUI : MonoBehaviour
     [SerializeField]PopUpUI escPopUPUI;
    
 
+    public void SaveData()
+    {
+        PlayerPrefs.SetString("LastScene",
+            Manager.Scene.GetCurSceneName()); //현재씬을 저장해놓음. 
+    }
+
+
    
     //씬 재로드 팝업 
     public void RestartScene() //씬 재로드 (씬 다시 시작 ) 

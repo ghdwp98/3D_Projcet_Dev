@@ -9,8 +9,7 @@ public class Ch3_1Scene : BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
-        PlayerPrefs.SetString("LastScene",
-            Manager.Scene.GetCurSceneName());
+        
         yield return null;
     }
 }

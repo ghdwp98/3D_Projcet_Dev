@@ -17,11 +17,6 @@ public class Ch1Scene :BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
-        PlayerPrefs.SetString("LastScene",
-            Manager.Scene.GetCurSceneName());
-
-       
-
 
         if (GameManager.saved == false)
             yield break;
