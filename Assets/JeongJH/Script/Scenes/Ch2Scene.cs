@@ -15,14 +15,18 @@ public class Ch2Scene : BaseScene
     [SerializeField] int smallSize;
     [SerializeField] int smallCapacity;
 
+    [SerializeField] PopUpUI escPopUPUI;
+
     //아기 산불들은 들어가면 생성되어야 하는데 그 위치를 정해주는건 빈 오브젝트를 넣어둘까? 
 
 
     public override IEnumerator LoadingRoutine()
     {
+        PlayerPrefs.SetString("LastScene",
+           Manager.Scene.GetCurSceneName());
+
         /*Manager.Pool.CreatePool(FirePrefab, size, capacity);
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);*/
-        Debug.Log("로딩루틴 진행중인데.. 이거 디버그가 안나옴");
         
 
         if (GameManager.saved == false)
@@ -39,6 +43,16 @@ public class Ch2Scene : BaseScene
     }
 
 
+    private void Update()
+    {
+        //메인씬이 아닐때만 esc키 이용가능. 
+        if (Input.GetKeyDown(KeyCode.Escape) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
+        {
+            Debug.Log("겟키 들어감");
+            Manager.UI.ShowPopUpUI(escPopUPUI); //ESC팝업 UI 
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")) //플레이어가 닿으면 3챕터 씬 로드... 
@@ -47,8 +61,6 @@ public class Ch2Scene : BaseScene
         }
     }
 
-
-
     private void Awake()
     {
        
@@ -56,9 +68,6 @@ public class Ch2Scene : BaseScene
         Manager.Pool.CreatePool(smallFirePrefab, smallSize, smallCapacity);
 
         // 씬 넘기면서 하기 귀찮으니까 일단 여기서하고 나중에 변경. 
-
-
-
 
     }
 

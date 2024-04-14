@@ -5,13 +5,26 @@ using UnityEngine;
 
 public class MainSceneButton : MonoBehaviour
 {
-    public void MainSceneLoad()
+    string sceneName;
+
+    private void Start()
     {
-        Manager.Scene.LoadScene("TutorialScene");
+        sceneName = PlayerPrefs.GetString("LastScene");      //저장 된 씬
     }
 
 
-    public void On0ClickExit()
+    public void ch1Load()  //start버튼 
+    {
+        Manager.Scene.LoadScene("1MAPJaehoon");
+    }
+
+    public void ContinueBtn()
+    {
+        Manager.Scene.LoadScene(sceneName); //저장된 씬을 로드함. 
+    }
+
+
+    public void On0ClickExit()  //quit 버튼 
     {
         Application.Quit();
     }

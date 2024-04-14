@@ -12,52 +12,29 @@ public class EscPopUpUI : MonoBehaviour
     // ESC 키를 누르면 팝업뜨고 
 
     [SerializeField]PopUpUI escPopUPUI;
-    //SerializeField] PopUpUI soundPopUPUI;
-    
-    
-    public void SoundBtn()
-    {
-        //Manager.UI.ShowPopUpUI(soundPopUPUI);
-    }
+   
 
-    public void Update()
-    {
-        
-        //메인씬이 아닐때만 esc키 이용가능. 
-        if (Input.GetKeyDown(KeyCode.Escape)&& UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
-        {
-            Debug.Log("겟키 들어감");
-            Manager.UI.ShowPopUpUI(escPopUPUI); //ESC팝업 UI 
-        }
-
-    }
-
-    
-
+   
     //씬 재로드 팝업 
-    public void RestartGameScene() //씬 재로드 (씬 다시 시작 ) 
+    public void RestartScene() //씬 재로드 (씬 다시 시작 ) 
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        Manager.UI.ClearPopUpUI();
+        Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName());
     }
-
-    public void ReturnGame() // 팝업 전부 끄기 -->다시 시작 느낌. 
+    public void ReturnGame() // 팝업 전부 끄기 --> 다시 게임화면으로 
     {       
         Manager.UI.ClearPopUpUI();
     }
 
     public void GmaeQuit() //게임종료
     {
+        Manager.UI.ClearPopUpUI();
         Application.Quit();
     }
 
-    public void MainReturnButton() //팝업 1개 끄기 
+    public void MainScene() //메인화면으로 이동. 
     {
-        Manager.UI.ClosePopUpUI(); 
+        Manager.UI.ClearPopUpUI();
+        Manager.Scene.LoadScene("MainScene");
     }
-
-
-
-
-
 }
