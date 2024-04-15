@@ -24,6 +24,8 @@ namespace JJH
         [SerializeField] float damage;
         [SerializeField] float KnockBackPower;
 
+        [SerializeField] Collider target;
+
         string attack;
         int size = 20;
         Vector3 dirToTarget;
@@ -33,6 +35,8 @@ namespace JJH
         Rigidbody rigid;
         CapsuleCollider capsuleCollider;
         Animator animator;
+
+        bool isCoroutine;
 
 
         public enum State
@@ -134,7 +138,7 @@ namespace JJH
                     ChangeState(State.Trace);
                 }
             }
-            Collider[] colliders = new Collider[20];
+            Collider[] colliders = new Collider[100];
             private void FindTarget()
             {
                 size = Physics.OverlapSphereNonAlloc(viewPoint.position, range, colliders, targetLayerMask);
@@ -167,13 +171,12 @@ namespace JJH
             }
             public override void Enter()
             {
-                Debug.Log(State.Trace);
+                
                 animator.Play("Swim/Fly");
             }
             public override void Update()
             {
                 FindTarget();
-                Debug.Log(size); //쿨타임 찍어보자. 
                 
                 
             }
@@ -234,7 +237,8 @@ namespace JJH
                 Debug.Log(State.Attack);
 
                 animator.Play(monster.attack);
-                PlayerHp.Player_Action(monster.damage); 
+                PlayerHp.Player_Action(monster.damage);
+                
                 
             }
             public override void Update()
@@ -247,7 +251,8 @@ namespace JJH
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName(monster.attack) == true)
                 {
                     if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) //애니메이션 종료. 
-                    {                  
+                    {
+                        Debug.Log("attack -> trace 전환");
                         ChangeState(State.Trace);
                     }
                 }
@@ -344,15 +349,18 @@ namespace JJH
             }
             
         }
+
+        
         private void OnTriggerExit(Collider other)
         {
+            
             if (Extension.Contain(targetLayerMask, other.gameObject.layer))
             {
                 Debug.Log("트리거 아님.");
                 isTriggerOn = false;
             }
         }
-
+        
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
@@ -379,19 +387,28 @@ namespace JJH
 
         IEnumerator ControllerCoroutine(Collider other)
         {
-            Vector3 direction = other.transform.position - transform.position;
-            CharacterController characterController = other.GetComponent<CharacterController>();
-            if (characterController != null)
+            if(isCoroutine==false)
             {
-                characterController.enabled = false;
-                Rigidbody playerRigid = other.GetComponent<Rigidbody>();
-                playerRigid.isKinematic = false;
-                playerRigid.velocity = Vector3.zero;
-                playerRigid.velocity = direction * KnockBackPower;
-                yield return new WaitForSeconds(0.7f);
-                playerRigid.isKinematic = true;
-                characterController.enabled = true;
+                isCoroutine=true;
+                Vector3 direction = other.transform.position - transform.position;
+                CharacterController characterController = other.GetComponent<CharacterController>();
+                if (characterController != null)
+                {
+                    characterController.enabled = false;
+                    Rigidbody playerRigid = other.GetComponent<Rigidbody>();
+                    playerRigid.isKinematic = false;
+                    playerRigid.velocity = Vector3.zero;
+                    playerRigid.velocity = direction * KnockBackPower;
+                    Debug.Log($"대기 전 : {playerRigid.velocity}");
+                    yield return new WaitForSeconds(0.7f);
+                    Debug.Log($"대기 후 : {playerRigid.velocity}");
+                    playerRigid.isKinematic = true;
+                    Debug.Log($"키네마틱 후 : {playerRigid.velocity}");
+                    characterController.enabled = true;
+                    isCoroutine = false;
+                }
             }
+            
         }
 
     }

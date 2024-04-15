@@ -52,7 +52,7 @@ public class LightningSpawner : MonoBehaviour
             {           
                 lightningZone[count] = Random.insideUnitSphere * circleRnage;
                 createPos[count] = playerPos.transform.position + lightningZone[count];
-                createPos[count].y = playerPos.transform.position.y; //플레이어의 y 위치와 똑같이?
+                createPos[count].y = playerPos.transform.position.y+0.5f; //플레이어의 y 위치와 똑같이?
             }
            
             for(int i=0;i<lightningZone.Length;i++)

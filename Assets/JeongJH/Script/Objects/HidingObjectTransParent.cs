@@ -47,7 +47,7 @@ public class HidingObjectTransParent : MonoBehaviour
         {
             boxCollider.enabled = true;
             material.color = new Color32(255, 255, 255, 255);
-            other.gameObject.layer = 9; // 아 이게 문제가 뭐냐면 트리거가 tag가 player인데... 이게 
+            other.gameObject.layer = LayerMask.NameToLayer("Player"); // 아 이게 문제가 뭐냐면 트리거가 tag가 player인데... 이게 
             // 지금 플레이어로 바뀌어서 그럼. --> 바닥에 있어서 exit이 되어버림. 
 
         }
