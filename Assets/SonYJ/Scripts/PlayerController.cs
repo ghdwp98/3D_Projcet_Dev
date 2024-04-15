@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("Component")]
 	[SerializeField] CharacterController controller;
+	[SerializeField] Animator ani;
 
 	[Header("Spec")]
 	[SerializeField] float moveSpeed;
@@ -13,7 +14,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] float ySpeed; // 실제 이동 Y 속도
 	[SerializeField] bool groundChecker; // 땅에 붙어있는지 확인
 	Vector3 moveDir;
-	Vector3 selfDir;
 
 	[SerializeField] PlayerHp playerhpmp;
 	GameObject nearObject;
@@ -36,6 +36,15 @@ public class PlayerController : MonoBehaviour
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
+		if(inputDir != Vector3.zero)
+		{
+			ani.SetBool("walk", true);
+		}
+		else
+		{
+			Debug.Log("123");
+			ani.SetBool("walk", false);
+		}
 		string temp = Manager.Scene.GetCurSceneName();
 		if(temp == "1MapJaehoon")
 		{
@@ -66,8 +75,10 @@ public class PlayerController : MonoBehaviour
 	{
 		// 점프 버튼 눌리고 controller.isGrounded가 true일 때
 		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
+		ani.SetTrigger("jump");
 		ySpeed = jumpSpeed;
 		groundChecker = false;
+		
 	}
 
 	private void Fall()
@@ -88,14 +99,14 @@ public class PlayerController : MonoBehaviour
 
 	private void Down() // z
 	{
-		controller.radius = 0.3f;
-		controller.height = 0.5f;
+		controller.radius = 0.6f;
+		controller.height = 2.0f;
 	}
 
 	private void UnDown()
 	{
-		controller.radius = 0.6f;
-		controller.height = 1f;
+		controller.radius = 0.5f;
+		controller.height = 2.7f;
 	}
 
 	private void OnInteraction(InputValue value) // x
@@ -113,6 +124,7 @@ public class PlayerController : MonoBehaviour
 			IInteractable target = colliders[i].GetComponent<IInteractable>();
 
 			target?.Interact(this);
+			break; // 제일 가까운 하나 상호작용하면 break로 멈추기, 여러개 할 필요 X
 		}
 		// NPC, 오브젝트에 획득 아이템 전달
 
