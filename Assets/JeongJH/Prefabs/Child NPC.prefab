@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5031607574047161104}
   - component: {fileID: 7510921130103953582}
   - component: {fileID: 8987426284552082026}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,9 +117,9 @@ GameObject:
   - component: {fileID: 6880553028929065473}
   - component: {fileID: 8885604396620112110}
   - component: {fileID: 6144347923614443435}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: Child NPC
-  m_TagString: Untagged
+  m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,8 +256,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1867560122157472328}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 10
+  m_Radius: 0.8
+  m_Speed: 25
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -284,8 +284,10 @@ MonoBehaviour:
   viewPoint: {fileID: 8045024675106256854}
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  range: 5
+    m_Bits: 1024
+  range: 10
+  isHide: 0
+  dialogCount: 0
   dialogSystems:
   - {fileID: 289122575052846190}
   - {fileID: 4075027371489724056}
@@ -329,6 +331,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1895214076518758618, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895214076518758618, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -353,12 +359,20 @@ PrefabInstance:
       value: -97
       objectReference: {fileID: 0}
     - target: {fileID: 3822059024285004143, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822059024285004143, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4697537954090003890, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 424
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893330467888933989, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4893330467888933989, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_IsActive
@@ -389,8 +403,16 @@ PrefabInstance:
       value: PanelDiaglog
       objectReference: {fileID: 0}
     - target: {fileID: 6551602219576720054, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551602219576720054, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691935489568914842, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7691935489568914842, guid: 52fd67ba95644b743857cd1be76b0beb, type: 3}
       propertyPath: m_IsActive
@@ -638,6 +660,10 @@ PrefabInstance:
       value: DialogSystem4
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -745,6 +771,10 @@ PrefabInstance:
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_Name
       value: DialogSystem6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
@@ -856,6 +886,10 @@ PrefabInstance:
       value: DialogSystem1
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -963,6 +997,10 @@ PrefabInstance:
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_Name
       value: DialogSystem2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
@@ -1074,6 +1112,10 @@ PrefabInstance:
       value: DialogSystem5
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1183,6 +1225,10 @@ PrefabInstance:
       value: DialogSystem3
       objectReference: {fileID: 0}
     - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127410657535268260, guid: eb7f13a88ee268740a8bc57f0f5d7533, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1262,6 +1308,10 @@ PrefabInstance:
     - target: {fileID: 9167995116420661461, guid: 8dc7c28796d150748acda1bd40b2368c, type: 3}
       propertyPath: m_Name
       value: DialogTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 9167995116420661461, guid: 8dc7c28796d150748acda1bd40b2368c, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9167995116420661461, guid: 8dc7c28796d150748acda1bd40b2368c, type: 3}
       propertyPath: m_IsActive
