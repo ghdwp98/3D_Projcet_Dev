@@ -9,7 +9,7 @@ public class SoundManager : Singleton<SoundManager>
     public float BGMVolme { get { return bgmSource.volume; } set { bgmSource.volume = value; } }
     public float SFXVolme { get { return sfxSource.volume; } set { sfxSource.volume = value; } }
 
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(AudioClip clip) //playBgm 이용하기 . --> 이전 브금 끊고 사용가능. 
     {
         if (bgmSource.isPlaying)
         {

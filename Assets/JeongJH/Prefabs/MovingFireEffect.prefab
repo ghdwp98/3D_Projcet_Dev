@@ -4994,7 +4994,7 @@ MonoBehaviour:
   pooledObject: {fileID: 4007351123054317057}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   KnockBackPower: 5
   damage: 50
 --- !u!136 &2379763594150630266

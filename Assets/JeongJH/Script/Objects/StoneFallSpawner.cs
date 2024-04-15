@@ -47,7 +47,7 @@ public class StoneFallSpawner : MonoBehaviour
                 , rand); //zรเ ทฃดý. 
 
             Manager.Pool.GetPool(StonePrefab, zPos, Quaternion.identity);
-            yield return new WaitForSeconds(0.7f);            
+            yield return new WaitForSeconds(0.9f);            
             coroutineTime = false;
         }
     }
@@ -56,8 +56,6 @@ public class StoneFallSpawner : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            impluseCam.Priority = 11;
-            impluseCam.LookAt = other.transform;
 
             isTrigger = true;
         }
@@ -67,7 +65,7 @@ public class StoneFallSpawner : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            impluseCam.Priority = 9;
+            
             isTrigger = false;
         }
       

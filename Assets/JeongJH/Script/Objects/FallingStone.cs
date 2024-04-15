@@ -9,7 +9,7 @@ public class FallingStone : MonoBehaviour
     [SerializeField]PooledObject pooledObject; //Auto Release 5초. 
     [SerializeField] LayerMask playerLayer;
     [SerializeField] float KnockBackPower;
-    Rigidbody rigid;
+    [SerializeField] Rigidbody rigid;
 
     
 
@@ -17,11 +17,20 @@ public class FallingStone : MonoBehaviour
     private void OnEnable()  //spawner에서 생성하고 player 위의 위치로 이동시키자. 
     {
         //여러가지 있으면 재생해주고. 
-        rigid= GetComponent<Rigidbody>();
+        //rigid= GetComponent<Rigidbody>();
         KnockBackPower = 5f;
-
+        
 
     }
+
+
+    private void Update()
+    {
+        
+    }
+
+
+
 
     private void OnCollisionEnter(Collision collision) //무적일 때는 공격안받아야 하니까 레이어로 체크하자. 
     {
