@@ -16,7 +16,7 @@ public class Inventory : Singleton<Inventory>
 	{
 		if (!FindInven(str))
 		{
-			if (items.Count < 4)
+			if (items.Count < 3)
 			{
 				items.Add(str);
 				invenUI.PrintNameText();

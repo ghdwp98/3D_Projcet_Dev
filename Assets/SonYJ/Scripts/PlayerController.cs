@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		if (groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
+		if (Manager.Scene.GetCurSceneName() != "3M2" && Manager.Scene.GetCurSceneName() != "3M3" &&  groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
 			Jump();
 	}
 
