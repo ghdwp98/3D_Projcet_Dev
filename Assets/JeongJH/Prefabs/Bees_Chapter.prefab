@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8114249833258863062}
   - component: {fileID: 1297605209111092396}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: Chick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5050202535209801249}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: tail.01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1732346269310701310}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: tail.02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 337736247966201375}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: hair.02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 1260263233716497007}
   - component: {fileID: 872531466591893377}
   - component: {fileID: 5485822507707033754}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: Bees_Chapter
   m_TagString: Damage
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.18
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &872531466591893377
 MonoBehaviour:
@@ -310,12 +310,12 @@ MonoBehaviour:
   viewPoint: {fileID: 1374138515320633940}
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  range: 10
-  angle: 90
+  range: 15
+  angle: 138
   onGround: 0
   groundLayer:
     serializedVersion: 2
@@ -326,6 +326,7 @@ MonoBehaviour:
   startPos: {fileID: 0}
   damage: 10
   KnockBackPower: 10
+  target: {fileID: 0}
   stateEnum: 0
 --- !u!135 &5485822507707033754
 SphereCollider:
@@ -357,7 +358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 91736784424329382}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2751642251834184721}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: wing.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +421,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4645771994711618764}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: wing.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,7 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3793405253473714134}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: hair.01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1902686223606421296}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1494497788856114043}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: feet.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3908844648395498357}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: feet.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734518476608811080}
-  m_Layer: 31
+  m_Layer: 30
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

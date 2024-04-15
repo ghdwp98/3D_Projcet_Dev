@@ -54,7 +54,8 @@ namespace JJH
         public override void TakeDamage(float damage)
         {
             HP -= damage;
-            
+
+            Debug.Log(HP);
             if (HP <= 0) //플레이어 사망임. 
             {
                 PlayerDie();
@@ -72,6 +73,7 @@ namespace JJH
             Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName()); //이걸로 씬 재로드 일반화 가능
             // 현재씬을 재로드 하는 기능임. --> 각 베이스씬 상속 오브젝트마다 
             // gameMnager의 playerPos를 가져오면됨. 
+            Debug.Log("플레이어다이진입");
 
         }
 

@@ -157,20 +157,20 @@ public class PlayerController : MonoBehaviour
 		else
 			groundChecker = false;
 
-		if (hit.collider.gameObject.layer == 31) // Damage
+		/*if (hit.collider.gameObject.layer == 31) // Damage
 		{
 			gameObject.layer = 7; // DamageMusi
 			Invoke("OnDamageLayer", 1f);
 
 			if (playerhpmp.HP <= 0)
 				transform.position = CheckPoint.GetActiveCheckPointPosition();
-		}
+		}*/
 	}
 
-	void OnDamageLayer()
+	/*void OnDamageLayer()
 	{
 		gameObject.layer = 0; // Default
-	}
+	}*/
 
 	private void OnDrawGizmosSelected()
 	{
