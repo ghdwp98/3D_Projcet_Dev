@@ -1,6 +1,8 @@
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Playables;
 
 namespace JJH
 {
@@ -20,6 +22,8 @@ namespace JJH
         public float sec = 180f;
         public int min;
         public TextMeshProUGUI countDownText;
+        [SerializeField] GameObject timeLineDirector;
+        [SerializeField] CinemachineVirtualCamera playerCamera;
 
 
 
@@ -47,10 +51,11 @@ namespace JJH
         private void Awake() //이거 스포너에서 생성해줄거니까 그거 생각하면서 작성. 
         {
 
-            stateMachine = new StateMachine<State>();
+            
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             rigid = GetComponent<Rigidbody>();
+            stateMachine = new StateMachine<State>();
 
             stateMachine.AddState(State.Intro, new IntroState(this)); //진짜 시작은 인트로로 --> 인트로에서 타임라인진행. 
             stateMachine.AddState(State.Patrol, new PatrolState(this));
@@ -59,13 +64,14 @@ namespace JJH
             stateMachine.AddState(State.Wander, new WanderState(this));
 
             agent.updateRotation = false; //NavMeshAgent에서 회전을 업데이트 하지 않도록 설정 (수동 업데이트 진행.)
-            stateMachine.Start(State.Patrol); //임시로 시작을 패트롤 상태로 두기. 
+            stateMachine.Start(State.Intro); //인트로에서 타임라인 진행 후 
 
         }
 
         private void Start()
         {
             playerObj = GameObject.FindWithTag("Player");
+            agent.enabled = false;
         }
 
         private void Update()
@@ -143,13 +149,38 @@ namespace JJH
         {
             public IntroState(Robbery robbery) : base(robbery) { }
 
+            public double timeCount = 0;
+            PlayableDirector playableDirector;
             public override void Enter()
             {
-                // 시네머신 조정 + 타임라인 실시 등의 컷신 진행. 
+                Debug.Log(State.Intro);
+                // 인트로에서 타임라인 및 시네머신 조정 진행 후 patrol로 전환시작. 
+                animator.SetBool("isWalking", true);
+                roberry.timeLineDirector.SetActive(true);
+                roberry.startTimer = false;
+                roberry.countDownText.gameObject.SetActive(false);
+                playableDirector = roberry.timeLineDirector.gameObject.GetComponent<PlayableDirector>();
+                //timeCount = playableDirector.duration; //double 형식?
+                
+            }
+
+            public void OnTimeLineFinished()
+            {
+                roberry.playerCamera.MoveToTopOfPrioritySubqueue();
+
+                ChangeState(State.Patrol); //패트롤로 전환하기. 
             }
 
             public override void Update()
             {
+                timeCount += Time.deltaTime;
+
+                if(timeCount> playableDirector.duration)
+                {
+                    OnTimeLineFinished();
+                }
+
+                
 
             }
 
@@ -168,11 +199,12 @@ namespace JJH
             public override void Enter()
             {
                 Debug.Log(State.Patrol);
-
+                roberry.countDownText.gameObject.SetActive(true);
                 agent.speed = patrolSpeed;
-                roberry.startTimer = true;                
+                roberry.startTimer = true;      //여기서 타이머 켜주기.           
                 animator.SetBool("isWalking", true);
                 animator.SetBool("isRunning", false);
+                agent.enabled = true;
                 
 
             }
@@ -184,6 +216,8 @@ namespace JJH
                     Debug.Log("1f이내로 목적지에 접근함");
                     m_NextGoal = m_NextGoal != patrol.Length - 1 ? m_NextGoal + 1 : 0; //이 부분 나중에 확인.
                 }
+
+                Debug.Log(m_NextGoal);
                 agent.SetDestination(patrol[m_NextGoal].position);
 
                 Vector3 to = new Vector3(agent.destination.x, 0, agent.destination.z);
@@ -223,6 +257,7 @@ namespace JJH
             {
                 Debug.Log(State.Wander);
                 agent.speed = patrolSpeed;
+                
                 //animator.SetBool("isRunning", false);
                 // animator.SetBool("isWalking", true); //워킹 상태로 움직여주자.WW
                 animator.SetBool("isRunning", false);
@@ -291,7 +326,7 @@ namespace JJH
             public TraceState(Robbery robbery) : base(robbery) { }
             public override void Enter()
             {
-
+                
                 agent.speed = traceSpeed;
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isRunning", true);
@@ -329,7 +364,7 @@ namespace JJH
             public override void Enter()
             {
 
-                agent.isStopped = true; //멈추기 
+                //agent.isStopped = true; //멈추기 
                 Debug.Log(State.Die); //죽음 상태 진입 -> 여기서 여러 이벤트 진행. 
                 animator.SetTrigger("isDead");
 
@@ -347,6 +382,12 @@ namespace JJH
             }
 
 
+        }
+
+
+        public void ChangePatrol()
+        {
+            stateMachine.ChangeState(State.Patrol);
         }
 
 
