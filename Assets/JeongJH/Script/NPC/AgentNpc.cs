@@ -1,4 +1,3 @@
-using JJH;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -46,6 +45,8 @@ namespace Unity.AI.Navigation.Samples
         NavMeshAgent agent;
         [SerializeField] Transform[] destinations;
 
+        bool isRoutine;
+
 
         // 0번 목표를 플레이어로 해서 그냥 0번 dialog를 첫 번 만남 대사로 진행하면 될듯함. 
         // + 특정 이벤트 지역들에 들어가면 잠시 사라졌다가 다시 나와야 하는데 
@@ -58,10 +59,12 @@ namespace Unity.AI.Navigation.Samples
             isHide = false; //일단 false로 초기화. 
             rigid = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
-            meshRenderer= GetComponent<MeshRenderer>();
+            meshRenderer = GetComponent<MeshRenderer>();
             dialogCount = GameManager.NpcDialogCount;
             m_NextGoal = GameManager.staticNextGoal; //숫자 저장해두기. 
-            Debug.Log("npc의 start에서 시작하는 카운트 숫자. "+GameManager.NpcDialogCount);
+            isRoutine = false;
+            Debug.Log("npc의 start에서 시작하는 카운트 숫자. " + GameManager.NpcDialogCount);
+            Debug.Log("npc위치"+transform.position);
 
             agent.autoTraverseOffMeshLink = false;
             while (true)
@@ -85,7 +88,7 @@ namespace Unity.AI.Navigation.Samples
 
         private void Update()
         {
-            if(isHide==false)
+            if (isHide == false)
             {
                 agent.isStopped = false;
                 // 투명 해제 
@@ -136,12 +139,16 @@ namespace Unity.AI.Navigation.Samples
             if (distance < 2f) // 다음 위치로 이동하도록 함. 
             {
                 // 특정 위치에 도달하면 대화 코루틴 스타트. 
-                StartCoroutine(DialogSetOn(dialogCount));
-
+                
+                if(dialogCount<dialogSystems.Length&&isRoutine==false)
+                {
+                    StartCoroutine(DialogSetOn(dialogCount));
+                }
                 if (m_NextGoal < destinations.Length - 1)
                 {
                     m_NextGoal++;
                     GameManager.staticNextGoal++; //스태틱 넥스트골도 증가시켜서 다음 목적지를 기억해둬야함. 
+                    Debug.Log("현재 목표 번호:"+ GameManager.staticNextGoal);
 
                 }
                 agent.SetDestination(destinations[m_NextGoal].position);
@@ -154,20 +161,23 @@ namespace Unity.AI.Navigation.Samples
         // 이 부분 어차피 반복이니까  list형태로 관리해주자. 
         private IEnumerator DialogSetOn(int count)
         {
+            isRoutine = true;
             //count를 통해 배열 접근 
             panel.SetActive(true);
+            Debug.Log("카운트 " + count);
             dialogSystems[count].gameObject.SetActive(true);
             Time.timeScale = 0f;
+            Debug.Log("시간" + Time.timeScale);
             yield return new WaitUntil(() => dialogSystems[count].UpdateDialog());
             Time.timeScale = 1f;
-            dialogSystems[count].gameObject.SetActive(false); //어차피 count로 하니까 대사 다시 안나올듯 ? 
-            if(dialogCount<dialogSystems.Length-1)
-            {
-                dialogCount++; // 다음 번에 다음 패널을 불러오도록 
-                GameManager.NpcDialogCount++; //이거 저장해두고. 
-                Debug.Log("npc의 카운트를 증가시키는 순간. -->"+GameManager.NpcDialogCount);
-            }        
+            Debug.Log("시간" + Time.timeScale);
+            //여기 밑 부분을 마지막 트리거대사가 자동으로 실행되고 못돌아오고 있거든요
+            dialogSystems[count].gameObject.SetActive(false); //어차피 count로 하니까 대사 다시 안나올듯 ?          
+            dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+            GameManager.NpcDialogCount++; //이거 저장해두고. 
+            Debug.Log("npc의 카운트를 증가시키는 순간. -->" + GameManager.NpcDialogCount);
             panel.SetActive(false);
+            isRoutine = false;
 
         }
 
@@ -221,7 +231,7 @@ namespace Unity.AI.Navigation.Samples
 
         private void OnTriggerEnter(Collider other) //특정한 레이어에 닿으면 잠시 사라져야함. 
         {
-            
+
         }
 
     }

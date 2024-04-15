@@ -4995,7 +4995,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
-  KnockBackPower: 5
+  KnockBackPower: 3
   damage: 50
 --- !u!136 &2379763594150630266
 CapsuleCollider:

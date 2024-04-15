@@ -5,8 +5,8 @@ public class GameManager : Singleton<GameManager>
     public static bool saved;
     public static Vector3 playerPos;
 
-    public static int NpcDialogCount;
-    public static int staticNextGoal;
+    public static int NpcDialogCount; // 대사 숫자 저장. 
+    public static int staticNextGoal; //목적지 숫자 저장 
 
 
     //대화 로그를 저장해줘야하는데 
