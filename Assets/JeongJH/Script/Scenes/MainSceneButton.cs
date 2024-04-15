@@ -18,7 +18,7 @@ public class MainSceneButton : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
 
-        Manager.Scene.LoadScene("1MAPJaehoon");
+        Manager.Scene.LoadScene("PrologueScene"); //프롤로그씬으로 이동. 
     }
 
     public void ContinueBtn()
