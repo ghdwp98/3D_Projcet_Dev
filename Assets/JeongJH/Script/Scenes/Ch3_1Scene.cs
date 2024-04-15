@@ -4,7 +4,27 @@ using UnityEngine;
 
 public class Ch3_1Scene : BaseScene
 {
-    //3¸Ê 1Ãþ ¾À ·Îµù. 
+
+    [SerializeField] PopUpUI escPopUPUI;
+
+    private void Update()
+    {
+        //¸ÞÀÎ¾ÀÀÌ ¾Æ´Ò¶§¸¸ escÅ° ÀÌ¿ë°¡´É. 
+        if (Input.GetKeyDown(KeyCode.Escape) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
+        {
+            Debug.Log("°ÙÅ° µé¾î°¨");
+            Manager.UI.ShowPopUpUI(escPopUPUI); //ESCÆË¾÷ UI 
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            Manager.Scene.LoadScene("3M3");
+
+    }
+
 
 
     public override IEnumerator LoadingRoutine()
