@@ -15,8 +15,14 @@ public class Ch1Scene :BaseScene
     [SerializeField] PooledObject dangerCircle;
     [SerializeField] PopUpUI escPopUPUI;
 
+    [SerializeField] AudioClip bgmClip;
 
-    public override IEnumerator LoadingRoutine()
+	private void Start()
+	{
+        Manager.Sound.PlayBGM(bgmClip);
+	}
+
+	public override IEnumerator LoadingRoutine()
     {
 
         if (GameManager.saved == false)

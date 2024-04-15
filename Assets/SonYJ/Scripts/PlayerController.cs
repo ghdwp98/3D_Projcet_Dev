@@ -22,9 +22,11 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] Collider[] colliders = new Collider[20];
 	[SerializeField] float range;
 
+	[SerializeField] AudioClip clip;
+
 	private void Start()
 	{
-		
+		Manager.Sound.PlayBGM(clip);
 	}
 
 	private void Update()
