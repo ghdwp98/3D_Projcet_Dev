@@ -31,4 +31,24 @@ public class NPCInteract : MonoBehaviour
 			Manager.Inven.invenUI.PrintNPCText("문이 잠겨있다. 열쇠가 필요해보인다.");
 		}
 	}
+
+	public void CheckItemFood() // 재료가 필요한 화구
+	{
+		if (Manager.Inven.GetInvenCount() != 0)
+		{
+			if (Manager.Inven.FindInven("Vegetable-a") && Manager.Inven.FindInven("Vegetable-c"))
+			{
+				Manager.Inven.RemoveInven("Vegetable-a");
+				Manager.Inven.RemoveInven("Vegetable-c");
+				string str = "화구에 Vegetable-a 과 Vegetable-c를 사용했습니다.";
+				Manager.Inven.invenUI.PrintNPCText(str);
+			}
+			else
+			{
+				string str = "필요한 재료가 다 모이지 않았습니다! Vegetable-a과 Vegetable-c가 필요합니다!" +
+					"인벤토리가 다 찼다면 Q버튼을 눌러서 인벤토리를 비우세요!";
+				Manager.Inven.invenUI.PrintNPCText(str);
+			}
+		}
+	}
 }
