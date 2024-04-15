@@ -38,11 +38,11 @@ public class PlayerController : MonoBehaviour
 		Vector3 inputDir = value.Get<Vector2>();
 		if(inputDir != Vector3.zero)
 		{
-			ani.SetBool("walk", true);
+			ani.SetBool("run", true);
 		}
 		else
 		{
-			ani.SetBool("walk", false);
+			ani.SetBool("run", false);
 		}
 		string temp = Manager.Scene.GetCurSceneName();
 		if(temp == "1MapJaehoon")
