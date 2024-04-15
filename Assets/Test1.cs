@@ -10,5 +10,12 @@ public class Test1 : BaseScene
 		yield return null;
 	}
 
-	
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Player"))
+			Manager.Scene.LoadScene("3Map2");
+		// ㅠㅠ 수정필요함..
+	}
+
+
 }
