@@ -90,7 +90,19 @@ public class Fire : MonoBehaviour
             StartCoroutine(Delay());
             Debug.Log("fire¿¡¼­ exit");
             isTriggerOn = true; //ÀÌµ¿À» ¸ØÃç¹ö¸². 
+
+            CharacterController characterController = other.GetComponent<CharacterController>();
+            if (characterController != null)
+            {
+                Rigidbody playerRigid = other.GetComponent<Rigidbody>();  
+                playerRigid.isKinematic = true;
+                characterController.enabled = true;
+            }
+
+
+
             pooledObject.Release();
+
 
         }
     }

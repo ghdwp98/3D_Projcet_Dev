@@ -44,4 +44,19 @@ public class FixedFire : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (Extension.Contain(playerLayer, other.gameObject.layer)) //임시로 ppp 이용. 
+        {
+            CharacterController characterController = other.GetComponent<CharacterController>();
+            if (characterController != null)
+            {
+                Rigidbody playerRigid = other.GetComponent<Rigidbody>();
+                playerRigid.isKinematic = true;
+                characterController.enabled = true;
+            }
+        }
+    }
+
+
 }

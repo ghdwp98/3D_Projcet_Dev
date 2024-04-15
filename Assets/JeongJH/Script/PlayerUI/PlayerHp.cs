@@ -26,17 +26,26 @@ namespace JJH
 
         private void Update() //확인용 임시 
         {
-            // 기본 공격
-            if (Input.GetKeyDown("1"))
+            
+           /* if (Input.GetKeyDown("1"))
             {
                 target.TakeDamage(20);
             }
-            // 스킬 공격
+            
             else if (Input.GetKeyDown("2"))
             {
                 MP -= 100;
                 target.TakeDamage(55);
+            }*/
+
+            if(HP<=0)
+            {
+                Debug.Log("hp <=0");
+                PlayerDie();
+
             }
+
+
 
         }
 
@@ -53,13 +62,13 @@ namespace JJH
 
         public override void TakeDamage(float damage)
         {
+            
             HP -= damage;
-
-            Debug.Log(HP);
-            if (HP <= 0) //플레이어 사망임. 
+            /*if (HP <= 0) //플레이어 사망임. 
             {
+                Debug.Log($"{HP} : 사망상태진입");
                 PlayerDie();
-            }
+            }*/
 
         }
 

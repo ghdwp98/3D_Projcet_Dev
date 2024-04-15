@@ -25,6 +25,7 @@ public class NonHideNPC : MonoBehaviour
 
             agentNpc.transform.SetParent(null);
             agentNpc.isHide = false;
+            gameObject.SetActive(false);     //자기 자신 꺼보기. 
 
         }
     }

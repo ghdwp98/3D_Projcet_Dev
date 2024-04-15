@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    private Stats stats;        // 캐릭터 정보
+    [SerializeField]private Stats stats;        // 캐릭터 정보
     public Entity target;       // 공격 대상 (플레이어의 경우 대상을 클릭하는 방식으로 설정)
 
     // 체력(HP) 프로퍼티 : 0~MaxHP 사이의 값을 넘어갈 수 없도록 설정
@@ -59,9 +59,9 @@ public struct Stats
 {
     // 이름, 레벨, 직업, 스탯(힘, 지능 등), 체력/마나, 경험치 등의 캐릭터 수치
 
-    [HideInInspector]
+   // [HideInInspector]
     public float HP;
-    [HideInInspector]
+    //[HideInInspector]
     public float MP;
 }
 

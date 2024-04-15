@@ -38,7 +38,7 @@ public class DefalutDamageObjs : MonoBehaviour
     {
         if(other.gameObject.layer==LayerMask.NameToLayer("Player")) //플레이어라면. 데미지 주기. 
         {
-            PlayerHp.Player_Action(damage);
+              PlayerHp.Player_Action(damage);
             StartCoroutine(ControllerCoroutine(other));
 
         }

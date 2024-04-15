@@ -7,6 +7,7 @@ public class Ch2Scene : BaseScene
     //오브젝트풀링 ... 플레이어 체크포인트 등 필요한 기능들 로딩 루틴에 넣어주기. 
 
     [SerializeField] GameObject player;
+    [SerializeField] GameObject NPC; 
     [SerializeField] CharacterController controller;
     [SerializeField] PooledObject FirePrefab;
     [SerializeField] PooledObject smallFirePrefab;
@@ -31,10 +32,16 @@ public class Ch2Scene : BaseScene
 
         //여기서 위치 저장 가능한지? 순서 확인 할 것. 
         controller.enabled = false;
-        Debug.Log("로딩루틴의 위치 " + GameManager.playerPos);
         player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
+        NPC.transform.position=player.transform.position; //player의 위치와 똑같은 위치로 두기. 
+
         Debug.Log(GameManager.playerPos);
         controller.enabled = true;
+
+
+
+
+
 
         yield return null;
     }

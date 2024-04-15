@@ -1,3 +1,4 @@
+using JJH;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,7 +32,7 @@ namespace Unity.AI.Navigation.Samples
         Rigidbody rigid;
 
         [Header("NpcDialogue")]
-        int dialogCount = 0;
+        public int dialogCount = 0;
 
         [SerializeField]
         DialogSystem[] dialogSystems;
@@ -58,6 +59,10 @@ namespace Unity.AI.Navigation.Samples
             rigid = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
             meshRenderer= GetComponent<MeshRenderer>();
+            dialogCount = GameManager.NpcDialogCount;
+            m_NextGoal = GameManager.staticNextGoal; //숫자 저장해두기. 
+            Debug.Log("npc의 start에서 시작하는 카운트 숫자. "+GameManager.NpcDialogCount);
+
             agent.autoTraverseOffMeshLink = false;
             while (true)
             {
@@ -87,6 +92,12 @@ namespace Unity.AI.Navigation.Samples
                 meshRenderer.enabled = true;
                 FindTarget();
                 NextDest();
+
+                Vector3 to = new Vector3(agent.destination.x, 0, agent.destination.z);
+                Vector3 from = new Vector3(transform.position.x, 0, transform.position.z);
+                transform.rotation = Quaternion.LookRotation(to - from);
+
+
             }
             else //숨어있는 상태라면. (hide 가 true) 
             {
@@ -122,7 +133,7 @@ namespace Unity.AI.Navigation.Samples
         private void NextDest()
         {
             float distance = Vector3.Distance(agent.transform.position, destinations[m_NextGoal].position);
-            if (distance < 1.5f) // 다음 위치로 이동하도록 함. 
+            if (distance < 2f) // 다음 위치로 이동하도록 함. 
             {
                 // 특정 위치에 도달하면 대화 코루틴 스타트. 
                 StartCoroutine(DialogSetOn(dialogCount));
@@ -130,8 +141,11 @@ namespace Unity.AI.Navigation.Samples
                 if (m_NextGoal < destinations.Length - 1)
                 {
                     m_NextGoal++;
+                    GameManager.staticNextGoal++; //스태틱 넥스트골도 증가시켜서 다음 목적지를 기억해둬야함. 
+
                 }
                 agent.SetDestination(destinations[m_NextGoal].position);
+
             }
 
         }
@@ -150,6 +164,8 @@ namespace Unity.AI.Navigation.Samples
             if(dialogCount<dialogSystems.Length-1)
             {
                 dialogCount++; // 다음 번에 다음 패널을 불러오도록 
+                GameManager.NpcDialogCount++; //이거 저장해두고. 
+                Debug.Log("npc의 카운트를 증가시키는 순간. -->"+GameManager.NpcDialogCount);
             }        
             panel.SetActive(false);
 
