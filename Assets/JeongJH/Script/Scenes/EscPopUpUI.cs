@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Runtime.CompilerServices;
+using TMPro;
 
 
 public class EscPopUpUI : MonoBehaviour
@@ -12,12 +13,22 @@ public class EscPopUpUI : MonoBehaviour
     // ESC 키를 누르면 팝업뜨고 
 
     [SerializeField]PopUpUI escPopUPUI;
-   
+    [SerializeField] TextMeshProUGUI text;
+
+
+
+    private void Start()
+    {
+        text.enabled = false;
+    }
 
     public void SaveData()
     {
         PlayerPrefs.SetString("LastScene",
             Manager.Scene.GetCurSceneName()); //현재씬을 저장해놓음. 
+
+        StartCoroutine(OnText());
+
     }
 
 
@@ -43,5 +54,14 @@ public class EscPopUpUI : MonoBehaviour
     {
         Manager.UI.ClearPopUpUI();
         Manager.Scene.LoadScene("MainScene");
+    }
+
+
+    IEnumerator OnText()
+    {
+        text.enabled=true;
+        yield return new WaitForSecondsRealtime(1f);
+        text.enabled = false;
+        Manager.UI.ClearPopUpUI();
     }
 }

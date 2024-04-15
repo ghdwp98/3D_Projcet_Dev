@@ -13,6 +13,7 @@ public class Ch1Scene :BaseScene
     [SerializeField] int capacity;  
     [SerializeField] PooledObject lightningPrefab;
     [SerializeField] PooledObject dangerCircle;
+    [SerializeField] PopUpUI escPopUPUI;
 
 
     public override IEnumerator LoadingRoutine()
@@ -29,8 +30,18 @@ public class Ch1Scene :BaseScene
         yield return null;
     }
 
+    private void Update()
+    {
+        //메인씬이 아닐때만 esc키 이용가능. 
+        if (Input.GetKeyDown(KeyCode.Escape) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
+        {
+            Debug.Log("겟키 들어감");
+            Manager.UI.ShowPopUpUI(escPopUPUI); //ESC팝업 UI 
+        }
+    }
 
-	private void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.CompareTag("Player"))
 		{

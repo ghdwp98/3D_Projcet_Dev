@@ -228,14 +228,13 @@ namespace JJH
                 animator.SetBool("isRunning", false);
                 animator.SetBool("isWalking", false);
 
-
-
+                //idle 상태진입 가능한지 확인 
 
                 //goals = CalculateWanderPosition(); //랜덤 계속 부르면 안되니까 enter로 생성. 
             }
             public override void Update()
             {
-                currentTime += Time.deltaTime;
+                currentTime += Time.deltaTime; // 5초간 대기 후 다시 목적지로 떠남. 
 
                 /*float distance = Vector3.Distance(agent.transform.position, goals);
                 if (distance < 1f) //1 정도로 해보자. 좀 빠르게 휙휙 바뀌는 느낌으로 
@@ -341,6 +340,7 @@ namespace JJH
                 count += Time.deltaTime;
                 if (count > 2) //2초 후. 
                 {
+                    Manager.Scene.LoadScene("ending");
                     // 이벤트 관리하는 오브젝트 불러온 다음에 자기자신을 파괴한다. or 이벤트 관리 다른 방법 있으면 그거로 진행. 
                     Destroy(roberry.gameObject);
                 }

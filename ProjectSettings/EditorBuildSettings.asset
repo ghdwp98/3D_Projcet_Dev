@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/JeongJH/Scene/MainScene.unity
+    path: Assets/BaekJH/MainScene.unity
     guid: 920b1933e40a1e7499da309c6221ec7b
   - enabled: 1
     path: Assets/JeongJH/Scene/STARTsCENE.unity
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BaekJH/2M.unity
     guid: 5a2c5b027168a07418ed71f56a08c742
+  - enabled: 1
+    path: Assets/BaekJH/PrologueScene.unity
+    guid: 38a15b2ebe2131b46943b5c67af2e3c6
   - enabled: 1
     path: Assets/BaekJH/2Map.unity
     guid: f8a7aed3e95399845a58614cca6e4712
