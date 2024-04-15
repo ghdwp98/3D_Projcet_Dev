@@ -52,13 +52,19 @@ public class PlayerController : MonoBehaviour
 		{
 			ani.SetBool("run", false);
 		}
+
 		string temp = Manager.Scene.GetCurSceneName();
 		if(temp == "1MapJaehoon")
 		{
 			moveDir.x = (-1) * inputDir.x;
 			moveDir.z = (-1) * inputDir.y;
 		}
-		else if(temp == "3M")
+		if(temp == "2M")
+		{
+			moveDir.x = (-1) * inputDir.x;
+			moveDir.z = (-1) * inputDir.y;
+		}
+		if(temp == "3M")
 		{
 			moveDir.x = (-1) * inputDir.y;
 			moveDir.z = inputDir.x;
