@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
 			moveDir.x = inputDir.x;
 			moveDir.z = inputDir.y;
 		}
+		if(temp == "3M3")
+		{
+			moveDir.x = inputDir.x;
+			moveDir.z = inputDir.y;
+		}
 	}
 
 	private void Move()
@@ -85,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		if (groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
+		if (Manager.Scene.GetCurSceneName() != "3M2" && Manager.Scene.GetCurSceneName() != "3M3" && groundChecker) // 점프 버튼 눌리고(OnJump), 컨트롤러 isGrounded가 true일 때
 			Jump();
 	}
 
