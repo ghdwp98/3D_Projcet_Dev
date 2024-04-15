@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("123");
 			ani.SetBool("walk", false);
 		}
 		string temp = Manager.Scene.GetCurSceneName();
@@ -122,9 +121,11 @@ public class PlayerController : MonoBehaviour
 		for(int i = 0; i < sizeGet; i++)
 		{
 			IInteractable target = colliders[i].GetComponent<IInteractable>();
-
-			target?.Interact(this);
-			break; // 제일 가까운 하나 상호작용하면 break로 멈추기, 여러개 할 필요 X
+			if(target != null)
+			{
+				target?.Interact(this);
+				break; // 제일 가까운 하나 상호작용하면 break로 멈추기, 여러개 할 필요 X
+			}
 		}
 		// NPC, 오브젝트에 획득 아이템 전달
 
