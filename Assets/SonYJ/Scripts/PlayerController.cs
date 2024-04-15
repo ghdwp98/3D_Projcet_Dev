@@ -31,8 +31,16 @@ public class PlayerController : MonoBehaviour
 	{
 		Move();
 		Fall();
+		CleanInven();
 	}
 
+	private void CleanInven()
+	{
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			Manager.Inven.ClearInven();
+		}
+	}
 	private void OnMove(InputValue value)
 	{
 		Vector3 inputDir = value.Get<Vector2>();
@@ -54,6 +62,11 @@ public class PlayerController : MonoBehaviour
 		{
 			moveDir.x = (-1) * inputDir.y;
 			moveDir.z = inputDir.x;
+		}
+		if(temp == "3M2")
+		{
+			moveDir.x = inputDir.x;
+			moveDir.z = inputDir.y;
 		}
 	}
 
