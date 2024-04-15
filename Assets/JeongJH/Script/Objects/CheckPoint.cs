@@ -14,6 +14,11 @@ public class CheckPoint : MonoBehaviour
     GameObject instance;
     public bool Activated = false;
     public static List<GameObject> checkPointList;
+    Material outLine;
+    Renderer renderer;
+    List<Material> materialList=new List<Material>();
+
+
 
     //이 함수 사용 자제하자. 
     public static Vector3 GetActiveCheckPointPosition() //외부에서 불러오는 거임 -->순서대로 저장되서 최신부터
@@ -63,10 +68,20 @@ public class CheckPoint : MonoBehaviour
 
     }
 
-    private void Start()
+    private void Start() //아웃라인 적용 실행해보기. 
     {
         //thisAnimator=GetComponent<Animator>();
         checkPointList = GameObject.FindGameObjectsWithTag("CheckPoint").ToList();
+        outLine= new Material(Shader.Find("Draw/OutlineShader"));
+        renderer=this.GetComponent<Renderer>();
+
+        materialList.Clear();
+        materialList.AddRange(renderer.sharedMaterials);
+        materialList.Add(outLine);
+
+        renderer.materials = materialList.ToArray();
+       
+
     }
 
     private void Update()

@@ -1,7 +1,8 @@
 Shader "Draw/OutlineShader" {
 	Properties { //프로퍼티에서 아웃라인의 색을 조절할 수 있다. 
-		_OutlineColor ("Outline Color", Color) = (1,0,0,1)
-		_Outline ("Outline width", Range (0, 1)) = .1 //이 경우는 빨간색임. 
+		//_OutlineColor ("Outline Color", Color) = (1,0,0,1)
+		_OutlineColor ("Outline Color", Color) = (0,1,0,1)
+		_Outline ("Outline width", Range (0, 1)) = .05 //이 경우는 빨간색임. 
 	}
  
 CGINCLUDE
