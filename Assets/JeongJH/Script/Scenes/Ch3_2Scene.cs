@@ -5,8 +5,13 @@ using UnityEngine;
 public class Ch3_2Scene : BaseScene
 {
     [SerializeField] PopUpUI escPopUPUI;
+	[SerializeField] AudioClip bgmClip;
 
-    private void Update()
+	private void Start()
+	{
+		Manager.Sound.PlayBGM(bgmClip);
+	}
+	private void Update()
     {
         //메인씬이 아닐때만 esc키 이용가능. 
         if (Input.GetKeyDown(KeyCode.Escape) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")
