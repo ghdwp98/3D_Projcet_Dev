@@ -120,8 +120,8 @@ public class PlayerController : MonoBehaviour
 	{
 		// ySpeed : Character Controller에 없는 중력을 Time.deltaTime로 시간이 지날 때마다 계속 더한 값에 물리 중력 y 값을 곱해서 얻어지는 속도 변수
 		ySpeed += Physics.gravity.y * Time.deltaTime;
-		if (/*controller.isGrounded*/ groundChecker && ySpeed < 0)
-			ySpeed = 0;
+		//if (/*controller.isGrounded*/ groundChecker && ySpeed < 0)
+		//	ySpeed = 0;
 		controller.Move(Vector3.up * ySpeed * Time.deltaTime);
 
 		if (controller.transform.position.y < -20f && !isFall)
