@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
 			moveDir.x = inputDir.x;
 			moveDir.z = inputDir.y;
 		}
+		if (temp == "ending")
+		{
+			moveDir.x = (-1) * inputDir.x;
+			moveDir.z = (-1) * inputDir.y;
+		}
 	}
 
 	private void Move()
