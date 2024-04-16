@@ -15,6 +15,7 @@ TagManager:
   - Item
   - GroundChecking
   - Robbery
+  - Dialog
   layers:
   - Default
   - TransparentFX
