@@ -8,6 +8,15 @@ public class GameManager : Singleton<GameManager>
     public static int NpcDialogCount; // 대사 숫자 저장. 
     public static int staticNextGoal; //목적지 숫자 저장 
 
+    public static int ch3_1_count; //오두막 바깥 
+    public static int ch1_count;
+    public static int ch2_count;
+    public static int ch3_2_count; //1층 
+    public static int ch3_3_count; //2층
+
+    //스태틱 변수로 재로딩 시에 다시 씬 start 대사가 나오지 않도록 조정 . 
+
+
 
     //대화 로그를 저장해줘야하는데 
 

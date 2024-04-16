@@ -12,7 +12,11 @@ public class ch1Dialog : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DialogSetOn(0));
+        if (GameManager.ch1_count == 0)
+        {
+            StartCoroutine(DialogSetOn(0));
+            GameManager.ch1_count++; //카운트 늘려서 다시 실행되지 않도록 
+        }
 
     }
 
