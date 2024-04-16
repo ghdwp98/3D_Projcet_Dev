@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/MainScene.unity
     guid: 920b1933e40a1e7499da309c6221ec7b
-  - enabled: 1
+  - enabled: 0
     path: Assets/JeongJH/Scene/STARTsCENE.unity
     guid: ff2e341c3155f724285992f4763de298
-  - enabled: 1
+  - enabled: 0
     path: Assets/JeongJH/Scene/TutorialScene.unity
     guid: b6391c8a008307b4890d20fc1739a8a1
-  - enabled: 1
+  - enabled: 0
     path: Assets/JeongJH/Scene/BaseScene.unity
     guid: cbb4f71cefa14c94aaf0de28a4f85138
   - enabled: 0
@@ -23,28 +23,28 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/BaekJH/1Map.unity
     guid: 02c2a769d249cab42ab3e85b0e93876f
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/2M.unity
     guid: 5a2c5b027168a07418ed71f56a08c742
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/PrologueScene.unity
     guid: 38a15b2ebe2131b46943b5c67af2e3c6
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/2Map.unity
     guid: f8a7aed3e95399845a58614cca6e4712
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/3M.unity
     guid: 4855133f0eea9094bb9973c20ef0cd9d
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/3M2.unity
     guid: 3f81fbfcb9801314389da8339c311257
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/1MapJaehoon.unity
     guid: 9427940238e44054f981ee80d9979b1b
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/3M3.unity
     guid: dc7b6faf15c68cf4892c130750b8b7fc
-  - enabled: 1
+  - enabled: 0
     path: Assets/BaekJH/ending.unity
     guid: 58627ae63430cfc4990f38a0fd9375f6
   m_configObjects: {}

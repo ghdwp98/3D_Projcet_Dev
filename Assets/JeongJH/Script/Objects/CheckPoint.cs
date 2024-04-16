@@ -72,16 +72,6 @@ public class CheckPoint : MonoBehaviour
     {
         //thisAnimator=GetComponent<Animator>();
         checkPointList = GameObject.FindGameObjectsWithTag("CheckPoint").ToList();
-        outLine= new Material(Shader.Find("Draw/OutlineShader"));
-        renderer=this.GetComponent<Renderer>();
-
-        materialList.Clear();
-        materialList.AddRange(renderer.sharedMaterials);
-        materialList.Add(outLine);
-
-        renderer.materials = materialList.ToArray();
-       
-
     }
 
     private void Update()

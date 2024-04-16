@@ -1,7 +1,6 @@
 using JJH;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
