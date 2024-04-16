@@ -46,6 +46,7 @@ namespace Unity.AI.Navigation.Samples
         [SerializeField] Transform[] destinations;
 
         bool isRoutine;
+        Animator animator;
 
 
         // 0번 목표를 플레이어로 해서 그냥 0번 dialog를 첫 번 만남 대사로 진행하면 될듯함. 
@@ -61,6 +62,8 @@ namespace Unity.AI.Navigation.Samples
             agent = GetComponent<NavMeshAgent>();
             meshRenderer = GetComponent<MeshRenderer>();
             dialogCount = GameManager.NpcDialogCount;
+            animator=GetComponent<Animator>();
+           // animator.Play("Happy Idle");
             m_NextGoal = GameManager.staticNextGoal; //숫자 저장해두기. 
             isRoutine = false;
             Debug.Log("npc의 start에서 시작하는 카운트 숫자. " + GameManager.NpcDialogCount);
@@ -96,9 +99,10 @@ namespace Unity.AI.Navigation.Samples
                 FindTarget();
                 NextDest();
 
-                Vector3 to = new Vector3(agent.destination.x, 0, agent.destination.z);
-                Vector3 from = new Vector3(transform.position.x, 0, transform.position.z);
-                transform.rotation = Quaternion.LookRotation(to - from);
+                //업데이트 중에서 그냥 걷기 애니메이션만 진행? 일단 넣어보자. 
+
+
+                
 
 
             }
@@ -123,10 +127,12 @@ namespace Unity.AI.Navigation.Samples
                     {
                         agent.isStopped = false;
                         agent.SetDestination(destinations[m_NextGoal].transform.position);
+                        animator.Play("Slow Run"); //움직일때는 달리기 시작. 
                     }
                     else //플레이어가 범위 내에 없으면  대기. -->아 점프순간에 저장이 되어버려서 다시 돌아오는 상황임. 
                     {
                         agent.isStopped = true;
+                        //animator.Play("Happy Idle");
                     }
                 }
             }
@@ -136,12 +142,26 @@ namespace Unity.AI.Navigation.Samples
         private void NextDest()
         {
             float distance = Vector3.Distance(agent.transform.position, destinations[m_NextGoal].position);
+
+
+            if(distance>2f)
+            {
+                Vector3 to = new Vector3(agent.destination.x, 0, agent.destination.z);
+                Vector3 from = new Vector3(transform.position.x, 0, transform.position.z);
+                transform.rotation = Quaternion.LookRotation(to - from);
+
+                //일단 클 때만 회전 시켜볼까? 
+            }
+
+
             if (distance < 2f) // 다음 위치로 이동하도록 함. 
             {
                 // 특정 위치에 도달하면 대화 코루틴 스타트. 
                 
                 if(dialogCount<dialogSystems.Length&&isRoutine==false)
                 {
+                    // 여기서 idle로 변경하고 대화시작
+                    //animator.Play("Happy Idle");
                     StartCoroutine(DialogSetOn(dialogCount));
                 }
                 if (m_NextGoal < destinations.Length - 1)
