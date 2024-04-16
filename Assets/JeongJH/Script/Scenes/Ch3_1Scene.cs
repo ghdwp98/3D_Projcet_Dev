@@ -27,8 +27,10 @@ public class Ch3_1Scene : BaseScene
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            Manager.Scene.LoadScene("3M3");
-
+        {
+			Manager.Scene.LoadScene("3M3");
+            Manager.Inven.invenUI.CleanText();
+		}
     }
 
 

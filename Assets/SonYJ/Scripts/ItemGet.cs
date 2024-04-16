@@ -8,6 +8,8 @@ public class ItemGet : MonoBehaviour
 	public void Get()
 	{
 		Manager.Inven.AddInven(gameObject.name);
+		if(gameObject.name == "DoorKey")
+			gameObject.SetActive(false);
 	}
 
 	public void GetHP()

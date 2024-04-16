@@ -6,12 +6,10 @@ public class InvenUI : MonoBehaviour
 	[SerializeField] TextMeshProUGUI[] itemText;
 	[SerializeField] TextMeshProUGUI explainText;
 	[SerializeField] TextMeshProUGUI NPCText;
-	int count = 0;
 
 	public void PrintNameText()
 	{
-
-		count = Manager.Inven.items.Count;
+		int count = Manager.Inven.items.Count;
 
 		for (int i = 0; i < itemText.Length; i++)
 		{
