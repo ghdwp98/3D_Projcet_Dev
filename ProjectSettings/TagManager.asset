@@ -16,6 +16,7 @@ TagManager:
   - GroundChecking
   - Robbery
   - Dialog
+  - Save
   layers:
   - Default
   - TransparentFX
