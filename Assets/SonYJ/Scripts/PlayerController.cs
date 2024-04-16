@@ -24,9 +24,15 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] AudioClip clip;
 
+	[SerializeField] LayerMask groundLayer;
+
+	bool isFall;
+
 	private void Start()
 	{
 		Manager.Sound.PlayBGM(clip);
+		groundChecker = true;
+		isFall = false;
 	}
 
 	private void Update()
@@ -85,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Move()
 	{
-		if (moveDir != Vector3.zero)
+		if (moveDir != Vector3.zero && Time.timeScale != 0f)
 			transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up); // 회전
 		controller.Move(moveDir * moveSpeed * Time.deltaTime);
 	}
@@ -100,6 +106,8 @@ public class PlayerController : MonoBehaviour
 	{
 		// 점프 버튼 눌리고 controller.isGrounded가 true일 때
 		// 중력값으로 계속 - 되던 ySpeed 값을 원하는 jumpSpeed로 변경
+		ySpeed = 0;
+
 		ani.SetTrigger("jump");
 		ySpeed = jumpSpeed;
 		groundChecker = false;
@@ -113,6 +121,12 @@ public class PlayerController : MonoBehaviour
 		if (/*controller.isGrounded*/ groundChecker && ySpeed < 0)
 			ySpeed = 0;
 		controller.Move(Vector3.up * ySpeed * Time.deltaTime);
+
+		if (controller.transform.position.y < -20f && !isFall)
+		{
+			isFall = true;
+			Manager.Scene.LoadScene(Manager.Scene.GetCurSceneName());
+		}
 	}
 
 	private void OnDown(InputValue value)
@@ -157,22 +171,22 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	private void OnControllerColliderHit(ControllerColliderHit hit)
+	/*private void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		if (hit.collider.gameObject.layer == 6) // 땅에 닿았을 때 groundChecker true, 아닐때 false
 			groundChecker = true;
 		else
 			groundChecker = false;
 
-		/*if (hit.collider.gameObject.layer == 31) // Damage
+		*//*if (hit.collider.gameObject.layer == 31) // Damage
 		{
 			gameObject.layer = 7; // DamageMusi
 			Invoke("OnDamageLayer", 1f);
 
 			if (playerhpmp.HP <= 0)
 				transform.position = CheckPoint.GetActiveCheckPointPosition();
-		}*/
-	}
+		}*//*
+	}*/
 
 	/*void OnDamageLayer()
 	{
@@ -184,4 +198,35 @@ public class PlayerController : MonoBehaviour
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, range);
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		Debug.Log($"트리거 충돌 groundChecker1 : {groundChecker}");
+		if (((1 << other.gameObject.layer) & groundLayer) != 0) // 땅에 닿았을 때 groundChecker true, 아닐때 false
+			groundChecker = true;
+		Debug.Log($"트리거 충돌 groundChecker2 : {groundChecker}");
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		Debug.Log($"트리거 탈출 groundChecker1 : {groundChecker}");
+		if (((1 << other.gameObject.layer) & groundLayer) != 0 ) // 땅에 닿았을 때 groundChecker true, 아닐때 false
+			groundChecker = false;
+		Debug.Log($"트리거 탈출 groundChecker2 : {groundChecker}");
+	}
+
+	/*private void OnCollisionEnter(Collision collision)
+	{
+		Debug.Log("123");
+		Debug.Log(collision.gameObject.layer);
+		if (((1 << collision.gameObject.layer) & groundLayer) != 0) // 땅에 닿았을 때 groundChecker true, 아닐때 false
+			groundChecker = true;
+	}
+	private void OnCollisionExit(Collision collision)
+	{
+		
+		Debug.Log("000");
+		if (collision.gameObject.layer == 6) // 땅에 닿았을 때 groundChecker true, 아닐때 false
+			groundChecker = false;
+	}*/
 }
