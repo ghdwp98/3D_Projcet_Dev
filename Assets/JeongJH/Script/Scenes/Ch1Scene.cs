@@ -22,17 +22,24 @@ public class Ch1Scene :BaseScene
         Manager.Sound.PlayBGM(bgmClip);
 	}
 
-	public override IEnumerator LoadingRoutine()
+	public override IEnumerator LoadingRoutine()  //static 이 false 일 때만 진행 
     {
 
         if (GameManager.saved == false)
             yield break;
 
-        //여기서 위치 저장 가능한지? 순서 확인 할 것. 
-        controller.enabled = false;
-        player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
-        Debug.Log(GameManager.playerPos);
-        controller.enabled = true;
+
+        if (GameManager.isChangeScene ==false)
+        {
+            //여기서 위치 저장 가능한지? 순서 확인 할 것. 
+            controller.enabled = false;
+            player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
+            Debug.Log(GameManager.playerPos);
+            controller.enabled = true;
+            yield return null;
+        }
+
+        GameManager.isChangeScene = false;
         yield return null;
     }
 
@@ -47,10 +54,11 @@ public class Ch1Scene :BaseScene
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //여기서 bool 변수 true로 변경 
 	{
 		if (other.gameObject.CompareTag("Player"))
 		{
+            GameManager.isChangeScene = true;
 			Manager.Scene.LoadScene("2M");
 		}
 	}

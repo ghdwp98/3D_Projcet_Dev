@@ -8,6 +8,9 @@ public class GameManager : Singleton<GameManager>
     public static int NpcDialogCount; // 대사 숫자 저장. 
     public static int staticNextGoal; //목적지 숫자 저장 
 
+    public static bool isChangeScene;
+
+
     public static int ch3_1_count; //오두막 바깥 
     public static int ch1_count;
     public static int ch2_count;
