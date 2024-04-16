@@ -120,7 +120,7 @@ namespace Unity.AI.Navigation.Samples
                 meshRenderer.enabled = false;
                 for (int i = 0; i < allMesh.Length; i++)
                 {
-                    allMesh[i].enabled = true;
+                    allMesh[i].enabled = false;
                 }
 
                 agent.isStopped = true; //stop이 안된다?? 
