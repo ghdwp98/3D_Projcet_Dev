@@ -45,17 +45,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "f25b45b6-9542-43c6-92c7-ea54e82b3a75",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8c3ed744-fff8-4242-a170-8df5253bcc64",
                     "path": "<Keyboard>/c",
                     "interactions": "",
