@@ -37,20 +37,29 @@ public class Ch2Scene : BaseScene
         if (GameManager.saved == false)
             yield break;
 
-        //여기서 위치 저장 가능한지? 순서 확인 할 것. 
-        controller.enabled = false;
-        player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
-        NavMeshAgent navMeshAgent=NPC.GetComponent<NavMeshAgent>(); //npc의 네비매쉬를 가져와서
-        if (navMeshAgent != null)
+
+        if (GameManager.isChangeScene == false)
         {
-            navMeshAgent.Warp(GameManager.playerPos);
+            //여기서 위치 저장 가능한지? 순서 확인 할 것. 
+            controller.enabled = false;
+            player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
+            NavMeshAgent navMeshAgent = NPC.GetComponent<NavMeshAgent>(); //npc의 네비매쉬를 가져와서
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.Warp(GameManager.playerPos);
+            }
+            Debug.Log(NPC.transform.position);
+
+            Debug.Log(GameManager.playerPos);
+            controller.enabled = true;
+            yield return null;
         }
-        Debug.Log(NPC.transform.position);
 
-        Debug.Log(GameManager.playerPos);
-        controller.enabled = true;
-
+        GameManager.isChangeScene = false;
         yield return null;
+
+
+
     }
 
 
@@ -68,6 +77,7 @@ public class Ch2Scene : BaseScene
     {
         if (other.gameObject.CompareTag("Player")) //플레이어가 닿으면 3챕터 씬 로드... 
         {
+            GameManager.isChangeScene = true;
             Manager.Scene.LoadScene("3M");
         }
     }
