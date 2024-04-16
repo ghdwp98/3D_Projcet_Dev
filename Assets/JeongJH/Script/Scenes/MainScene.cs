@@ -8,7 +8,7 @@ namespace JJH
     {
         // 컨티뉴 버튼 비활성화 작업
         public GameObject continueBtn;
-
+        [SerializeField] AudioClip audioclip;
 
         private void Start()
         {
@@ -23,6 +23,8 @@ namespace JJH
             {
                 continueBtn.GetComponent<Button>().interactable = true; //활성
             }
+
+            Manager.Sound.PlayBGM(audioclip);
 
         }
 
