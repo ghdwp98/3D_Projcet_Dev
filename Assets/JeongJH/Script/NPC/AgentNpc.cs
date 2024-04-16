@@ -44,9 +44,13 @@ namespace Unity.AI.Navigation.Samples
         public AnimationCurve m_Curve = new AnimationCurve();
         NavMeshAgent agent;
         [SerializeField] Transform[] destinations;
+        [SerializeField] SkinnedMeshRenderer[] allMesh;
+
+
+
 
         bool isRoutine;
-        Animator animator;
+        
 
 
         // 0번 목표를 플레이어로 해서 그냥 0번 dialog를 첫 번 만남 대사로 진행하면 될듯함. 
@@ -62,12 +66,14 @@ namespace Unity.AI.Navigation.Samples
             agent = GetComponent<NavMeshAgent>();
             meshRenderer = GetComponent<MeshRenderer>();
             dialogCount = GameManager.NpcDialogCount;
-            animator=GetComponent<Animator>();
-           // animator.Play("Happy Idle");
+            
+           
             m_NextGoal = GameManager.staticNextGoal; //숫자 저장해두기. 
             isRoutine = false;
             Debug.Log("npc의 start에서 시작하는 카운트 숫자. " + GameManager.NpcDialogCount);
             Debug.Log("npc위치"+transform.position);
+
+            allMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
 
             agent.autoTraverseOffMeshLink = false;
             while (true)
@@ -101,7 +107,10 @@ namespace Unity.AI.Navigation.Samples
 
                 //업데이트 중에서 그냥 걷기 애니메이션만 진행? 일단 넣어보자. 
 
-
+                for(int i = 0; i < allMesh.Length; i++)
+                {
+                    allMesh[i].enabled = true;
+                }
                 
 
 
@@ -109,6 +118,11 @@ namespace Unity.AI.Navigation.Samples
             else //숨어있는 상태라면. (hide 가 true) 
             {
                 meshRenderer.enabled = false;
+                for (int i = 0; i < allMesh.Length; i++)
+                {
+                    allMesh[i].enabled = true;
+                }
+
                 agent.isStopped = true; //stop이 안된다?? 
                 agent.transform.localPosition = new Vector3(0, 0, 0);
             }
@@ -127,12 +141,12 @@ namespace Unity.AI.Navigation.Samples
                     {
                         agent.isStopped = false;
                         agent.SetDestination(destinations[m_NextGoal].transform.position);
-                        animator.Play("Slow Run"); //움직일때는 달리기 시작. 
+                        
                     }
                     else //플레이어가 범위 내에 없으면  대기. -->아 점프순간에 저장이 되어버려서 다시 돌아오는 상황임. 
                     {
                         agent.isStopped = true;
-                        //animator.Play("Happy Idle");
+                        
                     }
                 }
             }
@@ -161,7 +175,7 @@ namespace Unity.AI.Navigation.Samples
                 if(dialogCount<dialogSystems.Length&&isRoutine==false)
                 {
                     // 여기서 idle로 변경하고 대화시작
-                    //animator.Play("Happy Idle");
+                    
                     StartCoroutine(DialogSetOn(dialogCount));
                 }
                 if (m_NextGoal < destinations.Length - 1)
