@@ -22,15 +22,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] Collider[] colliders = new Collider[20];
 	[SerializeField] float range;
 
-	[SerializeField] AudioClip clip;
-
 	[SerializeField] LayerMask groundLayer;
 
 	bool isFall;
 
 	private void Start()
 	{
-		Manager.Sound.PlayBGM(clip);
 		groundChecker = true;
 		isFall = false;
 	}
