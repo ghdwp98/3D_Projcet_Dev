@@ -15,7 +15,11 @@ public class ch3_1Dialog : MonoBehaviour  // 3챕터 오두막 대사 .
 
     private void Start()
     {
-        StartCoroutine(DialogSetOn(0)); //0번 다이얼로그는 start 되자마자 진행됨. 
+        if (GameManager.ch3_1_count == 0)
+        {
+            StartCoroutine(DialogSetOn(0));
+            GameManager.ch3_1_count++; //카운트 늘려서 다시 실행되지 않도록 
+        }
 
     }
 
