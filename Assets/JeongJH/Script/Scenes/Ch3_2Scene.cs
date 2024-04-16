@@ -18,7 +18,9 @@ public class Ch3_2Scene : BaseScene
 
     public override IEnumerator LoadingRoutine()
     {
-        
+        Debug.Log("3-2층 로딩루틴 여기서 진행할 내용은 존재하는지?");
+        GameManager.isSceneChange = false;  //false로 풀어줘야 하는지? 
+
         yield return null;
     }
 }

@@ -22,18 +22,26 @@ public class Ch1Scene :BaseScene
         Manager.Sound.PlayBGM(bgmClip);
 	}
 
-	public override IEnumerator LoadingRoutine()
+	public override IEnumerator LoadingRoutine()  
     {
 
         if (GameManager.saved == false)
             yield break;
 
         //여기서 위치 저장 가능한지? 순서 확인 할 것. 
-        controller.enabled = false;
-        player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
-        Debug.Log(GameManager.playerPos);
-        controller.enabled = true;
+
+        if(GameManager.isSceneChange==false)
+        {
+            controller.enabled = false;
+            player.transform.position = GameManager.playerPos + new Vector3(1, 0, 1);
+            Debug.Log(GameManager.playerPos);
+            controller.enabled = true;
+            yield return null;
+        }
+
+        GameManager.isSceneChange = false; //루팅 진행 후 false로 변경. 
         yield return null;
+        
     }
 
     private void Update()
@@ -47,11 +55,14 @@ public class Ch1Scene :BaseScene
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //트리거로 2맵 진입. 
 	{
-		if (other.gameObject.CompareTag("Player"))
+		if (other.gameObject.CompareTag("Player")) //2맵으로 넘어가게 된다.
 		{
-			Manager.Scene.LoadScene("2M");
+            GameManager.isSceneChange = true; // 이거를 잠시 트루로 두고 2m 로딩루틴에서 false일때만 playerpos를 진행하도록 하고 다시 false 로 변경 
+
+            Debug.Log("1 -> 2 scene " + GameManager.isSceneChange);
+            Manager.Scene.LoadScene("2M");
 		}
 	}
 

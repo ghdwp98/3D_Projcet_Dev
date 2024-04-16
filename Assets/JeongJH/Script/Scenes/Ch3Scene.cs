@@ -19,17 +19,24 @@ public class Ch3Scene : BaseScene
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)  //트리거 시 씬 전환.
     {
         if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.isSceneChange = true;
+            Debug.Log("3->3_1층 챕터변경" + GameManager.isSceneChange);
             Manager.Scene.LoadScene("3M2");
+        }
+           
         
     }
 
 
     public override IEnumerator LoadingRoutine()
     {
-        
+        Debug.Log("3씬 진입 로딩루틴 " + GameManager.isSceneChange);
+        GameManager.isSceneChange = false;
+        Debug.Log("3씬 진입 로딩루틴 false 변경 성공적인지 " + GameManager.isSceneChange);
 
         yield return null;
     }
