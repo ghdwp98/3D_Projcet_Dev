@@ -566,7 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3701841734625212238}
   ani: {fileID: 4631677543057124581}
-  moveSpeed: 10
+  moveSpeed: 5
   jumpSpeed: 8
   ySpeed: 0
   groundChecker: 0

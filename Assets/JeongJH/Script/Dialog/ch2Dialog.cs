@@ -9,15 +9,14 @@ public class ch2Dialog : MonoBehaviour
     public bool isRoutine;
     public int dialogCount;
 
-    private void Start()
+	private void Start()
     {
-        if(GameManager.ch2_count==0)
+
+		if (GameManager.ch2_count==0)
         {
             StartCoroutine(DialogSetOn(0));
             GameManager.ch2_count++; //카운트 늘려서 다시 실행되지 않도록 
         }
-        
-
     }
 
     public void StartTextCoroutine(int count) //매개변수 int로 몇번 째 대화를 가져올지 구분. 

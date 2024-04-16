@@ -7,8 +7,14 @@ public class Ch3Scene : BaseScene
     //3¸Ê Áý ¹Ù±ù ¾À ·Îµù. 
     [SerializeField] PopUpUI escPopUPUI;
 
+    [SerializeField] AudioClip bgmClip;
 
-    private void Update()
+
+	private void Start()
+	{
+		Manager.Sound.PlayBGM(bgmClip);
+	}
+	private void Update()
     {
         //¸ÞÀÎ¾ÀÀÌ ¾Æ´Ò¶§¸¸ escÅ° ÀÌ¿ë°¡´É. 
         if (Input.GetKeyDown(KeyCode.Escape) && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainScene")

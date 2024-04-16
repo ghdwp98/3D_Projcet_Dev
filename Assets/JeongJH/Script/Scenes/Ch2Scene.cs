@@ -16,13 +16,19 @@ public class Ch2Scene : BaseScene
     [SerializeField] int capacity;
     [SerializeField] int smallSize;
     [SerializeField] int smallCapacity;
+	[SerializeField] AudioClip bgmClip;
 
-    [SerializeField] PopUpUI escPopUPUI;
+	[SerializeField] PopUpUI escPopUPUI;
 
-    //아기 산불들은 들어가면 생성되어야 하는데 그 위치를 정해주는건 빈 오브젝트를 넣어둘까? 
+	//아기 산불들은 들어가면 생성되어야 하는데 그 위치를 정해주는건 빈 오브젝트를 넣어둘까? 
+
+	private void Start()
+	{
+		Manager.Sound.PlayBGM(bgmClip);
+	}
 
 
-    public override IEnumerator LoadingRoutine()
+	public override IEnumerator LoadingRoutine()
     {
 
         /*Manager.Pool.CreatePool(FirePrefab, size, capacity);
