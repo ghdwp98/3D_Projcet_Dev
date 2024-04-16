@@ -146,10 +146,12 @@ MonoBehaviour:
   viewPoint: {fileID: 488539727717546193}
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 0
   range: 7
-  dialogSystem01: {fileID: 0}
-  dialogSystem02: {fileID: 0}
+  isHide: 1
+  dialogCount: 0
+  dialogSystems: []
+  panel: {fileID: 0}
   m_Method: 2
   m_Curve:
     serializedVersion: 2
